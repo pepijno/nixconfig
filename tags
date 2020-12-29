@@ -1,0 +1,111 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	Development	//
+/	init.vim	/^map  \/ <Plug>(easymotion-sn)$/;"	m
+/	init.vim	/^omap \/ <Plug>(easymotion-tn)$/;"	m
+<Leader>E	init.vim	/^nnoremap <Leader>E :PHPExpandFQCN<cr>$/;"	m
+<Leader>L	init.vim	/^map <Leader>L <Plug>(easymotion-bd-jk)$/;"	m
+<Leader>L	init.vim	/^nmap <Leader>L <Plug>(easymotion-overwin-line)$/;"	m
+<Leader>e	init.vim	/^nnoremap <Leader>e :PHPExpandFQCNAbsolute<cr>$/;"	m
+<Leader>h	init.vim	/^map <Leader>h <Plug>(easymotion-linebackward)$/;"	m
+<Leader>j	init.vim	/^map <Leader>j <Plug>(easymotion-j)$/;"	m
+<Leader>k	init.vim	/^map <Leader>k <Plug>(easymotion-k)$/;"	m
+<Leader>l	init.vim	/^map <Leader>l <Plug>(easymotion-lineforward)$/;"	m
+<Leader>tt	init.vim	/^nmap <Leader>tt :TagbarToggle<CR>$/;"	m
+<Leader>u	init.vim	/^nnoremap <Leader>u :PHPImportClass<cr>$/;"	m
+<Leader>w	init.vim	/^map  <Leader>w <Plug>(easymotion-bd-w)$/;"	m
+<Leader>w	init.vim	/^nmap <Leader>w <Plug>(easymotion-overwin-w)$/;"	m
+<TAB>	init.vim	/^inoremap <expr> <TAB> pumvisible() ? "\\<c-n>" : "\\<TAB>"$/;"	m
+<leader><space>	init.vim	/^map <leader><space> :let @\/=''<cr> " clear search$/;"	m
+<leader>ev	init.vim	/^nnoremap <leader>ev :vsp $MYVIMRC<CR>$/;"	m
+<leader>fc	init.vim	/^nmap <silent> <leader>fc :Tags<CR>$/;"	m
+<leader>ff	init.vim	/^nmap <silent> <leader>ff :Files<CR>$/;"	m
+<leader>fl	init.vim	/^nmap <silent> <leader>fl :Lines<CR>$/;"	m
+<leader>fr	init.vim	/^nmap <silent> <leader>fr :Rg<CR>$/;"	m
+<leader>raa	init.vim	/^nnoremap <leader>raa :call PHPModify("add_missing_properties")<cr>$/;"	m
+<leader>rcv	init.vim	/^nnoremap <leader>rcv :call PhpRenameClassVariable()<CR>$/;"	m
+<leader>rdu	init.vim	/^nnoremap <leader>rdu :call PhpDetectUnusedUseStatements()<CR>$/;"	m
+<leader>rec	init.vim	/^vnoremap <leader>rec :call PhpExtractConst()<CR>$/;"	m
+<leader>rep	init.vim	/^nnoremap <leader>rep :call PhpExtractClassProperty()<CR>$/;"	m
+<leader>reu	init.vim	/^nnoremap <leader>reu :call PhpExtractUse()<CR>$/;"	m
+<leader>ric	init.vim	/^nnoremap <leader>ric :call PHPModify("implement_contracts")<cr>$/;"	m
+<leader>rlv	init.vim	/^nnoremap <leader>rlv :call PhpRenameLocalVariable()<CR>$/;"	m
+<leader>rmc	init.vim	/^nnoremap <leader>rmc :call PHPMoveClass()<cr>$/;"	m
+<leader>rmd	init.vim	/^nnoremap <leader>rmd :call PHPMoveDir()<cr>$/;"	m
+<leader>rnp	init.vim	/^nnoremap <leader>rnp :call PhpCreateProperty()<CR>$/;"	m
+<leader>rrm	init.vim	/^nnoremap <leader>rrm :call PhpRenameMethod()<CR>$/;"	m
+<leader>rsg	init.vim	/^nnoremap <leader>rsg :call PhpCreateSettersAndGetters()<CR>$/;"	m
+<leader>sv	init.vim	/^nnoremap <leader>sv :source $MYVIMRC<CR>$/;"	m
+<s-tab>	init.vim	/^inoremap <expr> <s-tab> pumvisible() ? "\\<c-p>" : "\\<TAB>"$/;"	m
+<space>	init.vim	/^nnoremap <space> za$/;"	m
+IPhpExpandClass	init.vim	/^function! IPhpExpandClass()$/;"	f
+IPhpInsertUse	init.vim	/^function! IPhpInsertUse()$/;"	f
+N	init.vim	/^nmap N <Plug>(easymotion-prev)$/;"	m
+PHPModify	init.vim	/^function! PHPModify(transformer)$/;"	f
+PHPMoveClass	init.vim	/^function! PHPMoveClass()$/;"	f
+PHPMoveDir	init.vim	/^function! PHPMoveDir()$/;"	f
+ask	polybar/scripts/checkupdates	/^ask() {$/;"	f
+error	polybar/scripts/checkupdates	/^error() {$/;"	f
+g:EasyMotion_smartcase	init.vim	/^let g:EasyMotion_smartcase = 1$/;"	v
+g:UltiSnipsExpandTrigger	init.vim	/^let g:UltiSnipsExpandTrigger="<c-j>"$/;"	v
+g:UltiSnipsJumpBackwardTrigger	init.vim	/^let g:UltiSnipsJumpBackwardTrigger="<c-b>"$/;"	v
+g:UltiSnipsJumpForwardTrigger	init.vim	/^let g:UltiSnipsJumpForwardTrigger="<c-j>"$/;"	v
+g:ale_cpp_gcc_executable	init.vim	/^let g:ale_cpp_gcc_executable = '\/usr\/bin\/gcc'$/;"	v
+g:ale_cpp_gcc_options	init.vim	/^let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++17'$/;"	v
+g:ale_echo_msg_format	init.vim	/^let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'$/;"	v
+g:ale_fix_on_save	init.vim	/^let g:ale_fix_on_save = 1$/;"	v
+g:ale_fixers	init.vim	/^let g:ale_fixers = {$/;"	v
+g:ale_keep_list_window_open	init.vim	/^let g:ale_keep_list_window_open=0$/;"	v
+g:ale_lint_on_enter	init.vim	/^let g:ale_lint_on_enter = 0$/;"	v
+g:ale_lint_on_text_changed	init.vim	/^let g:ale_lint_on_text_changed = 'never'$/;"	v
+g:ale_linters	init.vim	/^let g:ale_linters = {'c': ['gcc'], 'cpp': ['g++']}$/;"	v
+g:ale_list_window_size	init.vim	/^let g:ale_list_window_size = 5$/;"	v
+g:ale_open_list	init.vim	/^let g:ale_open_list = 1$/;"	v
+g:ale_php_phpcbf_standard	init.vim	/^let g:ale_php_phpcbf_standard='PSR2'$/;"	v
+g:ale_php_phpcs_standard	init.vim	/^let g:ale_php_phpcs_standard='phpcs.xml.dist'$/;"	v
+g:ale_php_phpmd_ruleset	init.vim	/^let g:ale_php_phpmd_ruleset='phpmd.xml'$/;"	v
+g:ale_set_quickfix	init.vim	/^let g:ale_set_quickfix=0$/;"	v
+g:gruvbox_contrast_dark	init.vim	/^let g:gruvbox_contrast_dark="hard"$/;"	v
+g:gruvbox_contrast_light	init.vim	/^let g:gruvbox_contrast_light="hard"$/;"	v
+g:gruvbox_improved_strings	init.vim	/^let g:gruvbox_improved_strings=0$/;"	v
+g:gruvbox_improved_warnings	init.vim	/^let g:gruvbox_improved_warnings=1$/;"	v
+g:gruvbox_invert_signs	init.vim	/^let g:gruvbox_invert_signs=0$/;"	v
+g:gruvbox_italic	init.vim	/^let g:gruvbox_italic=1$/;"	v
+g:gruvbox_undercurl	init.vim	/^let g:gruvbox_undercurl=1$/;"	v
+g:haskell_backpack	init.vim	/^let g:haskell_backpack = 1                " to enable highlighting of backpack keywords$/;"	v
+g:haskell_enable_arrowsyntax	init.vim	/^let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`$/;"	v
+g:haskell_enable_pattern_synonyms	init.vim	/^let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`$/;"	v
+g:haskell_enable_quantification	init.vim	/^let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`$/;"	v
+g:haskell_enable_recursivedo	init.vim	/^let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`$/;"	v
+g:haskell_enable_static_pointers	init.vim	/^let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`$/;"	v
+g:haskell_enable_typeroles	init.vim	/^let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles$/;"	v
+g:haskell_indent_case	init.vim	/^let g:haskell_indent_case = 2$/;"	v
+g:haskell_indent_case_alternative	init.vim	/^let g:haskell_indent_case_alternative = 1$/;"	v
+g:php_cs_fixer_config	init.vim	/^let g:php_cs_fixer_config = "default"$/;"	v
+g:php_cs_fixer_path	init.vim	/^let g:php_cs_fixer_path = "~\/.config\/composer\/vendor\/bin\/php-cs-fixer"$/;"	v
+g:php_namespace_sort_after_insert	init.vim	/^let g:php_namespace_sort_after_insert=1$/;"	v
+g:phpstan_analyse_level	init.vim	/^let g:phpstan_analyse_level = 4$/;"	v
+g:python3_host_prog	init.vim	/^let g:python3_host_prog = '\/usr\/bin\/python3'$/;"	v
+g:ultisnips_php_scalar_types	init.vim	/^let g:ultisnips_php_scalar_types = 1$/;"	v
+g:vim_php_refactoring_use_default_mapping	init.vim	/^let g:vim_php_refactoring_use_default_mapping = 0$/;"	v
+gV	init.vim	/^nnoremap gV `[v`]$/;"	m
+get_total_updates	polybar/scripts/updates.sh	/^get_total_updates() { UPDATES=$(checkupdates 2>\/dev\/null | wc -l); }$/;"	f
+kj	init.vim	/^cnoremap kj <ESC>$/;"	m
+kj	init.vim	/^inoremap kj <ESC>$/;"	m
+mapleader	init.vim	/^let mapleader = ","$/;"	v
+msg	polybar/scripts/checkupdates	/^msg() {$/;"	f
+msg2	polybar/scripts/checkupdates	/^msg2() {$/;"	f
+n	init.vim	/^nmap n <Plug>(easymotion-next)$/;"	m
+plain	polybar/scripts/checkupdates	/^plain() {$/;"	f
+s	init.vim	/^nmap s <Plug>(easymotion-overwin-f2)$/;"	m
+t	init.vim	/^nmap t <Plug>(easymotion-t2)$/;"	m
+tf	init.vim	/^nnoremap tf :call RunOrmolu()<CR>$/;"	m
+th	init.vim	/^nnoremap th :tabprev<CR>$/;"	m
+tj	init.vim	/^nnoremap tj :tabfirst<CR>$/;"	m
+tk	init.vim	/^nnoremap tk :tablast<CR>$/;"	m
+tl	init.vim	/^nnoremap tl :tabnext<CR>$/;"	m
+tn	init.vim	/^nnoremap tn :tabnew<Space>$/;"	m
+warning	polybar/scripts/checkupdates	/^warning() {$/;"	f
