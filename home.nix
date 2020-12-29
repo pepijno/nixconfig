@@ -34,6 +34,7 @@ in {
     pkgs.ranger
     pkgs.rsync
     pkgs.imagemagick
+	pkgs.ctags
 
     unstable.electrum
 
