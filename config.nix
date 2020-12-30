@@ -1,1 +1,2 @@
-/nix/store/2a5ykn2lsbhs39zy31lw3sq2wmhpqyjj-home-manager-files/.config/nixpkgs/config.nix
+{
+}

@@ -14,6 +14,34 @@ let
 in {
   fonts.fontconfig.enable = true;
 
+  systemd.user.services.backup = {
+    Unit = {
+      Description = "Run backup script";
+    };
+
+    Service = {
+      Type = "oneshot";
+      ExecStart = "/home/pepijn/bin/create_backup /home/pepijn/ /backups";
+      Environment = "PATH=/run/wrappers/bin:/home/pepijn/.nix-profile/bin:/etc/profiles/per-user/pepijn/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin";
+    };
+  };
+
+  systemd.user.timers.backup = {
+    Unit = {
+      Description = "Run backup every day";
+    };
+
+    Timer = {
+      OnCalendar = "*-*-* 06:00:00";
+      OnBootSec = "900";
+      Persistent = true;
+    };
+
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+  };
+
   home.packages = [
     pkgs.fontconfig
     pkgs.killall
@@ -34,7 +62,9 @@ in {
     pkgs.ranger
     pkgs.rsync
     pkgs.imagemagick
-	pkgs.ctags
+    pkgs.ctags
+    pkgs.libnotify
+    pkgs.nix-du
 
     unstable.electrum
 
@@ -132,9 +162,9 @@ in {
   home.file."bin".source = ./bin;
 
   nixpkgs.config.allowUnfree = true;
-  home.file.".config/nixpkgs/config.nix".text = ''
-    { allowUnfree = true; }
-  '';
+  # home.file.".config/nixpkgs/config.nix".text = ''
+  #   { allowUnfree = true; }
+  # '';
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
