@@ -11,7 +11,7 @@
 
 [ -f "$HOME/.cache/wal/colors.sh" ] && . "$HOME/.cache/wal/colors.sh"
 
-pidof dunst && killall dunst
+pidof dunst && pkill dunst
 
 dunst -lf  "${color7:-#ffffff}" \
       -lb  "${color3:-#eeeeee}" \

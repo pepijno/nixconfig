@@ -208,7 +208,7 @@ exec --no-startup-id wal -R
 exec_always --no-startup-id wal -i ~/Pictures/Wallpapers/ -o ~/.config/dunst/launchdunst.sh
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 #exec_always --no-startup-id ~/.config/dunst/launchdunst.sh
-exec_always --no-startup-id xrandr -s 1920x108
+exec_always --no-startup-id xrandr -s 1920x1080
 
 assign [class = "Vivaldi-stable"] $ws2
 assign [class = "Firefox"] $ws3

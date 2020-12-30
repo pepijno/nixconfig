@@ -48,6 +48,7 @@ PHPModify	init.vim	/^function! PHPModify(transformer)$/;"	f
 PHPMoveClass	init.vim	/^function! PHPMoveClass()$/;"	f
 PHPMoveDir	init.vim	/^function! PHPMoveDir()$/;"	f
 ask	polybar/scripts/checkupdates	/^ask() {$/;"	f
+dir_exists	bin/create_backup	/^function dir_exists {$/;"	f
 error	polybar/scripts/checkupdates	/^error() {$/;"	f
 g:EasyMotion_smartcase	init.vim	/^let g:EasyMotion_smartcase = 1$/;"	v
 g:UltiSnipsExpandTrigger	init.vim	/^let g:UltiSnipsExpandTrigger="<c-j>"$/;"	v
@@ -101,6 +102,9 @@ msg2	polybar/scripts/checkupdates	/^msg2() {$/;"	f
 n	init.vim	/^nmap n <Plug>(easymotion-next)$/;"	m
 plain	polybar/scripts/checkupdates	/^plain() {$/;"	f
 s	init.vim	/^nmap s <Plug>(easymotion-overwin-f2)$/;"	m
+send_message	bin/create_backup	/^function send_message {$/;"	f
+show_fail	bin/create_backup	/^function show_fail {$/;"	f
+show_success	bin/create_backup	/^function show_success {$/;"	f
 t	init.vim	/^nmap t <Plug>(easymotion-t2)$/;"	m
 tf	init.vim	/^nnoremap tf :call RunOrmolu()<CR>$/;"	m
 th	init.vim	/^nnoremap th :tabprev<CR>$/;"	m
