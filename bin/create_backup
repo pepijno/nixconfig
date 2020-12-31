@@ -45,9 +45,21 @@ fi
 ym=$(date +%Y-%m)
 time=$(date +%Y-%m-%d_%T)
 
-dir_exists $bkp_dir/full_$ym
+prev=0
+for ((i=30;i>0;i-=1)); do
+	d=$(date -d "$date -$i days" +"%Y-%m-%d")
+	dir="$bkp_dir/$d*"
+	dir_exists $dir
+	if [ $? -eq 0 ]; then
+		files=( $dir )
+		prev="${files[0]}"
+	fi
+	if [ "$prev" != "0" ]; then
+		break;
+	fi
+done
 
-if [ $? -ne 0 ]; then
+if [ "$prev" == "0" ]; then
 	echo "Creating full backup..."
 	rsync \
 		--archive \
@@ -66,19 +78,6 @@ if [ $? -ne 0 ]; then
 	fi
 else
 	echo "Creating partial backup..."
-	d=$(date +%d)
-	prev=0
-	for ((i=$d;i>0;i-=1)); do
-		dir="$bkp_dir/full_$ym-$i*"
-		dir_exists $dir
-		if [ $? -eq 0 ]; then
-			files=( $dir )
-			prev="${files[0]}"
-		fi
-		if [ "$prev" != "0" ]; then
-			break;
-		fi
-	done
 	rsync \
 		--archive \
 		--one-file-system \
