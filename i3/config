@@ -205,9 +205,8 @@ exec --no-startup-id wal -R
 
 #exec_always --no-startup-id feh --recursive --randomize --bg-fill /usr/share/antergos/wallpapers
 #exec_always --no-startup-id feh --recursive --randomize --bg-fill ~/Pictures/Wallpapers
-exec_always --no-startup-id wal -i ~/Pictures/Wallpapers/ -o ~/.config/dunst/launchdunst.sh
+exec_always --no-startup-id wal -i ~/Pictures/Wallpapers/ -o ~/bin/restart_dunst
 exec_always --no-startup-id ~/.config/polybar/launch.sh
-#exec_always --no-startup-id ~/.config/dunst/launchdunst.sh
 exec_always --no-startup-id xrandr -s 1920x1080
 
 assign [class = "Vivaldi-stable"] $ws2
