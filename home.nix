@@ -1,17 +1,6 @@
 { config, lib, pkgs, ... }:
 
-let
-  unstable = import <nixos-unstable> {
-    config = {
-      allowUnfree = true;
-      vivaldi = {
-        proprietaryCodecs = true;
-        enableWideVine = true;
-      };
-    };
-  };
-in {
-
+{
   imports = [
     ./git.nix
     ./fish.nix
@@ -19,35 +8,16 @@ in {
     ./fonts.nix
     ./vim/vim.nix
     ./backup/backup.nix
-    ./polybar/polybar.nix
     ./dunst/dunst.nix
+    ./polybar/polybar.nix
+
+    ./packages.nix
+    ./packages-unstable.nix
+
+    # ./compton.nix
   ];
 
-  home.packages = [
-    pkgs.unzip
-    pkgs.pywal
-    pkgs.solaar
-    pkgs.redshift
-    # these are manually installed because the latest versions are bugged
-    # (pkgs.nerdfonts.override { fonts = [ "Iosevka" "DroidSansMono" ]; })
-    pkgs.ranger
-    pkgs.imagemagick
-    pkgs.ctags
-    pkgs.nix-du
-
-    unstable.thunderbird
-
-    unstable.electrum
-
-    unstable.steam
-    unstable.discord
-
-    unstable.tor-browser-bundle-bin
-
-    unstable.vivaldi
-    unstable.vivaldi-widevine
-    unstable.vivaldi-ffmpeg-codecs
-  ];
+  nixpkgs.config.allowUnfree = true;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
