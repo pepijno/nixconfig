@@ -6,6 +6,7 @@
     ./fonts.nix
     ./git.nix
     ./i3.nix
+    ./redshift.nix
     ./urxvt.nix
 
     ./backup/backup.nix
