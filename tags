@@ -41,6 +41,7 @@
 <leader>sv	vim/init.vim	/^nnoremap <leader>sv :source $MYVIMRC<CR>$/;"	m
 <s-tab>	vim/init.vim	/^inoremap <expr> <s-tab> pumvisible() ? "\\<c-p>" : "\\<TAB>"$/;"	m
 <space>	vim/init.vim	/^nnoremap <space> za$/;"	m
+Command	ranger/commands.py	/^from ranger.api.commands import Command$/;"	i
 IPhpExpandClass	vim/init.vim	/^function! IPhpExpandClass()$/;"	f
 IPhpInsertUse	vim/init.vim	/^function! IPhpInsertUse()$/;"	f
 N	vim/init.vim	/^nmap N <Plug>(easymotion-prev)$/;"	m
@@ -50,6 +51,8 @@ PHPMoveDir	vim/init.vim	/^function! PHPMoveDir()$/;"	f
 ask	polybar/polybar/scripts/checkupdates	/^ask() {$/;"	f
 dir_exists	backup/create_backup	/^function dir_exists {$/;"	f
 error	polybar/polybar/scripts/checkupdates	/^error() {$/;"	f
+execute	ranger/commands.py	/^    def execute(self):$/;"	m	class:fzf_select
+fzf_select	ranger/commands.py	/^class fzf_select(Command):$/;"	c
 g:EasyMotion_smartcase	vim/init.vim	/^let g:EasyMotion_smartcase = 1$/;"	v
 g:UltiSnipsExpandTrigger	vim/init.vim	/^let g:UltiSnipsExpandTrigger="<c-j>"$/;"	v
 g:UltiSnipsJumpBackwardTrigger	vim/init.vim	/^let g:UltiSnipsJumpBackwardTrigger="<c-b>"$/;"	v
@@ -100,11 +103,14 @@ mapleader	vim/init.vim	/^let mapleader = ","$/;"	v
 msg	polybar/polybar/scripts/checkupdates	/^msg() {$/;"	f
 msg2	polybar/polybar/scripts/checkupdates	/^msg2() {$/;"	f
 n	vim/init.vim	/^nmap n <Plug>(easymotion-next)$/;"	m
+os	ranger/commands.py	/^        import os.path$/;"	i
+path	ranger/commands.py	/^        import os.path$/;"	i
 plain	polybar/polybar/scripts/checkupdates	/^plain() {$/;"	f
 s	vim/init.vim	/^nmap s <Plug>(easymotion-overwin-f2)$/;"	m
 send_message	backup/create_backup	/^function send_message {$/;"	f
 show_fail	backup/create_backup	/^function show_fail {$/;"	f
 show_success	backup/create_backup	/^function show_success {$/;"	f
+subprocess	ranger/commands.py	/^        import subprocess$/;"	i
 t	vim/init.vim	/^nmap t <Plug>(easymotion-t2)$/;"	m
 tf	vim/init.vim	/^nnoremap tf :call RunOrmolu()<CR>$/;"	m
 th	vim/init.vim	/^nnoremap th :tabprev<CR>$/;"	m

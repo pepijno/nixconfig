@@ -27,7 +27,7 @@
       "cursorBlink" = true;
       "cursorUnderline" = false;
       "urgentOnBell" = true;
-      "depth" = 24;
+      "depth" = 32;
       "urlLauncher" = "vivaldi";
       "underlineURLs" = true;
       "urlButton" = 1;

@@ -32,7 +32,7 @@
           border = 0;
         };
         startup = [
-          { command = "wal -i ~/Pictures/Wallpapers/ -a 90 -o ~/bin/restart_dunst"; always = true; notification = false; }
+          { command = "wal -i ~/Pictures/Wallpapers/ -a 94 -o ~/bin/restart_dunst"; always = true; notification = false; }
           { command = "~/.config/polybar/launch.sh"; always = true; notification = false; }
           { command = "xrandr -s 1920x1080"; always = true; notification = false; }
           { command = "redshift"; }
@@ -75,7 +75,6 @@
       };
       extraConfig = ''
         for_window [class=".*"] border pixel 0
-        bindsym $mod+Shift+e exec --no-startup-id /home/pepijn/.config/polybar/scripts/sysmenu
       '';
     };
   };

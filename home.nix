@@ -18,7 +18,7 @@
     ./packages.nix
     ./packages-unstable.nix
 
-    # ./compton.nix
+    ./compton.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
