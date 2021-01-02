@@ -11,8 +11,8 @@
 
     set encoding=UTF-8
 
-    " colorscheme wal
-    " let g:lightline = {'colorscheme': 'wal'}
+    colorscheme wal
+    "let g:lightline = {'colorscheme': 'wal'}
 
     "" make sure to create ctags on saving
     " au BufWritePost *.php execute '! sh -c "if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1 ; then ~/.git_template/hooks/ctags; fi"'
@@ -45,7 +45,8 @@
 
     " Whitespace
     set wrap
-    set textwidth=79
+    set textwidth=0
+    set wrapmargin=0
     set formatoptions=tcqrn1
     set tabstop=4
     set shiftwidth=4
@@ -264,16 +265,16 @@
     let g:php_namespace_sort_after_insert=1
     let g:phpstan_analyse_level = 4
 
-    set background=dark
+    "set background=dark
     " set background=light
-    let g:gruvbox_contrast_light="hard"
-    let g:gruvbox_italic=1
-    let g:gruvbox_invert_signs=0
-    let g:gruvbox_improved_strings=0
-    let g:gruvbox_improved_warnings=1
-    let g:gruvbox_undercurl=1
-    let g:gruvbox_contrast_dark="hard"
-    colorscheme gruvbox
+    "let g:gruvbox_contrast_light="hard"
+    "let g:gruvbox_italic=1
+    "let g:gruvbox_invert_signs=0
+    "let g:gruvbox_improved_strings=0
+    "let g:gruvbox_improved_warnings=1
+    "let g:gruvbox_undercurl=1
+    "let g:gruvbox_contrast_dark="hard"
+    "colorscheme gruvbox
 
     set cursorline!
 

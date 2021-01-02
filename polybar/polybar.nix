@@ -1,7 +1,15 @@
 { pkgs, ... }:
 
-{
-  home.packages = with pkgs; [
+let
+  # customLock = pkgs.writeScriptBin "customLock" ''
+  #   cp $(sed 1d "$HOME/.fehbg" | awk '{print $4}' | tr -d "\'") /tmp/screen.png
+  #   convert /tmp/screen.png -scale 10% -scale 1000% /tmp/screen.png
+  #   convert /tmp/screen.png ~/bin/lockicon.png -gravity center -composite -matte /tmp/screen.png
+  #   i3lock -u -i /tmp/screen.png
+  #   rm /tmp/screen.png
+  # '';
+in {
+  home.packages = [
     pkgs.libnotify
     pkgs.rofi
   ];
