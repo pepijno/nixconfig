@@ -7,11 +7,12 @@
     ./git.nix
     ./i3.nix
     ./urxvt.nix
-    ./vim/vim.nix
 
     ./backup/backup.nix
     ./dunst/dunst.nix
     ./polybar/polybar.nix
+    ./ranger/ranger.nix
+    ./vim/vim.nix
 
     ./packages.nix
     ./packages-unstable.nix
@@ -28,8 +29,6 @@
   # paths it should manage.
   home.username = "pepijn";
   home.homeDirectory = "/home/pepijn";
-
-  # xdg.configFile."i3/config".source = ./i3/config;
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

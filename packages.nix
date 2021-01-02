@@ -6,7 +6,6 @@
     pywal
     solaar
     redshift
-    ranger
     imagemagick
     ctags
     nix-du
