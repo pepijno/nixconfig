@@ -1,8 +1,23 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 
-{
+let
+  restart-dunst = pkgs.callPackage ./scripts/restart-dunst.nix { config = config; };
+  menu = pkgs.callPackage ./scripts/menu.nix { config = config; };
+  sysmenu = pkgs.callPackage ./scripts/sysmenu.nix { config = config; };
+  new-pywal = pkgs.callPackage ./scripts/new-pywal.nix { config = config; };
+  unstable = import <nixos-unstable> {
+    config = {
+      allowUnfree = true;
+      vivaldi = {
+        proprietaryCodecs = true;
+        enableWideVine = true;
+      };
+    };
+  };
+  mod = "Mod1";
+in {
   home.packages = with pkgs; [
-    i3lock
+    i3lock-color
   ];
 
   xsession = {
@@ -15,9 +30,9 @@
     windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
-      config = rec {
+      config = {
         bars = [];
-        modifier = "Mod1";
+        modifier = mod;
         terminal = "${pkgs.rxvt-unicode-unwrapped}/bin/urxvt";
         gaps = {
           inner = 10;
@@ -32,14 +47,11 @@
           border = 0;
         };
         startup = [
-          { command = "wal -i ~/Pictures/Wallpapers/ -a 94 -o ~/bin/restart_dunst"; always = true; notification = false; }
-          { command = "~/.config/polybar/launch.sh"; always = true; notification = false; }
-          { command = "xrandr -s 1920x1080"; always = true; notification = false; }
-          { command = "redshift"; }
-          { command = "solaar"; }
+          { command = "${new-pywal}/bin/new-pywal"; always = true; notification = false; }
+          { command = "${pkgs.xorg.xrandr}/bin/xrandr -s 1920x1080"; always = true; notification = false; }
+          { command = "${pkgs.solaar}/bin/solaar"; }
           { command = "/usr/lib/polkit-gnome-polkit-gnome-authentication-agent-1"; }
-          { command = "wal -R"; }
-          { command = "compton"; always = true; }
+          { command = "${pkgs.pywal}/bin/wal -R"; }
         ];
         assigns = {
           "2: vivaldi" = [{ class = "Vivaldi"; }];
@@ -48,12 +60,12 @@
           "5: steam" = [{ class = "Steam"; }];
         };
         keybindings = pkgs.lib.mkOptionDefault {
-          "${modifier}+Shift+b" = "exec ${pkgs.vivaldi}/bin/vivaldi";
-          "${modifier}+Shift+f" = "exec ${pkgs.firefox}/bin/firefox";
-          "${modifier}+Shift+o" = "exec ${pkgs.tor-browser-bundle-bin}/bin/tor-browser";
-          "${modifier}+Shift+s" = "exec ${pkgs.steam}/bin/steam";
-          "${modifier}+d" = "exec --no-startup-id /home/pepijn/.config/polybar/scripts/menu";
-          "${modifier}+Shift+e" = "exec --no-startup-id /home/pepijn/.config/polybar/scripts/sysmenu";
+          "${mod}+Shift+b" = "exec ${unstable.vivaldi}/bin/vivaldi";
+          "${mod}+Shift+f" = "exec ${unstable.firefox}/bin/firefox";
+          "${mod}+Shift+o" = "exec ${unstable.tor-browser-bundle-bin}/bin/tor-browser";
+          "${mod}+Shift+s" = "exec ${unstable.steam}/bin/steam";
+          "${mod}+d" = "exec --no-startup-id ${menu}/bin/menu";
+          "${mod}+Shift+e" = "exec --no-startup-id ${sysmenu}/bin/sysmenu";
           "XF86AudioRaiseVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%";
           "XF86AudioLowerVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%";
           "XF86AudioMute" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ toggle";

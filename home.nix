@@ -5,20 +5,19 @@
     ./fish.nix
     ./fonts.nix
     ./git.nix
-    ./i3.nix
-    ./redshift.nix
+    ./packages.nix
+    ./packages-unstable.nix
     ./urxvt.nix
 
-    ./backup/backup.nix
-    ./dunst/dunst.nix
-    ./polybar/polybar.nix
     ./ranger/ranger.nix
     ./vim/vim.nix
 
-    ./packages.nix
-    ./packages-unstable.nix
-
-    ./compton.nix
+    ./services/backup.nix
+    ./services/compton.nix
+    ./services/i3.nix
+    ./services/redshift.nix
+    ./services/dunst.nix
+    ./services/polybar.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

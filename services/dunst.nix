@@ -16,10 +16,9 @@ let
       in "${key}=${value'}";
   };
 
-in {
-  home.file."bin/launch_dunst".source = ./launch_dunst;
-  home.file."bin/restart_dunst".source = ./restart_dunst;
+  launch-dunst = pkgs.callPackage ./scripts/launch-dunst.nix {};
 
+in {
   home.packages = with pkgs; [
     dunst
   ];
@@ -68,8 +67,7 @@ in {
     Service = {
       Type = "dbus";
       BusName = "org.freedesktop.Notifications";
-      ExecStart = "/home/pepijn/bin/launch_dunst ${pkgs.dunst}/bin/dunst /home/pepijn/.cache/wal/colors.sh";
-      Environment = "PATH=/run/wrappers/bin:/home/pepijn/.nix-profile/bin:/etc/profiles/per-user/pepijn/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin";
+      ExecStart = "${launch-dunst}/bin/launch-dunst ${config.home.homeDirectory}/.cache/wal/colors.sh";
     };
   };
 

@@ -1,8 +1,11 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
-{
-  home.packages = with pkgs; [
-    rsync
+let
+  create-backup = pkgs.callPackage ./scripts/create-backup.nix { };
+in {
+  home.packages = [
+    pkgs.rsync
+    create-backup
   ];
 
   systemd.user.services.backup = {
@@ -12,8 +15,7 @@
 
     Service = {
       Type = "oneshot";
-      ExecStart = "/home/pepijn/bin/create_backup /home/pepijn/ /backups";
-      Environment = "PATH=/run/wrappers/bin:/home/pepijn/.nix-profile/bin:/etc/profiles/per-user/pepijn/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin";
+      ExecStart = "${create-backup}/bin/create-backup ${config.home.homeDirectory}/ /backups";
     };
   };
 
@@ -32,6 +34,4 @@
       WantedBy = [ "default.target" ];
     };
   };
-
-  home.file."bin/create_backup".source = ./create_backup;
 }

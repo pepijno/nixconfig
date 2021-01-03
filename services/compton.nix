@@ -19,7 +19,7 @@
 
     activeOpacity = "1.0";
     inactiveOpacity = "1.0";
-    menuOpacity = "0.8";
+    menuOpacity = "1.0";
 
     backend = "glx";
     vSync = true;

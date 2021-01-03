@@ -28,6 +28,6 @@ in {
       vim-gitgutter
       haskell-vim
     ];
-    extraConfig = vimrc.config;
+    extraConfig = vimrc.conf;
   };
 }
