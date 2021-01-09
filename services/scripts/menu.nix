@@ -16,7 +16,6 @@ pkgs.writeScriptBin "menu" ''
   if [ "$1" == "full" ]; then
     params+=(-fullscreen)
   fi
-  echo $params
   ${pkgs.rofi}/bin/rofi -no-lazy-grab -show drun \
     -display-drun "Applications :" -drun-display-format "{name}" \
     -hide-scrollbar true \
