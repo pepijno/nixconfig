@@ -28,6 +28,7 @@ in {
         gaps = {
           inner = 10;
           outer = 10;
+          top = 32;
         };
         fonts = [ "Noto sans 10" "FontAwesome 10" ];
         window = {

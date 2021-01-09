@@ -18,6 +18,7 @@
     ./services/redshift.nix
     ./services/dunst.nix
     ./services/polybar.nix
+    ./services/wal.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

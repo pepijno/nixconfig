@@ -48,8 +48,6 @@ N	vim/init.vim	/^nmap N <Plug>(easymotion-prev)$/;"	m
 PHPModify	vim/init.vim	/^function! PHPModify(transformer)$/;"	f
 PHPMoveClass	vim/init.vim	/^function! PHPMoveClass()$/;"	f
 PHPMoveDir	vim/init.vim	/^function! PHPMoveDir()$/;"	f
-ask	services/polybar/polybar/scripts/checkupdates	/^ask() {$/;"	f
-error	services/polybar/polybar/scripts/checkupdates	/^error() {$/;"	f
 execute	ranger/commands.py	/^    def execute(self):$/;"	m	class:fzf_select
 fzf_select	ranger/commands.py	/^class fzf_select(Command):$/;"	c
 g:EasyMotion_smartcase	vim/init.vim	/^let g:EasyMotion_smartcase = 1$/;"	v
@@ -95,16 +93,12 @@ g:python3_host_prog	vim/init.vim	/^let g:python3_host_prog = '\/usr\/bin\/python
 g:ultisnips_php_scalar_types	vim/init.vim	/^let g:ultisnips_php_scalar_types = 1$/;"	v
 g:vim_php_refactoring_use_default_mapping	vim/init.vim	/^let g:vim_php_refactoring_use_default_mapping = 0$/;"	v
 gV	vim/init.vim	/^nnoremap gV `[v`]$/;"	m
-get_total_updates	services/polybar/polybar/scripts/updates.sh	/^get_total_updates() { UPDATES=$(checkupdates 2>\/dev\/null | wc -l); }$/;"	f
 kj	vim/init.vim	/^cnoremap kj <ESC>$/;"	m
 kj	vim/init.vim	/^inoremap kj <ESC>$/;"	m
 mapleader	vim/init.vim	/^let mapleader = ","$/;"	v
-msg	services/polybar/polybar/scripts/checkupdates	/^msg() {$/;"	f
-msg2	services/polybar/polybar/scripts/checkupdates	/^msg2() {$/;"	f
 n	vim/init.vim	/^nmap n <Plug>(easymotion-next)$/;"	m
 os	ranger/commands.py	/^        import os.path$/;"	i
 path	ranger/commands.py	/^        import os.path$/;"	i
-plain	services/polybar/polybar/scripts/checkupdates	/^plain() {$/;"	f
 s	vim/init.vim	/^nmap s <Plug>(easymotion-overwin-f2)$/;"	m
 subprocess	ranger/commands.py	/^        import subprocess$/;"	i
 t	vim/init.vim	/^nmap t <Plug>(easymotion-t2)$/;"	m
@@ -114,4 +108,3 @@ tj	vim/init.vim	/^nnoremap tj :tabfirst<CR>$/;"	m
 tk	vim/init.vim	/^nnoremap tk :tablast<CR>$/;"	m
 tl	vim/init.vim	/^nnoremap tl :tabnext<CR>$/;"	m
 tn	vim/init.vim	/^nnoremap tn :tabnew<Space>$/;"	m
-warning	services/polybar/polybar/scripts/checkupdates	/^warning() {$/;"	f

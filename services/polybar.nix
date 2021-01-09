@@ -43,11 +43,11 @@ in {
       "bar/main" = {
         width = "100%";
         height = 32;
-        offset-x = "2%";
-        offset-y = "2%";
         bottom = false;
         fixed-center = false;
         line-size = 2;
+        override-redirect = true;
+        wm-restack = "i3";
 
         background = bg;
         foreground = fg;
