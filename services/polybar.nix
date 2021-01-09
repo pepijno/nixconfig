@@ -4,15 +4,6 @@ let
   menu = pkgs.callPackage ./scripts/menu.nix { config = config; };
   sysmenu = pkgs.callPackage ./scripts/sysmenu.nix { config = config; };
   check-network = pkgs.callPackage ./scripts/check-network.nix { config = config; };
-  unstable = import <nixos-unstable> {
-    config = {
-      allowUnfree = true;
-      vivaldi = {
-        proprietaryCodecs = true;
-        enableWideVine = true;
-      };
-    };
-  };
 
   bg = "\${xrdb:color0}";
   fg = "\${xrdb:color7}";
@@ -129,7 +120,7 @@ in {
         content = "";
         content-padding = 2;
         content-foreground = fg-alt;
-        click-left = "${unstable.vivaldi}/bin/vivaldi &";
+        click-left = "vivaldi &";
       };
 
       "module/firefox" = {
@@ -137,7 +128,7 @@ in {
         content = "";
         content-padding = 2;
         content-foreground = fg-alt;
-        click-left = "${unstable.firefox}/bin/firefox &";
+        click-left = "firefox &";
       };
 
       "module/tor" = {
@@ -145,7 +136,7 @@ in {
         content = "";
         content-padding = 2;
         content-foreground = fg-alt;
-        click-left = "${unstable.tor-browser-bundle-bin}/bin/tor-browser &";
+        click-left = "tor-browser &";
       };
 
       "module/steam" = {
@@ -153,7 +144,7 @@ in {
         content = "";
         content-padding = 2;
         content-foreground = fg-alt;
-        click-left = "${unstable.steam}/bin/steam &";
+        click-left = "steam &";
       };
 
       "module/filesystem" = {

@@ -10,8 +10,8 @@
     ctags
     nix-du
     wget
-    alacritty
     betterlockscreen
     neofetch
+    stack
   ];
 }

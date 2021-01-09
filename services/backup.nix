@@ -26,7 +26,6 @@ in {
 
     Timer = {
       OnCalendar = "*-*-* 06:00:00";
-      OnBootSec = "900";
       Persistent = true;
     };
 

@@ -5,15 +5,6 @@ let
   menu = pkgs.callPackage ./scripts/menu.nix { config = config; };
   sysmenu = pkgs.callPackage ./scripts/sysmenu.nix { config = config; };
   new-pywal = pkgs.callPackage ./scripts/new-pywal.nix { config = config; };
-  unstable = import <nixos-unstable> {
-    config = {
-      allowUnfree = true;
-      vivaldi = {
-        proprietaryCodecs = true;
-        enableWideVine = true;
-      };
-    };
-  };
   mod = "Mod1";
 in {
   home.packages = with pkgs; [
@@ -60,10 +51,10 @@ in {
           "5: steam" = [{ class = "Steam"; }];
         };
         keybindings = pkgs.lib.mkOptionDefault {
-          "${mod}+Shift+b" = "exec ${unstable.vivaldi}/bin/vivaldi";
-          "${mod}+Shift+f" = "exec ${unstable.firefox}/bin/firefox";
-          "${mod}+Shift+o" = "exec ${unstable.tor-browser-bundle-bin}/bin/tor-browser";
-          "${mod}+Shift+s" = "exec ${unstable.steam}/bin/steam";
+          "${mod}+Shift+b" = "exec vivaldi";
+          "${mod}+Shift+f" = "exec firefox";
+          "${mod}+Shift+o" = "exec tor-browser";
+          "${mod}+Shift+s" = "exec steam";
           "${mod}+d" = "exec --no-startup-id ${menu}/bin/menu";
           "${mod}+Shift+e" = "exec --no-startup-id ${sysmenu}/bin/sysmenu";
           "XF86AudioRaiseVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%";
