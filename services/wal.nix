@@ -24,7 +24,7 @@ in {
     };
 
     Timer = {
-      OnUnitInactiveSec = "2700s";
+      OnUnitInactiveSec = "10s";
     };
 
     Install = {
