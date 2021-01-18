@@ -1,7 +1,16 @@
 { pkgs, ... }:
 
 let
-  vimrc = import ./vimrc.nix { pkgs = pkgs; };
+  pink-moon = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "pink-moon";
+    version = "2020-10-02";
+    src = pkgs.fetchFromGitHub {
+      owner = "sts10";
+      repo = "vim-pink-moon";
+      rev = "ab1980d1f216aea8060d935b7220bdc42d05a92b";
+      sha256 = "1fwcwb9a7n3vp6c0c7k53i6dzjzjrk3id62j5nq31rlssjcbps6i";
+    };
+  };
 in {
 
   home.packages = with pkgs; [
@@ -11,23 +20,26 @@ in {
 
   programs.neovim = {
     enable = true;
+    viAlias = true;
     vimAlias = true;
     plugins = with pkgs.vimPlugins; [
-      vim-nix
-      lightline-vim
+      ayu-vim
+      fzf-vim
+      gruvbox-community
+      pink-moon
+      tagbar
+      undotree
       vim-abolish
       vim-commentary
-      vim-easymotion
-      tagbar
-      fzf-vim
-      vim-startify
-      vim-gutentags
-      gruvbox
-      wal-vim
       vim-devicons
-      vim-gitgutter
-      haskell-vim
+      vim-easymotion
+      vim-nix
+      vim-startify
+      wal-vim
+      # vim-gutentags
+      # vim-gitgutter
+      # haskell-vim
     ];
-    extraConfig = vimrc.conf;
+	extraConfig = builtins.readFile ./init.vim;
   };
 }
