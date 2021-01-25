@@ -105,6 +105,11 @@ let $FZF_DEFAULT_OPTS='--reverse'
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
+" (Un)quote word
+nnoremap <Leader>q" ciw""<Esc>P
+nnoremap <Leader>q' ciw''<Esc>P
+nnoremap <Leader>qd daW"=substitute(@@,"'\\\|\"","","g")<CR>P
+
 " vim-abolish
 nnoremap <leader>rp :Subvert/
 
