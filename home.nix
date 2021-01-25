@@ -8,6 +8,7 @@
     ./git.nix
     ./packages.nix
     ./packages-unstable.nix
+    ./tmux.nix
     ./urxvt.nix
 
     ./ranger/ranger.nix
