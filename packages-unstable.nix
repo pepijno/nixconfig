@@ -10,14 +10,20 @@ let
       };
     };
   };
+  torbrowserWithAudio = unstable.torbrowser.override {
+    audioSupport = true;
+    mediaSupport = true;
+  };
 in {
   home.packages = with unstable; [
     thunderbird
     electrum
     steam
+    protontricks
+    mumble
     discord
-    tor-browser-bundle-bin
-    firefox
+    torbrowserWithAudio
+    firefox-wayland
     vivaldi
     vivaldi-widevine
     vivaldi-ffmpeg-codecs

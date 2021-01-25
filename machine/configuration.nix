@@ -62,6 +62,10 @@
   nixpkgs.config.allowUnfree = true;
 
   programs.fish.enable = true;
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+  };
 
   services.xserver = {
     enable = true;
