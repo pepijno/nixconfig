@@ -18,6 +18,7 @@
   imports =
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
+      ./pci-passthrough.nix
     ];
 
   fileSystems."/backups" =
@@ -110,7 +111,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.pepijn = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "kvm" "input" ];
     shell = pkgs.fish;
   };
 
