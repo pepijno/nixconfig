@@ -4,107 +4,21 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	Development	//
-/	vim/init.vim	/^map  \/ <Plug>(easymotion-sn)$/;"	m
-/	vim/init.vim	/^omap \/ <Plug>(easymotion-tn)$/;"	m
-<Leader>E	vim/init.vim	/^nnoremap <Leader>E :PHPExpandFQCN<cr>$/;"	m
-<Leader>L	vim/init.vim	/^map <Leader>L <Plug>(easymotion-bd-jk)$/;"	m
-<Leader>L	vim/init.vim	/^nmap <Leader>L <Plug>(easymotion-overwin-line)$/;"	m
-<Leader>e	vim/init.vim	/^nnoremap <Leader>e :PHPExpandFQCNAbsolute<cr>$/;"	m
-<Leader>h	vim/init.vim	/^map <Leader>h <Plug>(easymotion-linebackward)$/;"	m
-<Leader>j	vim/init.vim	/^map <Leader>j <Plug>(easymotion-j)$/;"	m
-<Leader>k	vim/init.vim	/^map <Leader>k <Plug>(easymotion-k)$/;"	m
-<Leader>l	vim/init.vim	/^map <Leader>l <Plug>(easymotion-lineforward)$/;"	m
-<Leader>tt	vim/init.vim	/^nmap <Leader>tt :TagbarToggle<CR>$/;"	m
-<Leader>u	vim/init.vim	/^nnoremap <Leader>u :PHPImportClass<cr>$/;"	m
-<Leader>w	vim/init.vim	/^map  <Leader>w <Plug>(easymotion-bd-w)$/;"	m
-<Leader>w	vim/init.vim	/^nmap <Leader>w <Plug>(easymotion-overwin-w)$/;"	m
-<TAB>	vim/init.vim	/^inoremap <expr> <TAB> pumvisible() ? "\\<c-n>" : "\\<TAB>"$/;"	m
-<leader><space>	vim/init.vim	/^map <leader><space> :let @\/=''<cr> " clear search$/;"	m
-<leader>ev	vim/init.vim	/^nnoremap <leader>ev :vsp $MYVIMRC<CR>$/;"	m
-<leader>fc	vim/init.vim	/^nmap <silent> <leader>fc :Tags<CR>$/;"	m
-<leader>ff	vim/init.vim	/^nmap <silent> <leader>ff :Files<CR>$/;"	m
-<leader>fl	vim/init.vim	/^nmap <silent> <leader>fl :Lines<CR>$/;"	m
-<leader>fr	vim/init.vim	/^nmap <silent> <leader>fr :Rg<CR>$/;"	m
-<leader>raa	vim/init.vim	/^nnoremap <leader>raa :call PHPModify("add_missing_properties")<cr>$/;"	m
-<leader>rcv	vim/init.vim	/^nnoremap <leader>rcv :call PhpRenameClassVariable()<CR>$/;"	m
-<leader>rdu	vim/init.vim	/^nnoremap <leader>rdu :call PhpDetectUnusedUseStatements()<CR>$/;"	m
-<leader>rec	vim/init.vim	/^vnoremap <leader>rec :call PhpExtractConst()<CR>$/;"	m
-<leader>rep	vim/init.vim	/^nnoremap <leader>rep :call PhpExtractClassProperty()<CR>$/;"	m
-<leader>reu	vim/init.vim	/^nnoremap <leader>reu :call PhpExtractUse()<CR>$/;"	m
-<leader>ric	vim/init.vim	/^nnoremap <leader>ric :call PHPModify("implement_contracts")<cr>$/;"	m
-<leader>rlv	vim/init.vim	/^nnoremap <leader>rlv :call PhpRenameLocalVariable()<CR>$/;"	m
-<leader>rmc	vim/init.vim	/^nnoremap <leader>rmc :call PHPMoveClass()<cr>$/;"	m
-<leader>rmd	vim/init.vim	/^nnoremap <leader>rmd :call PHPMoveDir()<cr>$/;"	m
-<leader>rnp	vim/init.vim	/^nnoremap <leader>rnp :call PhpCreateProperty()<CR>$/;"	m
-<leader>rrm	vim/init.vim	/^nnoremap <leader>rrm :call PhpRenameMethod()<CR>$/;"	m
-<leader>rsg	vim/init.vim	/^nnoremap <leader>rsg :call PhpCreateSettersAndGetters()<CR>$/;"	m
-<leader>sv	vim/init.vim	/^nnoremap <leader>sv :source $MYVIMRC<CR>$/;"	m
-<s-tab>	vim/init.vim	/^inoremap <expr> <s-tab> pumvisible() ? "\\<c-p>" : "\\<TAB>"$/;"	m
-<space>	vim/init.vim	/^nnoremap <space> za$/;"	m
 Command	ranger/commands.py	/^from ranger.api.commands import Command$/;"	i
-IPhpExpandClass	vim/init.vim	/^function! IPhpExpandClass()$/;"	f
-IPhpInsertUse	vim/init.vim	/^function! IPhpInsertUse()$/;"	f
-N	vim/init.vim	/^nmap N <Plug>(easymotion-prev)$/;"	m
-PHPModify	vim/init.vim	/^function! PHPModify(transformer)$/;"	f
-PHPMoveClass	vim/init.vim	/^function! PHPMoveClass()$/;"	f
-PHPMoveDir	vim/init.vim	/^function! PHPMoveDir()$/;"	f
+autostart	result/bin/sway-launcher-desktop.sh	/^function autostart() {$/;"	f
+describe	result/bin/sway-launcher-desktop.sh	/^function describe() {$/;"	f
+describe	result/bin/sway-launcher-desktop.sh	/^function describe-command() {$/;"	f
+describe	result/bin/sway-launcher-desktop.sh	/^function describe-desktop() {$/;"	f
+desktopFileID	result/bin/sway-launcher-desktop.sh	/^    function desktopFileID(filename){$/;"	f
+entries	result/bin/sway-launcher-desktop.sh	/^function entries() {$/;"	f
 execute	ranger/commands.py	/^    def execute(self):$/;"	m	class:fzf_select
 fzf_select	ranger/commands.py	/^class fzf_select(Command):$/;"	c
-g:EasyMotion_smartcase	vim/init.vim	/^let g:EasyMotion_smartcase = 1$/;"	v
-g:UltiSnipsExpandTrigger	vim/init.vim	/^let g:UltiSnipsExpandTrigger="<c-j>"$/;"	v
-g:UltiSnipsJumpBackwardTrigger	vim/init.vim	/^let g:UltiSnipsJumpBackwardTrigger="<c-b>"$/;"	v
-g:UltiSnipsJumpForwardTrigger	vim/init.vim	/^let g:UltiSnipsJumpForwardTrigger="<c-j>"$/;"	v
-g:ale_cpp_gcc_executable	vim/init.vim	/^let g:ale_cpp_gcc_executable = '\/usr\/bin\/gcc'$/;"	v
-g:ale_cpp_gcc_options	vim/init.vim	/^let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++17'$/;"	v
-g:ale_echo_msg_format	vim/init.vim	/^let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'$/;"	v
-g:ale_fix_on_save	vim/init.vim	/^let g:ale_fix_on_save = 1$/;"	v
-g:ale_fixers	vim/init.vim	/^let g:ale_fixers = {$/;"	v
-g:ale_keep_list_window_open	vim/init.vim	/^let g:ale_keep_list_window_open=0$/;"	v
-g:ale_lint_on_enter	vim/init.vim	/^let g:ale_lint_on_enter = 0$/;"	v
-g:ale_lint_on_text_changed	vim/init.vim	/^let g:ale_lint_on_text_changed = 'never'$/;"	v
-g:ale_linters	vim/init.vim	/^let g:ale_linters = {'c': ['gcc'], 'cpp': ['g++']}$/;"	v
-g:ale_list_window_size	vim/init.vim	/^let g:ale_list_window_size = 5$/;"	v
-g:ale_open_list	vim/init.vim	/^let g:ale_open_list = 1$/;"	v
-g:ale_php_phpcbf_standard	vim/init.vim	/^let g:ale_php_phpcbf_standard='PSR2'$/;"	v
-g:ale_php_phpcs_standard	vim/init.vim	/^let g:ale_php_phpcs_standard='phpcs.xml.dist'$/;"	v
-g:ale_php_phpmd_ruleset	vim/init.vim	/^let g:ale_php_phpmd_ruleset='phpmd.xml'$/;"	v
-g:ale_set_quickfix	vim/init.vim	/^let g:ale_set_quickfix=0$/;"	v
-g:gruvbox_contrast_dark	vim/init.vim	/^let g:gruvbox_contrast_dark="hard"$/;"	v
-g:gruvbox_contrast_light	vim/init.vim	/^let g:gruvbox_contrast_light="hard"$/;"	v
-g:gruvbox_improved_strings	vim/init.vim	/^let g:gruvbox_improved_strings=0$/;"	v
-g:gruvbox_improved_warnings	vim/init.vim	/^let g:gruvbox_improved_warnings=1$/;"	v
-g:gruvbox_invert_signs	vim/init.vim	/^let g:gruvbox_invert_signs=0$/;"	v
-g:gruvbox_italic	vim/init.vim	/^let g:gruvbox_italic=1$/;"	v
-g:gruvbox_undercurl	vim/init.vim	/^let g:gruvbox_undercurl=1$/;"	v
-g:haskell_backpack	vim/init.vim	/^let g:haskell_backpack = 1                " to enable highlighting of backpack keywords$/;"	v
-g:haskell_enable_arrowsyntax	vim/init.vim	/^let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`$/;"	v
-g:haskell_enable_pattern_synonyms	vim/init.vim	/^let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`$/;"	v
-g:haskell_enable_quantification	vim/init.vim	/^let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`$/;"	v
-g:haskell_enable_recursivedo	vim/init.vim	/^let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`$/;"	v
-g:haskell_enable_static_pointers	vim/init.vim	/^let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`$/;"	v
-g:haskell_enable_typeroles	vim/init.vim	/^let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles$/;"	v
-g:haskell_indent_case	vim/init.vim	/^let g:haskell_indent_case = 2$/;"	v
-g:haskell_indent_case_alternative	vim/init.vim	/^let g:haskell_indent_case_alternative = 1$/;"	v
-g:php_cs_fixer_config	vim/init.vim	/^let g:php_cs_fixer_config = "default"$/;"	v
-g:php_cs_fixer_path	vim/init.vim	/^let g:php_cs_fixer_path = "~\/.config\/composer\/vendor\/bin\/php-cs-fixer"$/;"	v
-g:php_namespace_sort_after_insert	vim/init.vim	/^let g:php_namespace_sort_after_insert=1$/;"	v
-g:phpstan_analyse_level	vim/init.vim	/^let g:phpstan_analyse_level = 4$/;"	v
-g:python3_host_prog	vim/init.vim	/^let g:python3_host_prog = '\/usr\/bin\/python3'$/;"	v
-g:ultisnips_php_scalar_types	vim/init.vim	/^let g:ultisnips_php_scalar_types = 1$/;"	v
-g:vim_php_refactoring_use_default_mapping	vim/init.vim	/^let g:vim_php_refactoring_use_default_mapping = 0$/;"	v
-gV	vim/init.vim	/^nnoremap gV `[v`]$/;"	m
-kj	vim/init.vim	/^cnoremap kj <ESC>$/;"	m
-kj	vim/init.vim	/^inoremap kj <ESC>$/;"	m
-mapleader	vim/init.vim	/^let mapleader = ","$/;"	v
-n	vim/init.vim	/^nmap n <Plug>(easymotion-next)$/;"	m
+generate	result/bin/sway-launcher-desktop.sh	/^function generate-command() {$/;"	f
+list	result/bin/sway-launcher-desktop.sh	/^function list-autostart() {$/;"	f
+list	result/bin/sway-launcher-desktop.sh	/^function list-commands() {$/;"	f
+list	result/bin/sway-launcher-desktop.sh	/^function list-entries() {$/;"	f
 os	ranger/commands.py	/^        import os.path$/;"	i
 path	ranger/commands.py	/^        import os.path$/;"	i
-s	vim/init.vim	/^nmap s <Plug>(easymotion-overwin-f2)$/;"	m
+provide	result/bin/sway-launcher-desktop.sh	/^function provide() {$/;"	f
+run	result/bin/sway-launcher-desktop.sh	/^function run-desktop() {$/;"	f
 subprocess	ranger/commands.py	/^        import subprocess$/;"	i
-t	vim/init.vim	/^nmap t <Plug>(easymotion-t2)$/;"	m
-tf	vim/init.vim	/^nnoremap tf :call RunOrmolu()<CR>$/;"	m
-th	vim/init.vim	/^nnoremap th :tabprev<CR>$/;"	m
-tj	vim/init.vim	/^nnoremap tj :tabfirst<CR>$/;"	m
-tk	vim/init.vim	/^nnoremap tk :tablast<CR>$/;"	m
-tl	vim/init.vim	/^nnoremap tl :tabnext<CR>$/;"	m
-tn	vim/init.vim	/^nnoremap tn :tabnew<Space>$/;"	m

@@ -12,6 +12,8 @@
     qemu
     OVMF
     pciutils
+    looking-glass-client
+    scream-receivers
   ];
 
   virtualisation.libvirtd = {
@@ -20,6 +22,11 @@
   };
 
   users.groups.libvirtd.members = [ "root" "pepijn"];
+
+  systemd.tmpfiles.rules = [
+    "f /dev/shm/scream 0660 pepijn qemu-libvirtd -"
+    "f /dev/shm/looking-glass 0660 pepijn qemu-libvirtd -"
+  ];
 
   virtualisation.libvirtd.qemuVerbatimConfig = ''
     nvram = [

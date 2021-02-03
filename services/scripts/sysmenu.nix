@@ -2,6 +2,7 @@
 
 let
   systemctl = "/run/current-system/sw/bin/systemctl";
+  customLock = import ../../applications/customLock.nix { inherit pkgs config; };
 in
   pkgs.writeScriptBin "sysmenu" ''
     #!${pkgs.stdenv.shell}
@@ -41,10 +42,10 @@ in
             ${pkgs.i3-gaps}/bin/i3-msg exit
             ;;
         *Suspend)
-            ${systemctl} suspend && ${pkgs.betterlockscreen}/bin/betterlockscreen --lock blur
+            ${customLock}/bin/customLock & ${systemctl} suspend
             ;;
         *Hibernate)
-            ${systemctl} hibernate && ${pkgs.betterlockscreen}/bin/betterlockscreen --lock blur
+            ${customLock}/bin/customLock & ${systemctl} hibernate
             ;;
         *Reboot)
             ${systemctl} reboot

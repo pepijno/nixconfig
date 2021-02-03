@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  sway-launcher = import ../../sway-launcher.nix { inherit pkgs; };
+  sway-launcher = import ./sway-launcher.nix { inherit pkgs; };
 in
   pkgs.writeScriptBin "menu_wayland" ''
     #!${pkgs.stdenv.shell}

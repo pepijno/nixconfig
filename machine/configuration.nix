@@ -37,8 +37,13 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.kernel.sysctl = {
+    "net.ipv4.ip_forward" = 1;
+  };
+
   networking.hostName = "pep-pc"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  # networking.bridges.lan.interfaces = ["enp4s0"];
 
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
@@ -66,6 +71,9 @@
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
+    extraPackages = with pkgs; [
+      swaylock-effects
+    ];
   };
 
   services.xserver = {
@@ -111,7 +119,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.pepijn = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "kvm" "input" ];
+    extraGroups = [ "wheel" "kvm" "input" "libvirtd" ];
     shell = pkgs.fish;
   };
 

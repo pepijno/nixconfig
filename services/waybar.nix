@@ -1,10 +1,8 @@
 { config, pkgs, ... }:
 
 let
-  menu = pkgs.callPackage ./scripts/menu.nix { config = config; };
   sysmenu = pkgs.callPackage ./scripts/sysmenu.nix { config = config; };
-  menu_wayland = pkgs.callPackage ./scripts/menu_wayland.nix { config = config; };
-  sway-launcher = import ../sway-launcher.nix { inherit pkgs; };
+  sysmenu-wayland = import ./scripts/sysmenu-wayland.nix { inherit pkgs config; };
 in {
   home.packages = with pkgs; [
     libnotify
@@ -90,7 +88,7 @@ in {
           "custom/poweroff" = {
             tooltip = false;
             format = "";
-            on-click = "${sysmenu}/bin/sysmenu";
+            on-click = "${sysmenu-wayland}/bin/sysmenu-wayland";
           };
         };
       }

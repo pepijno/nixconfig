@@ -1,11 +1,14 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 let
-  sway-launcher = import ./sway-launcher.nix { inherit pkgs; };
+  nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+      inherit pkgs;
+    };
+  parsec = import ./pkgs/parsec.nix { inherit pkgs; };
+
 in {
   nixpkgs.config.pulseaudio = true;
   home.packages = [
-    sway-launcher
     pkgs.unzip
     pkgs.pywal
     pkgs.solaar
@@ -27,5 +30,8 @@ in {
     pkgs.swaybg
     pkgs.steam-run
     pkgs.ueberzug
+    pkgs.ncpamixer
+    pkgs.fff
+    pkgs.fd
   ];
 }

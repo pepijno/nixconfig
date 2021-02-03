@@ -33,6 +33,7 @@ in {
       vim-commentary
       vim-devicons
       vim-easymotion
+      vim-eunuch
       vim-nix
       vim-startify
       wal-vim

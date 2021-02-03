@@ -6,24 +6,21 @@ let
   menu_wayland = pkgs.callPackage ./scripts/menu_wayland.nix { config = config; };
   sysmenu = pkgs.callPackage ./scripts/sysmenu.nix { config = config; };
   new-pywal = pkgs.callPackage ./scripts/new-pywal.nix { config = config; };
-  sway-launcher = import ../sway-launcher.nix { inherit pkgs; };
+  sway-launcher = import ./scripts/sway-launcher.nix { inherit pkgs; };
+  customLock = import ../applications/customLock.nix { inherit pkgs config; };
+  sysmenu-wayland = import ./scripts/sysmenu-wayland.nix { inherit pkgs config; };
   mod = "Mod1";
 in {
   imports = [
     ./waybar.nix
   ];
   home.packages = with pkgs; [
-    # i3lock-color
     menu_wayland
+    sysmenu-wayland
+    # swaylock-effects
   ];
 
   wayland = {
-    # pointerCursor = {
-    #   package = pkgs.capitaine-cursors;
-    #   name = "capitaine-cursors";
-    #   size = 25;
-    # };
-
     windowManager.sway = {
       enable = true;
       # package = pkgs.i3-gaps;
@@ -48,7 +45,6 @@ in {
         };
         startup = [
           { command = "${new-pywal}/bin/new-pywal"; }
-          # { command = "${pkgs.xorg.xrandr}/bin/xrandr -s 1920x1080"; always = true; notification = false; }
           { command = "${pkgs.solaar}/bin/solaar"; }
           # { command = "/usr/lib/polkit-gnome-polkit-gnome-authentication-agent-1"; }
           { command = "${pkgs.pywal}/bin/wal -R"; }
@@ -65,7 +61,7 @@ in {
           "${mod}+Shift+o" = "exec tor-browser";
           "${mod}+Shift+s" = "exec steam";
           "${mod}+d" = "exec --no-startup-id ${menu_wayland}/bin/menu_wayland";
-          "${mod}+Shift+e" = "exec --no-startup-id ${sysmenu}/bin/sysmenu";
+          "${mod}+Shift+e" = "exec --no-startup-id ${sysmenu-wayland}/bin/sysmenu-wayland";
           "XF86AudioRaiseVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%";
           "XF86AudioLowerVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%";
           "XF86AudioMute" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ toggle";
@@ -87,12 +83,19 @@ in {
       };
       extraConfig = ''
         for_window [app_id="^launcher$"] floating enable, border pixel 7
+        for_window [app_id="^sysmenu-launcher$"] floating enable, border pixel 7, resize set width 234px height 234px
         for_window [class=".*"] border pixel 0
 
         include "$HOME/.cache/wal/colors-sway"
         output "*" bg $wallpaper fill
-        output DP-1 resolution 1920x1080 position 0,0
-        output HDMI-A-2 disable
+
+        seat * hide_cursor 2000
+
+        exec ${pkgs.swayidle}/bin/swayidle -w \
+            timeout 600 '${customLock}/bin/customLock -f -c 000000' \
+            timeout 300 'swaymsg "output * dpms off"' \
+                resume 'swaymsg "output * dpms on"' \
+            before-sleep '${customLock}/bin/customLock -f -c 000000'
       '';
     };
   };

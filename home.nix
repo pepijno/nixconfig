@@ -2,17 +2,18 @@
 
 {
   imports = [
-    ./alacritty.nix
-    ./fish.nix
     ./fonts.nix
-    ./git.nix
     ./packages.nix
     ./packages-unstable.nix
-    ./tmux.nix
-    ./urxvt.nix
 
-    ./ranger/ranger.nix
-    ./vim/vim.nix
+    ./applications/alacritty.nix
+    ./applications/fish.nix
+    ./applications/git.nix
+    ./applications/tmux.nix
+    ./applications/urxvt.nix
+
+    ./applications/ranger/ranger.nix
+    ./applications/vim/vim.nix
 
     ./services/backup.nix
     # ./services/compton.nix
