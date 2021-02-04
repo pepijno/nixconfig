@@ -17,6 +17,7 @@ in {
   home.packages = with pkgs; [
     menu_wayland
     sysmenu-wayland
+    mako
     # swaylock-effects
   ];
 
@@ -48,6 +49,8 @@ in {
           { command = "${pkgs.solaar}/bin/solaar"; }
           # { command = "/usr/lib/polkit-gnome-polkit-gnome-authentication-agent-1"; }
           { command = "${pkgs.pywal}/bin/wal -R"; }
+          { command = "include \"$HOME/.cache/wal/colors.sway\"; ${pkgs.mako}/bin/mako --background-color \"$background\" --text-color \"$foreground\" --border-color \"$color13\""; }
+          { command = "${pkgs.swayidle}/bin/swayidle -w timeout 600 '${customLock}/bin/customLock -f -c 000000' timeout 300 'swaymsg \"output * dpms off\"' resume 'swaymsg \"output * dpms on\"' before-sleep '${customLock}/bin/customLock -f -c 000000'"; }
         ];
         assigns = {
           "2: vivaldi" = [{ class = "Vivaldi"; }];
@@ -90,12 +93,6 @@ in {
         output "*" bg $wallpaper fill
 
         seat * hide_cursor 2000
-
-        exec ${pkgs.swayidle}/bin/swayidle -w \
-            timeout 600 '${customLock}/bin/customLock -f -c 000000' \
-            timeout 300 'swaymsg "output * dpms off"' \
-                resume 'swaymsg "output * dpms on"' \
-            before-sleep '${customLock}/bin/customLock -f -c 000000'
       '';
     };
   };
