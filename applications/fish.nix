@@ -17,9 +17,10 @@
     };
 
     shellInit = ''
-      set --export EDITOR "nvim -f"
+      set --export EDITOR "vim -f"
       set -U fish_greeting
-      cat ~/.cache/wal/sequences
+      set FZF_DEFAULT_COMMAND "rg --files"
+      source ~/.cache/wal/colors.fish
     '';
   };
 }

@@ -67,7 +67,7 @@ set cmdheight=2
 " Set whitespace chars visibility
 set list
 set showbreak=↪\
-set listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨
+set listchars=eol:↵,tab:>-,nbsp:␣,trail:•,extends:>,precedes:<
 
 " Use % to jump between fish hooks
 set matchpairs+=<:>
@@ -84,9 +84,11 @@ nnoremap gV `[v`]
 " map kj to escape
 inoremap kj <ESC>
 cnoremap kj <ESC>
+vnoremap kj <ESC>
 
-" Map leader to ','
-let mapleader = ","
+" Map leader to ' '
+let mapleader = " "
+nnoremap <SPACE> <Nop>
 
 " Toggle undo tree
 nnoremap <leader>ut :UndotreeToggle<CR>
@@ -98,8 +100,36 @@ nmap <silent> <leader>fr :Rg<CR>
 nmap <silent> <leader>fl :Lines<CR>
 
 " fzf window settings
-let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
-let $FZF_DEFAULT_OPTS='--reverse'
+let g:fzf_layout = {'up':'~90%', 'window': { 'width': 0.8, 'height': 0.8,'yoffset':0.5,'xoffset': 0.5, 'highlight': 'Todo' } }
+
+let $FZF_DEFAULT_OPTS = '--info=inline'
+let $FZF_DEFAULT_COMMAND="rg --files --hidden"
+ 
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+" Ripgrep advanced
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+
+command! -nargs=* -bang Rg call RipgrepFzf(<q-args>, <bang>0)
 
 " Move lines
 vnoremap J :m '>+1<CR>gv=gv
@@ -164,162 +194,24 @@ augroup backgr
 	autocmd CursorMoved,CursorHold,CursorHoldI,WinEnter,WinLeave,FocusLost,FocusGained,VimResized,ShellCmdPost * nested call SetColorscheme()
 augroup END
 
-" colorscheme wal
-" let g:lightline = {'colorscheme': 'gruvbox'}
+" yank highlighting
+let g:highlightedyank_highlight_duration = -1
 
-""" make sure to create ctags on saving
-"" au BufWritePost *.php execute '! sh -c "if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1 ; then ~/.git_template/hooks/ctags; fi"'
+" scrollbar
+augroup ScrollbarInit
+  autocmd!
+  autocmd CursorMoved,VimResized,QuitPre * silent! lua require('scrollbar').show()
+  autocmd WinEnter,FocusGained           * silent! lua require('scrollbar').show()
+  autocmd WinLeave,FocusLost             * silent! lua require('scrollbar').clear()
+augroup end
 
-"" autocmd Filetype php setlocale ts=4 sts=4 sw=4
+" EasyAlign
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
-"" For plugins to load correctly
-"filetype plugin indent on
-
-"" Whitespace
-"set textwidth=0
-"set wrapmargin=0
-"set formatoptions=tcqrn1
-
-"" Cursor motion
-"set backspace=indent,eol,start
-"runtime! macros/matchit.vim
-
-"" remaps for using tabs in vim
-"nnoremap tn :tabnew<Space>
-"nnoremap tj :tabfirst<CR>
-"nnoremap tk :tablast<CR>
-"nnoremap th :tabprev<CR>
-"nnoremap tl :tabnext<CR>
-
-"" sourcing and opening vimrc
-"nnoremap <leader>ev :vsp $MYVIMRC<CR>
-"nnoremap <leader>sv :source $MYVIMRC<CR>
-
-"" enable ncm2 for all buffers
-""autocmd BufEnter * call ncm2#enable_for_buffer()
-
-"" IMPORTANT: :help Ncm2PopupOpen for more information
-""set completeopt=noinsert,menuone,noselect
-
-"" PHP cs Fixer
-"let g:php_cs_fixer_path = "~/.config/composer/vendor/bin/php-cs-fixer"
-"let g:php_cs_fixer_config = "default"
-
-"let g:UltiSnipsExpandTrigger="<c-j>"
-"let g:UltiSnipsJumpForwardTrigger="<c-j>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-
-"" PHP7
-"let g:ultisnips_php_scalar_types = 1
-
-"" augroup ncm2
-""   au!
-""   autocmd BufEnter * call ncm2#enable_for_buffer()
-""   au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
-""   au User Ncm2PopupClose set completeopt=menuone
-"" augroup END
-
-"" parameter expansion for selected entry via Enter
-"" inoremap <silent> <expr> <CR> (pumvisible() ? ncm2_ultisnips#expand_or("\<CR>", 'n') : "\<CR>")
-
-"" cycle through completion entries with tab/shift+tab
-"inoremap <expr> <TAB> pumvisible() ? "\<c-n>" : "\<TAB>"
-"inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<TAB>"
-
-"" disable linting while typing
-"let g:ale_lint_on_text_changed = 'never'
-"let g:ale_lint_on_enter = 0
-"let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-"let g:ale_open_list = 1
-"let g:ale_keep_list_window_open=0
-"let g:ale_set_quickfix=0
-"let g:ale_list_window_size = 5
-"let g:ale_php_phpcbf_standard='PSR2'
-"let g:ale_php_phpcs_standard='phpcs.xml.dist'
-"let g:ale_php_phpmd_ruleset='phpmd.xml'
-"let g:ale_fixers = {
-"			\ '*': ['remove_trailing_lines', 'trim_whitespace'],
-"			\ 'php': ['phpcbf', 'php_cs_fixer', 'remove_trailing_lines', 'trim_whitespace'],
-"			\}
-"let g:ale_fix_on_save = 1
-"let g:ale_linters = {'c': ['gcc'], 'cpp': ['g++']}
-"let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++17'
-
-"let g:ale_cpp_gcc_executable = '/usr/bin/gcc'
-
-"function! PHPModify(transformer)
-"	:update
-"	let l:cmd = "silent !".g:phpactor_executable." class:transform ".expand('%').' --transform='.a:transformer
-"	execute l:cmd
-"endfunction
-
-"nnoremap <leader>ric :call PHPModify("implement_contracts")<cr>
-"nnoremap <leader>raa :call PHPModify("add_missing_properties")<cr>
-"nnoremap <leader>rmc :call PHPMoveClass()<cr>
-"function! PHPMoveClass()
-"	:w
-"	let l:oldPath = expand('%')
-"	let l:newPath = input("New path: ", l:oldPath)
-"	execute "!".g:phpactor_executable." class:move ".l:oldPath.' '.l:newPath
-"	execute "bd ".l:oldPath
-"	execute "e ". l:newPath
-"endfunction
-"nnoremap <leader>rmd :call PHPMoveDir()<cr>
-"function! PHPMoveDir()
-"	:w
-"	let l:oldPath = input("old path: ", expand('%:p:h'))
-"	let l:newPath = input("New path: ", l:oldPath)
-"	execute "!".g:phpactor_executable." class:move ".l:oldPath.' '.l:newPath
-"endfunction
-
-"nnoremap <Leader>u :PHPImportClass<cr>
-"nnoremap <Leader>e :PHPExpandFQCNAbsolute<cr>
-"nnoremap <Leader>E :PHPExpandFQCN<cr>
-
-"let g:vim_php_refactoring_use_default_mapping = 0
-"nnoremap <leader>rlv :call PhpRenameLocalVariable()<CR>
-"nnoremap <leader>rcv :call PhpRenameClassVariable()<CR>
-"nnoremap <leader>rrm :call PhpRenameMethod()<CR>
-"nnoremap <leader>reu :call PhpExtractUse()<CR>
-"vnoremap <leader>rec :call PhpExtractConst()<CR>
-"nnoremap <leader>rep :call PhpExtractClassProperty()<CR>
-"nnoremap <leader>rnp :call PhpCreateProperty()<CR>
-"nnoremap <leader>rdu :call PhpDetectUnusedUseStatements()<CR>
-"nnoremap <leader>rsg :call PhpCreateSettersAndGetters()<CR>
-
-"function! IPhpInsertUse()
-"	call PhpInsertUse()
-"	call feedkeys('a',  'n')
-"endfunction
-"autocmd FileType php inoremap <Leader>pnu <Esc>:call IPhpInsertUse()<CR>
-"autocmd FileType php noremap <Leader>pnu :call PhpInsertUse()<CR>
-"function! IPhpExpandClass()
-"	call PhpExpandClass()
-"	call feedkeys('a', 'n')
-"endfunction
-"autocmd FileType php inoremap <Leader>pne <Esc>:call IPhpExpandClass()<CR>
-"autocmd FileType php noremap <Leader>pne :call PhpExpandClass()<CR>
-"let g:php_namespace_sort_after_insert=1
-"let g:phpstan_analyse_level = 4
-
-"set cursorline!
-
-"autocmd BufRead,BufNewFile   *.hs set expandtab
-"autocmd BufRead,BufNewFile   *.hs set tabstop=2
-"autocmd BufRead,BufNewFile   *.hs set shiftwidth=2
-"autocmd BufRead,BufNewFile   *.hs set softtabstop=2
-
-"" vim gitgutter
-"set updatetime=100
-
-"let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
-"let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
-"let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
-"let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
-"let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
-"let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
-"let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
-"let g:haskell_indent_case = 2
-"let g:haskell_indent_case_alternative = 1
-
-"nnoremap tf :call RunOrmolu()<CR>
+" quick-scope
+augroup qs_colors
+  autocmd!
+  autocmd ColorScheme * highlight QuickScopePrimary gui=underline cterm=underline
+  autocmd ColorScheme * highlight QuickScopeSecondary gui=underline cterm=underline
+augroup END
