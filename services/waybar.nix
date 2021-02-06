@@ -17,9 +17,9 @@ in {
         layer = "top";
         position = "top";
         height = 32;
-        modules-left = [ "sway/workspaces" "sway/mode" ];
+        modules-left = [ "sway/workspaces" "idle_inhibitor" "sway/mode" ];
         modules-center = [];
-        modules-right = [ "network" "disk#root" "disk#home" "disk#backups" "pulseaudio" "memory" "cpu" "clock" "custom/poweroff" ];
+        modules-right = [ "network" "disk#root" "disk#home" "disk#backups" "pulseaudio" "memory" "cpu" "temperature" "clock" "custom/poweroff" ];
 
         modules = {
           "sway/workspaces" = {
@@ -85,6 +85,20 @@ in {
             };
             on-click = "/run/current-system/sw/bin/amixer set Master toggle";
           };
+          "idle_inhibitor" = {
+            format = "{icon}";
+            format-icons = {
+              activated = "";
+              deactivated = "";
+            };
+          };
+          "temperature" = {
+            hwmon-path = "/sys/class/hwmon/hwmon1/temp1_input";
+            critical-threshold = 80;
+            format-critical = "{temperatureC}°C ";
+            format = "{temperatureC}°C ";
+            interval = 2;
+          };
           "custom/poweroff" = {
             tooltip = false;
             format = "";
@@ -136,7 +150,7 @@ in {
           font-size: 15px;
       }
 
-      #clock, #cpu, #memory, #network, #pulseaudio, #mode, #disk {
+      #temperature, #clock, #cpu, #memory, #network, #pulseaudio, #mode, #disk {
           font-size: 12px;
       }
 
@@ -146,7 +160,7 @@ in {
           padding: 0 11px;
       }
 
-      #clock, #cpu, #memory {
+      #clock, #cpu, #memory, #temperature {
           background-color: @color2;
       }
 

@@ -33,5 +33,9 @@ in {
     pkgs.ncpamixer
     pkgs.fff
     pkgs.fd
+    pkgs.lm_sensors
+    pkgs.stress
+    pkgs.s-tui
+    pkgs.sysbench
   ];
 }
