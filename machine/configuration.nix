@@ -67,6 +67,16 @@
   #   keyMap = "us";
   # };
 
+  security.doas = {
+    enable = true;
+    extraRules = [
+      {
+        users = [ "pepijn" ];
+        keepEnv = true;
+      }
+    ];
+  };
+
   nixpkgs.config.allowUnfree = true;
 
   programs.fish.enable = true;
