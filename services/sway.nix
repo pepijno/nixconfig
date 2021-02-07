@@ -1,24 +1,19 @@
 { config, pkgs, lib, ... }:
 
 let
-  restart-dunst = pkgs.callPackage ./scripts/restart-dunst.nix { config = config; };
-  menu = pkgs.callPackage ./scripts/menu.nix { config = config; };
-  menu_wayland = pkgs.callPackage ./scripts/menu_wayland.nix { config = config; };
   sysmenu = pkgs.callPackage ./scripts/sysmenu.nix { config = config; };
   new-pywal = pkgs.callPackage ./scripts/new-pywal.nix { config = config; };
-  sway-launcher = import ./scripts/sway-launcher.nix { inherit pkgs; };
   customLock = import ../applications/customLock.nix { inherit pkgs config; };
-  sysmenu-wayland = import ./scripts/sysmenu-wayland.nix { inherit pkgs config; };
+  launch-mak = import ./scripts/launch-mak.nix { inherit pkgs config; };
   mod = "Mod1";
 in {
   imports = [
     ./waybar.nix
+    ../applications/wofi/wofi.nix
   ];
   home.packages = with pkgs; [
-    menu_wayland
-    sysmenu-wayland
+    launch-mak
     mako
-    # swaylock-effects
   ];
 
   wayland = {
@@ -48,9 +43,19 @@ in {
           { command = "${new-pywal}/bin/new-pywal"; }
           { command = "${pkgs.solaar}/bin/solaar"; }
           # { command = "/usr/lib/polkit-gnome-polkit-gnome-authentication-agent-1"; }
-          { command = "${pkgs.pywal}/bin/wal -R"; }
-          { command = "include \"$HOME/.cache/wal/colors.sway\"; ${pkgs.mako}/bin/mako --background-color \"$background\" --text-color \"$foreground\" --border-color \"$color13\""; }
-          # { command = "${pkgs.swayidle}/bin/swayidle -w timeout 600 '${customLock}/bin/customLock -f -c 000000' timeout 300 'swaymsg \"output * dpms off\"' resume 'swaymsg \"output * dpms on\"' before-sleep '${customLock}/bin/customLock -f -c 000000'"; }
+          {
+            command = "${pkgs.pywal}/bin/wal -R";
+          }
+          {
+            command = "${launch-mak}/bin/launch-mak";
+            always = true;
+          }
+          {
+            command = "${pkgs.swayidle}/bin/swayidle -w timeout 600 '${customLock}/bin/customLock' \\
+              timeout 300 'swaymsg \"output * dpms off\"' \\
+              resume 'swaymsg \"output * dpms on\"' \\
+              before-sleep '${customLock}/bin/customLock'";
+          }
         ];
         assigns = {
           "2: vivaldi" = [{ class = "Vivaldi"; }];
@@ -63,8 +68,9 @@ in {
           "${mod}+Shift+f" = "exec firefox";
           "${mod}+Shift+o" = "exec tor-browser";
           "${mod}+Shift+s" = "exec steam";
-          "${mod}+d" = "exec --no-startup-id ${menu_wayland}/bin/menu_wayland";
-          "${mod}+Shift+e" = "exec --no-startup-id ${sysmenu-wayland}/bin/sysmenu-wayland";
+          "${mod}+Shift+l" = "exec ${customLock}/bin/customLock";
+          "${mod}+d" = "exec --no-startup-id ${pkgs.wofi}/bin/wofi --show drun";
+          "${mod}+Shift+e" = "exec --no-startup-id ${sysmenu}/bin/sysmenu";
           "XF86AudioRaiseVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%";
           "XF86AudioLowerVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%";
           "XF86AudioMute" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ toggle";
@@ -85,11 +91,19 @@ in {
         };
       };
       extraConfig = ''
-        for_window [app_id="^launcher$"] floating enable, border pixel 7
-        for_window [app_id="^sysmenu-launcher$"] floating enable, border pixel 7, resize set width 234px height 234px
         for_window [class=".*"] border pixel 0
 
         include "$HOME/.cache/wal/colors-sway"
+
+        # class                 border    backgr.   text      indicator child_border
+        client.focused          $color2   $color2   $color1   $color2   $color2
+        client.unfocused        $color0   $color0   $color0   $color0   $color0
+        client.focused_inactive $color3   $color3   $color1   $color3   $color3
+        client.urgent           $color15  $color15  $color7   $color15  $color15
+        client.placeholder      $color3   $color3   $color7   $color3   $color3
+
+        client.background       $bg
+
         output "*" bg $wallpaper fill
 
         seat * hide_cursor 2000

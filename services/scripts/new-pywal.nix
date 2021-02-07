@@ -2,8 +2,6 @@
 
 let
   restart-dunst = pkgs.writeScriptBin "restart-dunst" ''
-    #!${pkgs.stdenv.shell}
-    systemctl --user restart dunst.service
   '';
   date = "/run/current-system/sw/bin/date";
   systemctl = "/run/current-system/sw/bin/systemctl";

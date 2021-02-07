@@ -2,7 +2,6 @@
 
 let
   sysmenu = pkgs.callPackage ./scripts/sysmenu.nix { config = config; };
-  sysmenu-wayland = import ./scripts/sysmenu-wayland.nix { inherit pkgs config; };
 in {
   home.packages = with pkgs; [
     libnotify
@@ -102,7 +101,7 @@ in {
           "custom/poweroff" = {
             tooltip = false;
             format = "";
-            on-click = "${sysmenu-wayland}/bin/sysmenu-wayland";
+            on-click = "${sysmenu}/bin/sysmenu";
           };
         };
       }

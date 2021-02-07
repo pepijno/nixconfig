@@ -14,15 +14,11 @@
 
     ./applications/ranger/ranger.nix
     ./applications/vim/vim.nix
+    ./applications/wofi/wofi.nix
 
     ./services/backup.nix
-    # ./services/compton.nix
-    # ./services/i3.nix
     ./services/sway.nix
-    # ./services/redshift.nix
     ./services/gammastep.nix
-    # ./services/dunst.nix
-    # ./services/polybar.nix
     ./services/wal.nix
   ];
 
