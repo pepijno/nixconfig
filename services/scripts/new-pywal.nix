@@ -1,8 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  restart-dunst = pkgs.writeScriptBin "restart-dunst" ''
-  '';
+  launch-mak = pkgs.callPackage ./launch-mak.nix { config = config; };
   date = "/run/current-system/sw/bin/date";
   systemctl = "/run/current-system/sw/bin/systemctl";
 in
@@ -19,10 +18,9 @@ in
       fi
       ${pkgs.pywal}/bin/wal \
         -i ${config.home.homeDirectory}/Pictures/Wallpapers/ \
-        -o ${restart-dunst}/bin/restart-dunst \
+        -o ${launch-mak}/bin/launch-mak \
         "''${params[@]}"
     fi
     ${pkgs.pywal}/bin/wal -R
     source ${config.home.homeDirectory}/.cache/wal/colors.sh
-    ${pkgs.betterlockscreen}/bin/betterlockscreen -u "$wallpaper"
   ''
