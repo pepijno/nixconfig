@@ -97,15 +97,6 @@
 
     displayManager.lightdm.enable = true;
 
-    windowManager.i3 = {
-      enable = true;
-      package = pkgs.i3-gaps;
-      extraPackages = with pkgs; [
-        dmenu #application launcher most people use
-        i3lock #default i3 screen locker
-     ];
-    };
-
     # videoDrivers = [
     #   "ati_unfree"
     #   "modesetting"
@@ -124,6 +115,19 @@
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+  # hardware.pulseaudio.daemon.config.high-priority = "yes";
+  # hardware.pulseaudio.daemon.config.nice-level = -15;
+  # hardware.pulseaudio.daemon.config.realtime-scheduling = "yes";
+  # hardware.pulseaudio.daemon.config.realtime-priority = 9;
+  # hardware.pulseaudio.daemon.config.rlimit-rtprio = 9;
+  # hardware.pulseaudio.daemon.config.default-sample-rate = 16000;
+  # hardware.pulseaudio.daemon.config.default-sample-channels = 6;
+  # hardware.pulseaudio.daemon.config.default-sample-format = "float32le";
+  # hardware.pulseaudio.daemon.config.resample-method = "speex-float-10";
+  # hardware.pulseaudio.daemon.config.avoid-resampling = "false";
+  # hardware.pulseaudio.daemon.config.enable-remixing = "yes";
+  # hardware.pulseaudio.daemon.config.remixing-use-all-sink-channels = "no";
+  # hardware.pulseaudio.extraConfig = "load-module module-udev-detect tsched=0";
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
