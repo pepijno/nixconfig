@@ -7,6 +7,7 @@
     clock24 = true;
     historyLimit = 10000;
     shortcut = "a";
+    terminal = "screen-256color";
 
     extraConfig = ''
       unbind r
@@ -60,6 +61,8 @@
       set-option -g status-right "#(tmux-mem-cpu-load) "
       set-option -ag status-right "#(uptime | cut -f 7-7 -d ' ' | cut -f 1-1 -d ',') "
       set-option -ag status-right " %H:%M:%S %Y-%m-%d"
+      set -sa terminal-overrides ",xterm-256color:RGB"
+      set -ga terminal-overrides ",xterm-256color:Tc"
     '';
   };
 }

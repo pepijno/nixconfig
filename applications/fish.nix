@@ -20,7 +20,6 @@
       set --export EDITOR "vim -f"
       set -U fish_greeting
       set FZF_DEFAULT_COMMAND "rg --files"
-      cat ~/.cache/wal/sequences
     '';
   };
 }
