@@ -8,34 +8,37 @@ let
 
 in {
   nixpkgs.config.pulseaudio = true;
-  home.packages = [
-    pkgs.unzip
-    pkgs.pywal
-    pkgs.solaar
-    pkgs.redshift
-    pkgs.imagemagick
-    pkgs.ctags
-    pkgs.nix-du
-    pkgs.wget
-    pkgs.betterlockscreen
-    pkgs.pfetch
-    pkgs.stack
-    pkgs.sway
-    pkgs.xwayland
-    pkgs.dmenu
-    pkgs.nix-prefetch-git
-    pkgs.waybar
-    pkgs.wineWowPackages.stable
-    pkgs.wlr-randr
-    pkgs.swaybg
-    pkgs.steam-run
-    pkgs.ueberzug
-    pkgs.ncpamixer
-    pkgs.fff
-    pkgs.fd
-    pkgs.lm_sensors
-    pkgs.stress
-    pkgs.s-tui
-    pkgs.sysbench
+  home.packages = with pkgs; [
+    bash
+    unzip
+    pywal
+    solaar
+    redshift
+    imagemagick
+    ctags
+    nix-du
+    wget
+    betterlockscreen
+    pfetch
+    stack
+    sway
+    xwayland
+    dmenu
+    nix-prefetch-git
+    waybar
+    wineWowPackages.stable
+    wlr-randr
+    swaybg
+    steam-run
+    ueberzug
+    ncpamixer
+    fff
+    fd
+    lm_sensors
+    stress
+    s-tui
+    sysbench
+    openjdk11
+    minecraft
   ];
 }
