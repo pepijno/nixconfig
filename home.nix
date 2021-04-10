@@ -17,8 +17,13 @@
     ./applications/wofi/wofi.nix
 
     ./services/backup.nix
-    ./services/sway.nix
-    ./services/gammastep.nix
+    ./services/compton.nix
+    ./services/i3.nix
+    # ./services/sway.nix
+    ./services/redshift.nix
+    # ./services/gammastep.nix
+    ./services/dunst.nix
+    ./services/polybar.nix
     ./services/wal.nix
   ];
 
