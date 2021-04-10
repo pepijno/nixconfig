@@ -121,3 +121,6 @@ augroup qs_colors
   autocmd ColorScheme * highlight QuickScopePrimary gui=underline cterm=underline
   autocmd ColorScheme * highlight QuickScopeSecondary gui=underline cterm=underline
 augroup END
+
+autocmd Filetype haskell setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+

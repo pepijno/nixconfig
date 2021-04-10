@@ -14,6 +14,9 @@ in {
   home.packages = with pkgs; [
     launch-mak
     mako
+    grim
+    jq
+    wl-clipboard
   ];
 
   wayland = {
@@ -50,12 +53,12 @@ in {
             command = "${launch-mak}/bin/launch-mak";
             always = true;
           }
-          {
-            command = "${pkgs.swayidle}/bin/swayidle -w timeout 600 '${customLock}/bin/customLock' \\
-              timeout 300 'swaymsg \"output * dpms off\"' \\
-              resume 'swaymsg \"output * dpms on\"' \\
-              before-sleep '${customLock}/bin/customLock'";
-          }
+          # {
+          #   command = "${pkgs.swayidle}/bin/swayidle -w timeout 600 '${customLock}/bin/customLock' \\
+          #     timeout 300 'swaymsg \"output * dpms off\"' \\
+          #     resume 'swaymsg \"output * dpms on\"' \\
+          #     before-sleep '${customLock}/bin/customLock'";
+          # }
         ];
         assigns = {
           "2: vivaldi" = [{ class = "Vivaldi"; }];
@@ -71,6 +74,7 @@ in {
           "${mod}+Shift+l" = "exec ${customLock}/bin/customLock";
           "${mod}+d" = "exec --no-startup-id ${pkgs.wofi}/bin/wofi --show drun";
           "${mod}+Shift+e" = "exec --no-startup-id ${sysmenu}/bin/sysmenu";
+          "${mod}+p" = "exec --no-startup-id ${pkgs.grim}/bin/grim -o $(swaymsg -t get_outputs | ${pkgs.jq}/bin/jq -r '.[] | select(.focused) | .name') - | ${pkgs.wl-clipboard}/bin/wl-copy";
           "XF86AudioRaiseVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%";
           "XF86AudioLowerVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%";
           "XF86AudioMute" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ toggle";

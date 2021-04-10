@@ -1,11 +1,11 @@
 " Color scheme
 function! SetColorscheme()
 	set termguicolors
-	if strftime("%H") >= 8 && strftime("%H") < 20
-		let g:ayucolor="light"
-	else
+	" if strftime("%H") >= 8 && strftime("%H") < 20
+	" 	let g:ayucolor="light"
+	" else
 		let g:ayucolor="mirage"
-	endif
+	" endif
 	colorscheme ayu
 	hi Normal guibg=NONE ctermbg=NONE
 endfunction

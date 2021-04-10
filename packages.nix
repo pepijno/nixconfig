@@ -6,9 +6,13 @@ let
     };
   parsec = import ./pkgs/parsec.nix { inherit pkgs; };
 
+  # steam = pkgs.steam.override {
+  #   nativeOnly = true;
+  # };
 in {
   nixpkgs.config.pulseaudio = true;
   home.packages = with pkgs; [
+    gradle
     bash
     unzip
     pywal
@@ -29,7 +33,6 @@ in {
     wineWowPackages.stable
     wlr-randr
     swaybg
-    steam-run
     ueberzug
     ncpamixer
     fff
@@ -40,5 +43,8 @@ in {
     sysbench
     openjdk11
     minecraft
+    steam
+    steam-run
+    dosbox
   ];
 }

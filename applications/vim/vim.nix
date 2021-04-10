@@ -40,6 +40,8 @@ in {
       coc-nvim
       coc-java
       fzf-vim
+      kotlin-vim
+      haskell-vim
       nvim-treesitter
       quick-scope
       scrollbar

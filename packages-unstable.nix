@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   unstable = import <nixos-unstable> {
@@ -14,14 +14,23 @@ let
     audioSupport = true;
     mediaSupport = true;
   };
+
+  steam = unstable.steam.override {
+    nativeOnly = true;
+  };
 in {
+  # nixpkgs.overlays = [(self: super: { discord = super.discord.overrideAttrs (_: { src = builtins.fetchTarball https://discord.com/api/download/stable?platform=linux&format=tar.gz; });})];
+
   home.packages = with unstable; [
     thunderbird
     electrum
-    steam
+    # steam
+    # steam-run
     protontricks
     mumble
     discord
+    jetbrains.idea-community
+    # pkgs.discord
     torbrowserWithAudio
     firefox-wayland
     vivaldi
