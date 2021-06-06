@@ -42,7 +42,7 @@ in {
       fzf-vim
       kotlin-vim
       haskell-vim
-      nvim-treesitter
+      # nvim-treesitter
       quick-scope
       scrollbar
       tagbar
