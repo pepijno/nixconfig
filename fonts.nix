@@ -12,5 +12,6 @@
     hermit
     source-code-pro
     material-design-icons
+    tamsyn
   ];
 }

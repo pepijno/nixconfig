@@ -28,9 +28,9 @@ in {
         modifier = mod;
         terminal = "${pkgs.alacritty}/bin/alacritty";
         gaps = {
-          inner = 10;
-          outer = 10;
-          top = 32;
+          inner = 5;
+          outer = 5;
+          top = 47;
         };
         fonts = [ "Noto sans 10" "FontAwesome 10" ];
         window = {
@@ -46,6 +46,7 @@ in {
           { command = "${pkgs.solaar}/bin/solaar"; }
           { command = "/usr/lib/polkit-gnome-polkit-gnome-authentication-agent-1"; }
           { command = "${pkgs.pywal}/bin/wal -R"; }
+          { command = "${restart-dunst}/bin/restart-dunst"; always = true; }
         ];
         assigns = {
           "2: vivaldi" = [{ class = "Vivaldi"; }];
@@ -58,11 +59,12 @@ in {
           "${mod}+Shift+f" = "exec firefox";
           "${mod}+Shift+o" = "exec tor-browser";
           "${mod}+Shift+s" = "exec steam";
+          "${mod}+p" = "exec scrot ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S.png";
           "${mod}+d" = "exec --no-startup-id ${menu}/bin/menu";
           "${mod}+Shift+e" = "exec --no-startup-id ${sysmenu}/bin/sysmenu";
           "XF86AudioRaiseVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%";
           "XF86AudioLowerVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%";
-          "XF86AudioMute" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ toggle";
+          "XF86AudioMute" = "exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle";
         };
         modes = {
           resize = {

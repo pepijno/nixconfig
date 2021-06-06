@@ -79,14 +79,20 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  programs.fish.enable = true;
-  programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-    extraPackages = with pkgs; [
-      swaylock-effects
-    ];
+  nixpkgs.config.packageOverrides = pkgs: {
+    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+      inherit pkgs;
+    };
   };
+
+  programs.fish.enable = true;
+  # programs.sway = {
+  #   enable = true;
+  #   wrapperFeatures.gtk = true;
+  #   extraPackages = with pkgs; [
+  #     swaylock-effects
+  #   ];
+  # };
 
   services.xserver = {
     enable = true;
@@ -97,6 +103,15 @@
     };
 
     displayManager.lightdm.enable = true;
+
+    windowManager.i3 = {
+      enable = true;
+      package = pkgs.i3-gaps;
+      extraPackages = with pkgs; [
+        dmenu #application launcher most people use
+        i3lock #default i3 screen locker
+     ];
+    };
 
     # videoDrivers = [
     #   "ati_unfree"
@@ -116,19 +131,6 @@
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
-  # hardware.pulseaudio.daemon.config.high-priority = "yes";
-  # hardware.pulseaudio.daemon.config.nice-level = -15;
-  # hardware.pulseaudio.daemon.config.realtime-scheduling = "yes";
-  # hardware.pulseaudio.daemon.config.realtime-priority = 9;
-  # hardware.pulseaudio.daemon.config.rlimit-rtprio = 9;
-  # hardware.pulseaudio.daemon.config.default-sample-rate = 16000;
-  # hardware.pulseaudio.daemon.config.default-sample-channels = 6;
-  # hardware.pulseaudio.daemon.config.default-sample-format = "float32le";
-  # hardware.pulseaudio.daemon.config.resample-method = "speex-float-10";
-  # hardware.pulseaudio.daemon.config.avoid-resampling = "false";
-  # hardware.pulseaudio.daemon.config.enable-remixing = "yes";
-  # hardware.pulseaudio.daemon.config.remixing-use-all-sink-channels = "no";
-  # hardware.pulseaudio.extraConfig = "load-module module-udev-detect tsched=0";
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -144,6 +146,9 @@
   hardware.opengl.driSupport32Bit = true;
   hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
   hardware.pulseaudio.support32Bit = true;
+
+  hardware.logitech.wireless.enable = true;
+  hardware.logitech.wireless.enableGraphical = true; # for solaar to be included
 
   services.udev = {
     path = [ "/etc/udev/rules.d/50-oryx.rules" ];
@@ -165,6 +170,10 @@
       SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", \
           MODE:="0666", \
           SYMLINK+="stm32_dfu"
+
+      SUBSYSTEM=="input", GROUP="input", MODE="0666"
+      SUBSYSTEMS=="usb", ATTRS{idVendor}=="cdcd", ATTRS{idProduct}=="7575", MODE:="0666", GROUP="plugdev"
+      KERNEL=="hidraw*", ATTRS{idVendor}=="cdcd", ATTRS{idProduct}=="7575", MODE="0666", GROUP="plugdev"
     '' ;
   };
 

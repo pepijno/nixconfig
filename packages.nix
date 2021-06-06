@@ -1,10 +1,10 @@
 { pkgs, config, ... }:
 
 let
-  nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-      inherit pkgs;
-    };
-  parsec = import ./pkgs/parsec.nix { inherit pkgs; };
+  # nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+  #     inherit pkgs;
+  #   };
+  # parsec = import ./pkgs/parsec.nix { inherit pkgs; };
 
   # steam = pkgs.steam.override {
   #   nativeOnly = true;
@@ -12,27 +12,26 @@ let
 in {
   nixpkgs.config.pulseaudio = true;
   home.packages = with pkgs; [
-    gradle
+    # gradle
     bash
     unzip
     pywal
-    solaar
     redshift
     imagemagick
     ctags
     nix-du
     wget
-    betterlockscreen
+    # betterlockscreen
     pfetch
     stack
     sway
     xwayland
     dmenu
     nix-prefetch-git
-    waybar
+    # waybar
     wineWowPackages.stable
-    wlr-randr
-    swaybg
+    # wlr-randr
+    # swaybg
     ueberzug
     ncpamixer
     fff
@@ -42,9 +41,12 @@ in {
     s-tui
     sysbench
     openjdk11
-    minecraft
+    # minecraft
     steam
     steam-run
-    dosbox
+    hicolor-icon-theme
+    # dosbox
+    ltunify
+    pipewire
   ];
 }

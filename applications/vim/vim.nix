@@ -29,13 +29,13 @@ in {
     nodePackages.npm
   ];
 
-  programs.neovim = {
+  programs.vim = {
     enable = true;
-    package = pkgs.neovim-nightly;
-    viAlias = true;
-    vimAlias = true;
+    # package = pkgs.neovim-nightly;
+    # viAlias = true;
+    # vimAlias = true;
     plugins = with pkgs.vimPlugins; [
-      auto-pairs
+      # auto-pairs
       ayu-vim
       coc-nvim
       coc-java

@@ -22,17 +22,17 @@ in {
   # nixpkgs.overlays = [(self: super: { discord = super.discord.overrideAttrs (_: { src = builtins.fetchTarball https://discord.com/api/download/stable?platform=linux&format=tar.gz; });})];
 
   home.packages = with unstable; [
-    thunderbird
+    # thunderbird
     electrum
     # steam
     # steam-run
     protontricks
-    mumble
+    # mumble
     discord
-    jetbrains.idea-community
+    # jetbrains.idea-community
     # pkgs.discord
     torbrowserWithAudio
-    firefox-wayland
+    firefox
     vivaldi
     vivaldi-widevine
     vivaldi-ffmpeg-codecs

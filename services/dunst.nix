@@ -19,8 +19,9 @@ let
   launch-dunst = pkgs.callPackage ./scripts/launch-dunst.nix {};
 
 in {
-  home.packages = with pkgs; [
-    dunst
+  home.packages = [
+    pkgs.dunst
+    launch-dunst
   ];
 
   xdg.dataFile."dbus-1/services/org.knopwob.dunst.service".source =
@@ -68,6 +69,7 @@ in {
       Type = "dbus";
       BusName = "org.freedesktop.Notifications";
       ExecStart = "${launch-dunst}/bin/launch-dunst ${config.home.homeDirectory}/.cache/wal/colors.sh";
+      Environment = "DISPLAY=:0";
     };
   };
 
@@ -92,10 +94,7 @@ in {
         font = "DejaVu Sans Mono 10";
         line_height = 4;
         markup = "full";
-        format = ''
-          %s %p %I
-          %b
-        '';
+        format = "%s %p %I\\n%b";
         alignment = "left";
         show_age_threshold = 30;
         word_wrap = "yes";

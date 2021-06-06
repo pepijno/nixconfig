@@ -14,7 +14,7 @@
 
     ./applications/ranger/ranger.nix
     ./applications/vim/vim.nix
-    ./applications/wofi/wofi.nix
+    # ./applications/wofi/wofi.nix
 
     ./services/backup.nix
     ./services/compton.nix
@@ -28,6 +28,11 @@
   ];
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.packageOverrides = pkgs: {
+    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+      inherit pkgs;
+    };
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
