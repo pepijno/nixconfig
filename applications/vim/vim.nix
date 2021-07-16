@@ -29,11 +29,11 @@ in {
     nodePackages.npm
   ];
 
-  programs.vim = {
+  programs.neovim = {
     enable = true;
-    # package = pkgs.neovim-nightly;
-    # viAlias = true;
-    # vimAlias = true;
+    package = pkgs.neovim-nightly;
+    viAlias = true;
+    vimAlias = true;
     plugins = with pkgs.vimPlugins; [
       # auto-pairs
       ayu-vim
@@ -42,7 +42,7 @@ in {
       fzf-vim
       kotlin-vim
       haskell-vim
-      # nvim-treesitter
+      nvim-treesitter
       quick-scope
       scrollbar
       tagbar

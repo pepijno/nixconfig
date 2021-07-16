@@ -4,7 +4,7 @@ function! SetColorscheme()
 	" if strftime("%H") >= 8 && strftime("%H") < 20
 	" 	let g:ayucolor="light"
 	" else
-		let g:ayucolor="mirage"
+		let g:ayucolor="light"
 	" endif
 	colorscheme ayu
 	hi Normal guibg=NONE ctermbg=NONE

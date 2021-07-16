@@ -16,7 +16,6 @@ in {
     bash
     unzip
     pywal
-    redshift
     imagemagick
     ctags
     nix-du
@@ -24,8 +23,8 @@ in {
     # betterlockscreen
     pfetch
     stack
-    sway
-    xwayland
+    # sway
+    # xwayland
     dmenu
     nix-prefetch-git
     # waybar
@@ -48,5 +47,8 @@ in {
     # dosbox
     ltunify
     pipewire
+    transmission-gtk
+    rustc
+    cargo
   ];
 }

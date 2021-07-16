@@ -77,12 +77,6 @@ in {
         # modules-left = "menu workspaces terminal vivaldi firefox tor steam";
         # modules-right = "filesystem swap memory cpu volume network date powermenu";
 
-        tray-position = "none";
-        tray-padding = "";
-        tray-transparent = true;
-        tray-background = bg;
-        tray-detatched = false;
-
         offset-x = "10";
         offset-y = "10";
       };
@@ -106,7 +100,7 @@ in {
         offset-x = "40%";
         offset-y = "10";
         bottom = false;
-        width = "29%";
+        width = "34%";
 
         module-margin-left = 0;
         module-margin-right = 0;
@@ -115,6 +109,13 @@ in {
         modules-center = "filesystem";
         modules-right = "swap memory cpu";
         enable-ipc = true;
+
+        tray-position = "right";
+        tray-padding = "";
+        tray-transparent = true;
+        tray-background = bg;
+        tray-detatched = false;
+
       };
 
       "bar/tertiary" = {

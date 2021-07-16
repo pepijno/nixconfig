@@ -47,6 +47,23 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.bridges.lan.interfaces = ["enp4s0"];
 
+#   networking.wg-quick.interfaces = {
+#     mullvad = {
+#       address = [ "10.65.24.82/32" "fc00:bbbb:bbbb:bb01::2:1851/128" ];
+#       dns = [ "193.138.218.74" ];
+#       privateKey = "WPjAk96E7SCTHrrv/Tiw5np26XYArvb7ulH7vFLNhF0=";
+
+#       peers = [
+#         {
+#           publicKey = "IJJe0TQtuQOyemL4IZn6oHEsMKSPqOuLfD5HoAWEPTY=";
+#           allowedIPs = [ "0.0.0.0/0" "::/0" ];
+#           endpoint = "141.98.252.130:51820";
+#           persistentKeepalive = 25;
+#         }
+#       ];
+#     };
+#   };
+
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
 
@@ -83,6 +100,13 @@
     nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
       inherit pkgs;
     };
+    mullvad-vpn = pkgs.mullvad-vpn.overrideAttrs (old: rec {
+      version = "2020.7";
+      src = pkgs.fetchurl {
+        url = "https://www.mullvad.net/media/app/MullvadVPN-${version}_amd64.deb";
+        sha256 = "07vryz1nq8r4m5y9ry0d0v62ykz1cnnsv628x34yvwiyazbav4ri";
+      };
+    });
   };
 
   programs.fish.enable = true;
@@ -99,7 +123,7 @@
 
     desktopManager = {
       xterm.enable = false;
-      xfce.enable = true;
+      # xfce.enable = true;
     };
 
     displayManager.lightdm.enable = true;
@@ -144,7 +168,9 @@
   };
 
   hardware.opengl.driSupport32Bit = true;
-  hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
+  hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux;
+    [ libva ]
+    ++ lib.optionals config.services.pipewire.enable [ pipewire ];
   hardware.pulseaudio.support32Bit = true;
 
   hardware.logitech.wireless.enable = true;
@@ -176,6 +202,11 @@
       KERNEL=="hidraw*", ATTRS{idVendor}=="cdcd", ATTRS{idProduct}=="7575", MODE="0666", GROUP="plugdev"
     '' ;
   };
+
+  services.mullvad-vpn.enable = true;
+  # Workaround for NixOS/nixpkgs#91923
+  networking.iproute2.enable = true;
+  networking.wireguard.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
