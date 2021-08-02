@@ -23,7 +23,7 @@ in {
 
   home.packages = with unstable; [
     # thunderbird
-    # electrum
+    electrum
     # steam
     # steam-run
     protontricks

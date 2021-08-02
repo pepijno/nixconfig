@@ -11,6 +11,7 @@
     ./applications/git.nix
     ./applications/tmux.nix
     ./applications/urxvt.nix
+    ./applications/bat.nix
 
     ./applications/ranger/ranger.nix
     ./applications/vim/vim.nix
@@ -36,6 +37,8 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  xdg.configFile."nvim/parser/rust.so".source = "${pkgs.tree-sitter.builtGrammars.tree-sitter-rust}/parser";
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.

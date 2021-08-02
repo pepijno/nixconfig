@@ -104,12 +104,12 @@ nnoremap <leader>rp :Subvert/
 nmap <Leader>tt :TagbarToggle<CR>
 
 " scrollbar
-augroup ScrollbarInit
-  autocmd!
-  autocmd CursorMoved,VimResized,QuitPre * silent! lua require('scrollbar').show()
-  autocmd WinEnter,FocusGained           * silent! lua require('scrollbar').show()
-  autocmd WinLeave,FocusLost             * silent! lua require('scrollbar').clear()
-augroup end
+" augroup ScrollbarInit
+"   autocmd!
+"   autocmd CursorMoved,VimResized,QuitPre * silent! lua require('scrollbar').show()
+"   autocmd WinEnter,FocusGained           * silent! lua require('scrollbar').show()
+"   autocmd WinLeave,FocusLost             * silent! lua require('scrollbar').clear()
+" augroup end
 
 " EasyAlign
 xmap ga <Plug>(EasyAlign)

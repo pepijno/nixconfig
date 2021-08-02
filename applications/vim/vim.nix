@@ -3,17 +3,6 @@
 let
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
   vimrc    = pkgs.callPackage ./vimrc.nix {};
-
-  scrollbar = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname   = "scrollbar";
-    version = "2020-09-28";
-    src     = pkgs.fetchFromGitHub {
-      owner  = "xuyuanp";
-      repo   = "scrollbar.nvim";
-      rev    = "72a4174a47a89b7f89401fc66de0df95580fa48c";
-      sha256 = "10kk74pmbzc4v70n8vwb2zk0ayr147xy9zk2sbr78zwqf12gas9y";
-    };
-  };
 in {
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
@@ -22,7 +11,6 @@ in {
   ];
 
   home.packages = with pkgs; [
-    bat
     fzf
     ripgrep
     nodejs-slim
@@ -36,6 +24,7 @@ in {
     vimAlias = true;
     plugins = with pkgs.vimPlugins; [
       # auto-pairs
+      ale
       ayu-vim
       coc-nvim
       coc-java
@@ -44,7 +33,8 @@ in {
       haskell-vim
       nvim-treesitter
       quick-scope
-      scrollbar
+      rust-vim
+      # scrollbar-nvim
       tagbar
       undotree
       vim-abolish
@@ -66,5 +56,10 @@ in {
       # haskell-vim
     ];
     extraConfig = vimrc;
+    extraPackages = with pkgs; [
+      tree-sitter
+      rustfmt
+      rust-analyzer
+    ];
   };
 }
