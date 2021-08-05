@@ -44,16 +44,23 @@ in {
       vim-easy-align
       vim-eunuch
       vim-highlightedyank
+      vim-lua
       vim-nix
       vim-rooter
       vim-smoothie
       vim-surround
       vim-which-key
+      vim-matchup
       wal-vim
       zig-vim
       # vim-gutentags
       # vim-gitgutter
       # haskell-vim
+
+      # telecope
+      telescope-nvim
+      plenary-nvim
+      popup-nvim
     ];
     extraConfig = vimrc;
     extraPackages = with pkgs; [

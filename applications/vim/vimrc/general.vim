@@ -1,6 +1,10 @@
 if &shell =~# 'fish$'
 	set shell=sh
 endif
+"
+" Map leader to ' '
+let mapleader = " "
+nnoremap <SPACE> <Nop>
 
 " Set encoding
 set encoding=UTF-8
@@ -93,15 +97,18 @@ vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
 " (Un)quote word
-nnoremap <Leader>q" ciw""<Esc>P
-nnoremap <Leader>q' ciw''<Esc>P
-nnoremap <Leader>qd daW"=substitute(@@,"'\\\|\"","","g")<CR>P
+nnoremap <leader>q" ciw""<Esc>P
+nnoremap <leader>q' ciw''<Esc>P
+nnoremap <leader>qd daW"=substitute(@@,"'\\\|\"","","g")<CR>P
+
+" Create new file
+nnoremap <leader>cf :e %:h/
 
 " vim-abolish
 nnoremap <leader>rp :Subvert/
 
 " toggle tagbar
-nmap <Leader>tt :TagbarToggle<CR>
+nmap <leader>tt :TagbarToggle<CR>
 
 " scrollbar
 " augroup ScrollbarInit
@@ -124,3 +131,16 @@ augroup END
 
 autocmd Filetype haskell setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 
+" COC
+if has("nvim-0.5.0") || has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+inoremap <silent><expr> <tab> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" inoremap <silent><expr> <tab> coc#refresh()
+
+nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>fx <Plug>(coc-fix-current)
