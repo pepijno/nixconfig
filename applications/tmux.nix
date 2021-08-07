@@ -7,11 +7,11 @@
     clock24 = true;
     historyLimit = 10000;
     shortcut = "a";
-    terminal = "screen-256color";
+    terminal = "screen.xterm-256color";
 
     extraConfig = ''
       unbind r
-      bind r source-file ~/.tmux.conf \; display 'Reloaded tmux config.'
+      bind r source-file ~/.config/tmux/tmux.conf \; display 'Reloaded tmux config.'
 
       bind -n M-Left select-pane -L
       bind -n M-Right select-pane -R
@@ -63,6 +63,9 @@
       set-option -ag status-right " %H:%M:%S %Y-%m-%d"
       set -sa terminal-overrides ",xterm-256color:RGB"
       set -ga terminal-overrides ",xterm-256color:Tc"
+
+      set-option -g status-position top
+      tmux_conf_theme_focused_pane_bg="terminal"
     '';
   };
 }

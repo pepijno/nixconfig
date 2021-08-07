@@ -21,7 +21,9 @@
       set -U fish_greeting
       set -U _JAVA_AWT_WM_NONREPARENTING 1
       set FZF_DEFAULT_COMMAND "rg --files"
-      cat ~/.cache/wal/sequences
+      if test -z "$TMUX"
+        cat ~/.cache/wal/sequences
+      end
     '';
   };
 }
