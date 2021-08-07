@@ -13,7 +13,7 @@
           echo -n \" <nix-shell> \"
         end
       )
-      echo -n -s (set_color cyan)(prompt_pwd) (set_color red)\"$nix_shell_info❯\"(set_color yellow)'❯'(set_color yellow)'❯ '";
+      echo -n -s (prompt_pwd) (set_color red)\"$nix_shell_info❯\"(set_color yellow)'❯'(set_color yellow)'❯ '";
     };
 
     shellInit = ''

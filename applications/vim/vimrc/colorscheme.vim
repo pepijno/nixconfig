@@ -1,19 +1,11 @@
 " Color scheme
-function! SetColorscheme()
-	set termguicolors
-	" if strftime("%H") >= 8 && strftime("%H") < 20
-	" 	let g:ayucolor="light"
-	" else
-		let g:ayucolor="light"
-	" endif
-	colorscheme ayu
-	hi Normal guibg=NONE ctermbg=NONE
-endfunction
-
-augroup backgr
-	autocmd!
-	autocmd CursorMoved,CursorHold,CursorHoldI,WinEnter,WinLeave,FocusLost,FocusGained,VimResized,ShellCmdPost * nested call SetColorscheme()
-augroup END
+set termguicolors
+set background=light
+let g:gruvbox_transparent_bg = 1
+let g:gruvbox_contrast_light = 'hard'
+let g:gruvbox_invert_selection='0'
+colorscheme gruvbox
+autocmd VimEnter * hi Normal ctermbg=NONE guibg=NONE
 
 " yank highlighting
 let g:highlightedyank_highlight_duration = -1
@@ -29,5 +21,15 @@ require'nvim-treesitter.configs'.setup {
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
+  indent = {
+    enabled = true,
+  },
+  rainbow = {
+    enable = true,
+    extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+    max_file_lines = 1000, -- Do not enable for files with more than 1000 lines, int
+    colors = {}, -- table of hex strings
+    termcolors = {} -- table of colour name strings
+  }
 }
 EOF

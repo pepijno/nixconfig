@@ -26,6 +26,8 @@
     ./services/dunst.nix
     ./services/polybar.nix
     ./services/wal.nix
+
+    ./languages/rust.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

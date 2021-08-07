@@ -1,22 +1,16 @@
 { pkgs, ... }:
 
 let
-  generic     = builtins.readFile ./vimrc/general.vim;
-  fzf         = builtins.readFile ./vimrc/fzf.vim;
-  easymotion  = builtins.readFile ./vimrc/easymotion.vim;
+  general     = builtins.readFile ./vimrc/general.vim;
+  bindings    = builtins.readFile ./vimrc/bindings.vim;
   colorscheme = builtins.readFile ./vimrc/colorscheme.vim;
-  rust        = builtins.readFile ./vimrc/rust.vim;
-  java        = builtins.readFile ./vimrc/java.vim;
+  plugins     = builtins.readFile ./vimrc/plugins.vim;
 in ''
-${generic}
+${general}
 
-${fzf}
-
-${easymotion}
+${bindings}
 
 ${colorscheme}
 
-${rust}
-
-${java}
+${plugins}
 ''

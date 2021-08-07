@@ -5,12 +5,6 @@ nmap t <Plug>(easymotion-t2)
 " Turn on case-insensitive feature
 let g:EasyMotion_smartcase = 1
 
-" JK motions: Line motions
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-map <Leader>h <Plug>(easymotion-linebackward)
-map <Leader>l <Plug>(easymotion-lineforward)
-
 " Jumping to next/prev
 nmap n <Plug>(easymotion-next)
 nmap N <Plug>(easymotion-prev)
