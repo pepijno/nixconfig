@@ -181,3 +181,39 @@ set signcolumn=yes
 
 " Enable type inlay hints
 autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
+
+lua << EOF
+require('formatter').setup({
+logging = false,
+filetype = {
+	rust = {
+		-- Rustfmt
+		function()
+			return {
+				exe = "rustfmt",
+				args = {"--emit=stdout"},
+				stdin = true
+				}
+		end
+		},
+    zig = {
+		-- zig fmt
+		function()
+			return {
+				exe = "zig",
+				args = {"fmt --stdin"},
+				stdin = true
+				}
+		end
+		}
+	}
+})
+
+vim.api.nvim_exec([[
+augroup FormatAutogroup
+	autocmd!
+	autocmd BufWritePost *.rs FormatWrite
+augroup END
+]], true)
+EOF
+nnoremap <silent> <C-f> :Format<CR>

@@ -40,7 +40,6 @@ nnoremap <silent> <leader>ltd <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> <leader>lr <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> <leader>la <cmd>lua vim.lsp.buf.code_action()<CR>
 nnoremap <silent> <leader>lf <cmd>lua vim.lsp.buf.formatting()<CR>
-vnoremap <silent> <leader>lf <cmd>lua vim.lsp.buf.formatting()<CR>
 
 " Set updatetime for CursorHold
 " 300ms of no cursor movement to trigger CursorHold

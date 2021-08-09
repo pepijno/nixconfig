@@ -28,6 +28,7 @@
     ./services/wal.nix
 
     ./languages/rust.nix
+    ./languages/zig.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -40,7 +41,7 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  xdg.configFile."nvim/parser/rust.so".source = "${pkgs.tree-sitter.builtGrammars.tree-sitter-rust}/parser";
+  xdg.configFile."nvim/parser/java.so".source = "${pkgs.tree-sitter.builtGrammars.tree-sitter-java}/parser";
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.

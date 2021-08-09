@@ -3,6 +3,15 @@
 let
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
   vimrc    = pkgs.callPackage ./vimrc.nix {};
+  formatter = pkgs.vimUtils.buildVimPlugin {
+    name = "formatter";
+    src = pkgs.fetchFromGitHub {
+      owner = "mhartington";
+      repo = "formatter.nvim";
+      rev = "51f10c8acc610d787cad2257224cee92b40216e5";
+      sha256 = "15jkrypcd3fa6vcz035yvcpd1rfrxcwvp93mqnihm0g1a74klrql";
+    };
+  };
   cheatsheet-nvim = pkgs.vimUtils.buildVimPlugin {
     name = "cheatsheet.nvim";
     src = pkgs.fetchFromGitHub {
@@ -22,8 +31,6 @@ in {
   home.packages = with pkgs; [
     fzf
     ripgrep
-    # nodejs-slim
-    # nodePackages.npm
   ];
 
   programs.neovim = {
@@ -35,10 +42,10 @@ in {
       cheatsheet-nvim
       # auto-pairs
       # ale
-      ayu-vim
+      # ayu-vim
       # coc-nvim
       # coc-java
-      fzf-vim
+      # fzf-vim
       kotlin-vim
       haskell-vim
       nvim-lspconfig
@@ -55,7 +62,6 @@ in {
       vim-easy-align
       vim-eunuch
       vim-fish
-      vim-highlightedyank
       vim-lua
       vim-nix
       vim-rooter
@@ -78,8 +84,12 @@ in {
 
       completion-nvim
 
+      formatter
+
+      # Colors
       gruvbox
       lsp-colors-nvim
+      vim-highlightedyank
 
       # telecope
       telescope-nvim
