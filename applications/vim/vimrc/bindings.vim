@@ -7,12 +7,12 @@ cnoremap kj <ESC>
 vnoremap kj <ESC>
 
 " Move lines
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
 inoremap <C-j> <esc>:m .+1<CR>==li
 inoremap <C-k> <esc>:m .-2<CR>==li
-nnoremap <leader>j :m .+1<CR>==
-nnoremap <leader>k :m .-2<CR>==
+nnoremap <C-j> :m .+1<CR>==
+nnoremap <C-k> :m .-2<CR>==
 
 " Undo breakpoints
 inoremap , ,<C-g>u

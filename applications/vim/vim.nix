@@ -30,6 +30,7 @@ in {
 
   home.packages = with pkgs; [
     fzf
+    fzy
     ripgrep
   ];
 
@@ -58,6 +59,7 @@ in {
       vim-abolish
       vim-commentary
       vim-devicons
+      nvim-web-devicons
       vim-easymotion
       vim-easy-align
       vim-eunuch
@@ -95,6 +97,7 @@ in {
       telescope-nvim
       plenary-nvim
       popup-nvim
+      telescope-fzy-native-nvim
     ];
     extraConfig = vimrc;
     extraPackages = with pkgs; [
