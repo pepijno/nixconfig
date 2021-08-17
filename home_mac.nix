@@ -12,6 +12,7 @@
   ];
 
   home.packages = with pkgs; [
+    bat
     fd
     pywal
     nix-prefetch-git

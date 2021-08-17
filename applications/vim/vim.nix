@@ -64,7 +64,8 @@ in {
       vim-easy-align
       vim-eunuch
       vim-fish
-      vim-lua
+      vim-highlightedyank
+      # vim-lua
       vim-nix
       vim-rooter
       vim-surround
@@ -98,6 +99,8 @@ in {
       plenary-nvim
       popup-nvim
       telescope-fzy-native-nvim
+
+      vimwiki
     ];
     extraConfig = vimrc;
     extraPackages = with pkgs; [

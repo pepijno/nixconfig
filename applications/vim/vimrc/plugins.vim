@@ -62,10 +62,16 @@ map  <Leader>w <Plug>(easymotion-bd-w)
 nmap <Leader>w <Plug>(easymotion-overwin-w)
 
 
-" Zettelkasten stuff
+" Zettelkasten/vimwiki stuff
 let g:zettelkasten = "~/Repos/zettelkasten/"
-command! -nargs=1 NewZettel :execute ":e" zettelkasten . strftime("%Y%m%d%H%M") . "-<args>.md"
-nnoremap <leader>zn :NewZettel 
+let g:vimwiki_list = [{'path': zettelkasten}]
+command! -nargs=1 NewFleetingZettel :execute ":e" zettelkasten . "fleeting/" . strftime("%Y%m%d%H%M") . "-<args>.wiki"
+command! -nargs=1 NewLiteratureZettel :execute ":e" zettelkasten . "literature/" . strftime("%Y%m%d%H%M") . "-<args>.wiki"
+command! -nargs=1 NewPermanentZettel :execute ":e" zettelkasten . "permanent/" . strftime("%Y%m%d%H%M") . "-<args>.wiki"
+nnoremap <leader>wnf :NewFleetingZettel 
+nnoremap <leader>wnl :NewLiteratureZettel 
+nnoremap <leader>wnp :NewPermanentZettel 
+nnoremap <silent> <leader>wf <cmd>lua require('telescope.builtin').find_files({ cwd = vim.g.zettelkasten })<CR>
 
 lua << EOF
 local actions = require('telescope.actions');
@@ -75,7 +81,7 @@ local actions_state = require('telescope.actions.state')
 function actions.create_md_link(prompt_bufnr)
 	local entry = actions_state.get_selected_entry()
 	actions.close(prompt_bufnr)
-	local link = "[" .. entry.value .. "](" .. entry.value .. ")"
+	local link = "[[../" .. entry.value .. "]]"
 	vim.api.nvim_put({link}, "", true, true);
 end
 
@@ -115,7 +121,6 @@ require('telescope').load_extension('fzy_native')
 EOF
 
 nnoremap <silent> <leader>ff <cmd>lua require('telescope.builtin').find_files({["layout_config.preview_width"] = 0.2})<CR>
-nnoremap <silent> <leader>fz <cmd>lua require('telescope.builtin').find_files({ cwd = vim.g.zettelkasten })<CR>
 nnoremap <leader>fr <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fb <cmd>lua require('telescope.builtin').file_browser()<cr>
 nnoremap <leader>ft <cmd>lua require('telescope.builtin').treesitter()<cr>
