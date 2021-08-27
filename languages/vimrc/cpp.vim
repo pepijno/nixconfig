@@ -8,7 +8,7 @@ local on_attach = function(client)
 end
 
 -- Enable rust_analyzer
-nvim_lsp.rls.setup {
+nvim_lsp.ccls.setup {
 	on_attach=on_attach
 }
 

@@ -13,18 +13,7 @@
     extraOptions = ''
       detect-client-opacity = true;
       detect-rounded-corners = true;
-      blur:
-      {
-          method = "kawase";
-          strength = 8;
-          background = false;
-          background-frame = false;
-          background-fixed = false;
-      };
-      blur-background-exclude = [
-          "class_g = 'keynav'"
-      ];
-      corner-radius = 12;
+      corner-radius = 4;
       round-borders = 1;
     '';
   };

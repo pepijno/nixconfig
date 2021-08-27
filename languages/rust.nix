@@ -7,6 +7,7 @@
     linuxPackages.perf
     rust-analyzer
     rustfmt
+    rls
   ];
 
   xdg.configFile."nvim/nvim.d/rust.vim".source = ./vimrc/rust.vim;

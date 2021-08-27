@@ -25,10 +25,13 @@
     # ./services/gammastep.nix
     ./services/dunst.nix
     ./services/polybar.nix
+    ./services/update-channels.nix
     ./services/wal.nix
 
     ./languages/rust.nix
     ./languages/zig.nix
+    ./languages/java.nix
+    ./languages/cpp.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -40,8 +43,6 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
-  xdg.configFile."nvim/parser/java.so".source = "${pkgs.tree-sitter.builtGrammars.tree-sitter-java}/parser";
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.

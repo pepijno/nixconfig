@@ -45,7 +45,6 @@ in {
       # ale
       # ayu-vim
       # coc-nvim
-      # coc-java
       # fzf-vim
       kotlin-vim
       haskell-vim

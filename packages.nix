@@ -12,7 +12,6 @@ let
 in {
   nixpkgs.config.pulseaudio = true;
   home.packages = with pkgs; [
-    gradle
     bash
     unzip
     pywal
@@ -39,7 +38,6 @@ in {
     stress
     s-tui
     sysbench
-    jdk11
     # minecraft
     steam
     steam-run

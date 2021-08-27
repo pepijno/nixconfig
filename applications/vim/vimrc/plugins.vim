@@ -221,3 +221,7 @@ augroup END
 ]], true)
 EOF
 nnoremap <silent> <C-f> :Format<CR>
+
+lua << EOF
+vim.lsp.set_log_level("debug")
+EOF

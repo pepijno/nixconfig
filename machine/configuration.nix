@@ -208,6 +208,23 @@
   networking.iproute2.enable = true;
   networking.wireguard.enable = true;
 
+  systemd.services.update-channels = {
+    description = "Update nix channels";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "/run/current-system/sw/bin/nix-channel --update";
+    };
+  };
+
+  systemd.timers.update-channels = {
+    wantedBy = [ "timers.target" ];
+    partOf = [ "update-channels.service" ];
+    timerConfig = {
+      OnCalendar = "*-*-* *:00:00";
+      Unit = "update-channels.service";
+    };
+  };
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
