@@ -43,7 +43,7 @@
         duration = 0;
       };
 
-      background_opacity = 0.80;
+      background_opacity = 0.92;
 
       cursor = {
         style = "Block";

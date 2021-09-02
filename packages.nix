@@ -12,6 +12,7 @@ let
 in {
   nixpkgs.config.pulseaudio = true;
   home.packages = with pkgs; [
+    lolcat
     bash
     unzip
     pywal

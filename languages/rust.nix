@@ -10,6 +10,6 @@
     rls
   ];
 
-  xdg.configFile."nvim/nvim.d/rust.vim".source = ./vimrc/rust.vim;
-  xdg.configFile."nvim/parser/rust.so".source = "${pkgs.tree-sitter.builtGrammars.tree-sitter-rust}/parser";
+  /* xdg.configFile."nvim/nvim.d/rust.vim".source = ./vimrc/rust.vim; */
+  /* xdg.configFile."nvim/parser/rust.so".source = "${pkgs.tree-sitter.builtGrammars.tree-sitter-rust}/parser"; */
 }

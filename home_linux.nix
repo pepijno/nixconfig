@@ -28,9 +28,9 @@
     ./services/update-channels.nix
     ./services/wal.nix
 
-    ./languages/rust.nix
+    #./languages/rust.nix
     ./languages/zig.nix
-    ./languages/java.nix
+    #./languages/java.nix
     ./languages/cpp.nix
   ];
 

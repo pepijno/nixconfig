@@ -120,7 +120,7 @@ in {
 
       "bar/tertiary" = {
         "inherit" = "bar/main";
-        offset-x = "86%:-10";
+        offset-x = "87%:-10";
         offset-y = "10";
         bottom = false;
         width = "13%";

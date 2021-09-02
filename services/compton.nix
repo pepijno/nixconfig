@@ -7,7 +7,7 @@
     backend = "glx";
     experimentalBackends = true;
     fade = true;
-    fadeDelta = 15;
+    fadeDelta = 5;
     activeOpacity = "1.0";
     inactiveOpacity = "1.0";
     extraOptions = ''
