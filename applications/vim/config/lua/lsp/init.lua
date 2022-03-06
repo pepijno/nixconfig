@@ -70,6 +70,18 @@ conf.languages = {
 			},
 		},
 	},
+	hs = {
+		formatters = {},
+		linters = {},
+		lsp = {
+			provider = "haskell-language-server-wrapper",
+			setup = {
+				cmd = {
+					"--lsp"
+				},
+			},
+		},
+	},
 	c = {
 		formatters = {
 			-- {
@@ -102,10 +114,10 @@ conf.languages = {
 			--   exe = "clang_format",
 			--   args = {},
 			-- },
-			{
-				exe = "uncrustify",
-				args = {},
-			},
+			-- {
+			-- 	exe = "uncrustify",
+			-- 	args = {},
+			-- },
 		},
 		linters = {},
 		lsp = {

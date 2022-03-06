@@ -16,6 +16,10 @@
       echo -n -s (prompt_pwd) (set_color red)\"$nix_shell_info❯\"(set_color yellow)'❯'(set_color yellow)'❯ '";
     };
 
+    shellAliases = {
+      lvim = "/home/pepijn/.local/bin/lvim";
+    };
+
     shellInit = ''
       set --export EDITOR "vim -f"
       set -U fish_greeting

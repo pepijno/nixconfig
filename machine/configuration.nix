@@ -96,18 +96,18 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  nixpkgs.config.packageOverrides = pkgs: {
-    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-      inherit pkgs;
-    };
-    mullvad-vpn = pkgs.mullvad-vpn.overrideAttrs (old: rec {
-      version = "2020.7";
-      src = pkgs.fetchurl {
-        url = "https://www.mullvad.net/media/app/MullvadVPN-${version}_amd64.deb";
-        sha256 = "07vryz1nq8r4m5y9ry0d0v62ykz1cnnsv628x34yvwiyazbav4ri";
-      };
-    });
-  };
+  # nixpkgs.config.packageOverrides = pkgs: {
+  #   nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+  #     inherit pkgs;
+  #   };
+  #   mullvad-vpn = pkgs.mullvad-vpn.overrideAttrs (old: rec {
+  #     version = "2020.7";
+  #     src = pkgs.fetchurl {
+  #       url = "https://www.mullvad.net/media/app/MullvadVPN-${version}_amd64.deb";
+  #       sha256 = "07vryz1nq8r4m5y9ry0d0v62ykz1cnnsv628x34yvwiyazbav4ri";
+  #     };
+  #   });
+  # };
 
   programs.fish.enable = true;
   # programs.sway = {

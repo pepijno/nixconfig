@@ -1,6 +1,9 @@
 { pkgs, config, ... }:
 
 let
+  steam = pkgs.steam.override {
+    extraPkgs = pkgs: with pkgs; [ pango harfbuzz libthai ];
+  };
   # nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
   #     inherit pkgs;
   #   };
@@ -9,44 +12,41 @@ let
   # steam = pkgs.steam.override {
   #   nativeOnly = true;
   # };
-in {
+in
+{
   nixpkgs.config.pulseaudio = true;
   home.packages = with pkgs; [
-    lolcat
     bash
     unzip
     pywal
     imagemagick
-    ctags
     nix-du
     wget
-    # betterlockscreen
-    pfetch
     stack
     # sway
     # xwayland
     dmenu
     nix-prefetch-git
     # waybar
-    wineWowPackages.stable
     # wlr-randr
     # swaybg
     ueberzug
-    ncpamixer
-    fff
     fd
     lm_sensors
-    stress
-    s-tui
-    sysbench
     # minecraft
     steam
     steam-run
     hicolor-icon-theme
     # dosbox
     ltunify
-    pipewire
-    transmission-gtk
     mullvad-vpn
+    haskell-language-server
+    dosbox
+    hlint
+    playerctl
+    jdk11
+    cargo
+    maven
+    /* clang-tools */
   ];
 }

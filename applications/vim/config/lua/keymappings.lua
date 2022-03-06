@@ -76,8 +76,8 @@ local keys = {
 		["sa"] = "ggVG" -- select all
 	},
 	visual_mode = {
-		["<C-j>"] = "<ESC>:m '>+1<CR>gv=gv", -- move line down
-		["<C-k>"] = "<ESC>:m '<-2<CR>gv=gv" -- move line up
+		["<C-j>"] = ":m '>+1<CR>gv=gv", -- move line down
+		["<C-k>"] = ":m '<-2<CR>gv=gv" -- move line up
 	}
 }
 

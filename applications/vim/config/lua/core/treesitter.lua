@@ -2,8 +2,8 @@ local M = {}
 
 M.config = function()
 	conf.treesitter = {
-		---		ensure_installed = { "nix", "lua", "c", "cpp", "bash", "fish", "java", "kotlin", "zig" },
-		ensure_installed = "maintained",
+		ensure_installed = { "haskell", "nix", "lua", "c", "cpp", "bash", "fish", "java", "kotlin", "zig" },
+		-- ensure_installed = "maintained",
 		highlight = {
 			enable = true,
 			additional_vim_regex_highlighting = true

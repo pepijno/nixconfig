@@ -10,7 +10,7 @@ let
       };
     };
   };
-  torbrowserWithAudio = unstable.torbrowser.override {
+  torbrowserWithAudio = unstable.tor-browser-bundle-bin.override {
     audioSupport = true;
     mediaSupport = true;
   };
@@ -26,13 +26,13 @@ in {
     electrum
     # steam
     # steam-run
-    protontricks
+    # protontricks
     # mumble
     discord
     # jetbrains.idea-community
     # pkgs.discord
     torbrowserWithAudio
-    firefox
+    firefox-bin
     vivaldi
     vivaldi-widevine
     vivaldi-ffmpeg-codecs

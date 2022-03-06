@@ -29,7 +29,7 @@
     ./services/wal.nix
 
     #./languages/rust.nix
-    ./languages/zig.nix
+    #./languages/zig.nix
     #./languages/java.nix
     ./languages/cpp.nix
   ];
