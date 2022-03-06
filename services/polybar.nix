@@ -83,7 +83,7 @@ in {
 
       "bar/primary" = {
         "inherit" = "bar/main";
-        offset-x = "10";
+        offset-x = "9";
         offset-y = "10";
         bottom = false;
         width = "29%";
@@ -120,7 +120,7 @@ in {
 
       "bar/tertiary" = {
         "inherit" = "bar/main";
-        offset-x = "87%:-10";
+        offset-x = "87%:-9";
         offset-y = "10";
         bottom = false;
         width = "13%";
