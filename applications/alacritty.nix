@@ -14,6 +14,7 @@
         dynamic_padding = true;
         decorations = "none";
         startup_mode = "Maximized";
+        opacity = 0.92;
       };
 
       scrolling = {
@@ -42,8 +43,6 @@
       bell = {
         duration = 0;
       };
-
-      background_opacity = 0.92;
 
       cursor = {
         style = "Block";
