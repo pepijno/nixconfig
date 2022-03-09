@@ -3,7 +3,6 @@
 let
   restart-dunst = pkgs.callPackage ./scripts/restart-dunst.nix { config = config; };
   menu = pkgs.callPackage ./scripts/menu.nix { config = config; };
-  # menu_wayland = pkgs.callPackage ./scripts/menu_wayland.nix { config = config; };
   sysmenu = pkgs.callPackage ./scripts/sysmenu.nix { config = config; };
   new-pywal = pkgs.callPackage ./scripts/new-pywal.nix { config = config; };
   mod = "Mod1";
@@ -11,7 +10,6 @@ in
 {
   home.packages = with pkgs; [
     i3lock-color
-    # menu_wayland
   ];
 
   xsession = {

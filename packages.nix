@@ -13,12 +13,10 @@ in
   nixpkgs.config.pulseaudio = true;
   home.packages = with pkgs; [
     bash
-    unzip
     pywal
     imagemagick
     nix-du
     wget
-    stack
     dmenu
     nix-prefetch-git
     ueberzug
@@ -31,21 +29,13 @@ in
     # dosbox
     ltunify
     mullvad-vpn
-    haskell-language-server
     dosbox
-    hlint
     playerctl
     jdk11
     cargo
     maven
     neovim
     ripgrep
-    # sway stuff
-    # waybar
-    # wlr-randr
-    # swaybg
-    # sway
-    # xwayland
 
     electrum
     discord

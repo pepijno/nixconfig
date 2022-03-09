@@ -112,15 +112,7 @@
   # };
 
   programs.git.enable = true;
-
   programs.fish.enable = true;
-  # programs.sway = {
-  #   enable = true;
-  #   wrapperFeatures.gtk = true;
-  #   extraPackages = with pkgs; [
-  #     swaylock-effects
-  #   ];
-  # };
 
   services.xserver = {
     enable = true;

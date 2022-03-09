@@ -19,7 +19,6 @@
     ./services/backup.nix
     ./services/compton.nix
     ./services/i3.nix
-    # ./services/sway.nix
     ./services/redshift.nix
     # ./services/gammastep.nix
     ./services/dunst.nix
