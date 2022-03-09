@@ -4,7 +4,6 @@
   imports = [
     ./fonts.nix
     ./packages.nix
-    ./packages-unstable.nix
 
     ./applications/alacritty.nix
     ./applications/fish.nix
@@ -33,13 +32,6 @@
     #./languages/java.nix
     ./languages/cpp.nix
   ];
-
-  # nixpkgs.config.allowUnfree = true;
-  # nixpkgs.config.packageOverrides = pkgs: {
-  #   nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-  #     inherit pkgs;
-  #   };
-  # };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

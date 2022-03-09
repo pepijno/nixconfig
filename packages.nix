@@ -4,14 +4,10 @@ let
   steam = pkgs.steam.override {
     extraPkgs = pkgs: with pkgs; [ pango harfbuzz libthai ];
   };
-  # nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-  #     inherit pkgs;
-  #   };
-  # parsec = import ./pkgs/parsec.nix { inherit pkgs; };
-
-  # steam = pkgs.steam.override {
-  #   nativeOnly = true;
-  # };
+  torbrowserWithAudio = pkgs.tor-browser-bundle-bin.override {
+    audioSupport = true;
+    mediaSupport = true;
+  };
 in
 {
   nixpkgs.config.pulseaudio = true;
@@ -23,13 +19,8 @@ in
     nix-du
     wget
     stack
-    # sway
-    # xwayland
     dmenu
     nix-prefetch-git
-    # waybar
-    # wlr-randr
-    # swaybg
     ueberzug
     fd
     lm_sensors
@@ -48,6 +39,20 @@ in
     cargo
     maven
     neovim
-    /* clang-tools */
+    ripgrep
+    # sway stuff
+    # waybar
+    # wlr-randr
+    # swaybg
+    # sway
+    # xwayland
+
+    electrum
+    discord
+    torbrowserWithAudio
+    firefox-bin
+    vivaldi
+    vivaldi-widevine
+    vivaldi-ffmpeg-codecs
   ];
 }
