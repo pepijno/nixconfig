@@ -2,17 +2,18 @@
 
 let
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
-in {
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-    }))
-  ];
+in
+{
+  # nixpkgs.overlays = [
+  #   (import (builtins.fetchTarball {
+  #     url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
+  #   }))
+  # ];
 
-#  xdg.configFile.nvim = {
-#	  source = ./config;
-#	  recursive = true;
-#  };
+  #  xdg.configFile.nvim = {
+  #	  source = ./config;
+  #	  recursive = true;
+  #  };
 
   home.packages = with pkgs; [
     ripgrep

@@ -7,7 +7,7 @@
 {
   environment.pathsToLink = [ "/libexec" ];
 
-  nix.autoOptimiseStore = true;
+  nix.settings.auto-optimise-store = true;
 
   nix.gc = {
     automatic = true;
@@ -16,13 +16,15 @@
   };
 
   imports =
-    [ # Include the results of the hardware scan.
-      /etc/nixos/hardware-configuration.nix
+    [
+      # Include the results of the hardware scan.
+      ./hardware-configuration.nix
       ./pci-passthrough.nix
     ];
 
   fileSystems."/backups" =
-    { device = "/dev/disk/by-uuid/2c5acd7d-98c6-44f5-b815-7611f9140b8a";
+    {
+      device = "/dev/disk/by-uuid/2c5acd7d-98c6-44f5-b815-7611f9140b8a";
       fsType = "ext4";
     };
 
@@ -37,7 +39,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelModules = ["coretemp"];
+  boot.kernelModules = [ "coretemp" ];
 
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;
@@ -47,22 +49,22 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.bridges.lan.interfaces = ["enp4s0"];
 
-#   networking.wg-quick.interfaces = {
-#     mullvad = {
-#       address = [ "10.65.24.82/32" "fc00:bbbb:bbbb:bb01::2:1851/128" ];
-#       dns = [ "193.138.218.74" ];
-#       privateKey = "WPjAk96E7SCTHrrv/Tiw5np26XYArvb7ulH7vFLNhF0=";
+  #   networking.wg-quick.interfaces = {
+  #     mullvad = {
+  #       address = [ "10.65.24.82/32" "fc00:bbbb:bbbb:bb01::2:1851/128" ];
+  #       dns = [ "193.138.218.74" ];
+  #       privateKey = "WPjAk96E7SCTHrrv/Tiw5np26XYArvb7ulH7vFLNhF0=";
 
-#       peers = [
-#         {
-#           publicKey = "IJJe0TQtuQOyemL4IZn6oHEsMKSPqOuLfD5HoAWEPTY=";
-#           allowedIPs = [ "0.0.0.0/0" "::/0" ];
-#           endpoint = "141.98.252.130:51820";
-#           persistentKeepalive = 25;
-#         }
-#       ];
-#     };
-#   };
+  #       peers = [
+  #         {
+  #           publicKey = "IJJe0TQtuQOyemL4IZn6oHEsMKSPqOuLfD5HoAWEPTY=";
+  #           allowedIPs = [ "0.0.0.0/0" "::/0" ];
+  #           endpoint = "141.98.252.130:51820";
+  #           persistentKeepalive = 25;
+  #         }
+  #       ];
+  #     };
+  #   };
 
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
@@ -109,6 +111,8 @@
   #   });
   # };
 
+  programs.git.enable = true;
+
   programs.fish.enable = true;
   # programs.sway = {
   #   enable = true;
@@ -134,7 +138,7 @@
       extraPackages = with pkgs; [
         dmenu #application launcher most people use
         i3lock #default i3 screen locker
-     ];
+      ];
     };
 
     # videoDrivers = [
@@ -160,7 +164,7 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.groups.plugdev = {};
+  users.groups.plugdev = { };
   users.users.pepijn = {
     isNormalUser = true;
     extraGroups = [ "wheel" "kvm" "input" "libvirtd" "plugdev" ];
@@ -200,7 +204,7 @@
       SUBSYSTEM=="input", GROUP="input", MODE="0666"
       SUBSYSTEMS=="usb", ATTRS{idVendor}=="cdcd", ATTRS{idProduct}=="7575", MODE:="0666", GROUP="plugdev"
       KERNEL=="hidraw*", ATTRS{idVendor}=="cdcd", ATTRS{idProduct}=="7575", MODE="0666", GROUP="plugdev"
-    '' ;
+    '';
   };
 
   services.mullvad-vpn.enable = true;
@@ -224,6 +228,12 @@
       Unit = "update-channels.service";
     };
   };
+
+  # enable flakes
+  nix.package = pkgs.nixUnstable;
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

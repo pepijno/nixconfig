@@ -47,6 +47,7 @@ in
     jdk11
     cargo
     maven
+    neovim
     /* clang-tools */
   ];
 }

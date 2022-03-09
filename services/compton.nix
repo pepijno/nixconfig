@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
 
-{ 
+{
   services.picom = {
     enable = true;
-    package = pkgs.nur.repos.reedrw.picom-next-ibhagwan;
+    # package = pkgs.nur.repos.reedrw.picom-next-ibhagwan;
     backend = "glx";
     experimentalBackends = true;
     fade = true;
