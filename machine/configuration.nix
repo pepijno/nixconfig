@@ -128,7 +128,6 @@
       enable = true;
       package = pkgs.i3-gaps;
       extraPackages = with pkgs; [
-        dmenu #application launcher most people use
         i3lock #default i3 screen locker
       ];
     };
@@ -203,23 +202,6 @@
   # Workaround for NixOS/nixpkgs#91923
   networking.iproute2.enable = true;
   networking.wireguard.enable = true;
-
-  systemd.services.update-channels = {
-    description = "Update nix channels";
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "/run/current-system/sw/bin/nix-channel --update";
-    };
-  };
-
-  systemd.timers.update-channels = {
-    wantedBy = [ "timers.target" ];
-    partOf = [ "update-channels.service" ];
-    timerConfig = {
-      OnCalendar = "*-*-* *:00:00";
-      Unit = "update-channels.service";
-    };
-  };
 
   # enable flakes
   nix.package = pkgs.nixUnstable;

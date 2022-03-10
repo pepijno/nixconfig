@@ -23,10 +23,10 @@ let
   shade8 = "\${xrdb:color5}";
   shade9 = "\${xrdb:color4}";
   txt = "\${xrdb:color7}";
-in {
+in
+{
   home.packages = with pkgs; [
     libnotify
-    rofi
   ];
 
   services.polybar = {
@@ -280,8 +280,6 @@ in {
         exec = "${pkgs.stdenv.shell} -c ${check-network}/bin/check-network";
         format-background = shade4;
         format-padding = 1;
-        click-left = "networkmanager_dmenu &";
-        click-right = "networkmanager_dmenu &";
         tail = true;
       };
 

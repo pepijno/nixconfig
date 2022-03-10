@@ -17,7 +17,6 @@ in
     imagemagick
     nix-du
     wget
-    dmenu
     nix-prefetch-git
     ueberzug
     fd

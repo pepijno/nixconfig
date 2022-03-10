@@ -4,7 +4,6 @@ let
   restart-dunst = pkgs.callPackage ./scripts/restart-dunst.nix { config = config; };
   menu = pkgs.callPackage ./scripts/menu.nix { config = config; };
   sysmenu = pkgs.callPackage ./scripts/sysmenu.nix { config = config; };
-  new-pywal = pkgs.callPackage ./scripts/new-pywal.nix { config = config; };
   mod = "Mod1";
 in
 {
@@ -40,12 +39,12 @@ in
           border = 0;
         };
         startup = [
-          { command = "${new-pywal}/bin/new-pywal"; always = true; notification = false; }
           { command = "${pkgs.xorg.xrandr}/bin/xrandr -s 1920x1080"; always = true; notification = false; }
           { command = "${pkgs.solaar}/bin/solaar"; }
           { command = "/usr/lib/polkit-gnome-polkit-gnome-authentication-agent-1"; }
           { command = "${pkgs.pywal}/bin/wal -R"; }
           { command = "${restart-dunst}/bin/restart-dunst"; always = true; }
+          { command = "${pkgs.betterlockscreen}/bin/betterlockscreen -u ~/Pictures/Wallpapers/"; always = true; notification = false; }
         ];
         assigns = {
           "2: vivaldi" = [{ class = "Vivaldi"; }];

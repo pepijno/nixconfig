@@ -1,6 +1,5 @@
 { pkgs, ... }:
 
-pkgs.writeScriptBin "restart-dunst" ''
-  #!${pkgs.stdenv.shell}
+pkgs.writeShellScriptBin "restart-dunst" ''
   systemctl --user restart dunst.service
 ''
