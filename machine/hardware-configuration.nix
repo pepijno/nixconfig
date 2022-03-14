@@ -5,28 +5,37 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
-
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/fd7828f0-d2bd-4fcb-a597-55e0a1edefeb";
+    {
+      device = "/dev/disk/by-uuid/fd7828f0-d2bd-4fcb-a597-55e0a1edefeb";
       fsType = "ext4";
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/e5dcf493-e48d-456b-b3fc-5fc1f2970aa4";
+    {
+      device = "/dev/disk/by-uuid/e5dcf493-e48d-456b-b3fc-5fc1f2970aa4";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/5474-3213";
+    {
+      device = "/dev/disk/by-uuid/5474-3213";
       fsType = "vfat";
     };
+
+  fileSystems."/backups" =
+    {
+      device = "/dev/disk/by-uuid/2c5acd7d-98c6-44f5-b815-7611f9140b8a";
+      fsType = "ext4";
+    };
+
+  swapDevices = [
+    { device = "/dev/disk/by-uuid/2cd9e64a-fc4e-4dd1-9323-881982ad7bcb"; }
+  ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }
