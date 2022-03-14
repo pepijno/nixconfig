@@ -15,7 +15,7 @@ in
     bash
     pywal
     imagemagick
-    nix-du
+    # nix-du
     wget
     nix-prefetch-git
     ueberzug

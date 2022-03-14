@@ -7,7 +7,7 @@
     clock24 = true;
     historyLimit = 10000;
     shortcut = "a";
-    terminal = "screen-256color";
+    terminal = "screen-256color-bce";
 
     extraConfig = ''
       unbind r
@@ -18,6 +18,8 @@
       bind -n M-Up select-pane -U
       bind -n M-Down select-pane -D
       set -g mouse on
+
+      set-option -g default-terminal "screen-256color-bce"
 
       # Keep your finger on ctrl, or don't, same result
       bind-key C-d detach-client

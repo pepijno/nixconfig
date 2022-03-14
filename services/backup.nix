@@ -2,7 +2,8 @@
 
 let
   create-backup = pkgs.callPackage ./scripts/create-backup.nix { };
-in {
+in
+{
   home.packages = [
     pkgs.rsync
     create-backup

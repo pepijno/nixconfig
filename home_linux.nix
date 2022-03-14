@@ -15,10 +15,11 @@
     # ./applications/vim/vim.nix
 
     ./services/backup.nix
+    ./services/betterlockscreen.nix
     ./services/compton.nix
+    ./services/dunst.nix
     ./services/i3.nix
     ./services/redshift.nix
-    ./services/dunst.nix
     ./services/polybar.nix
   ];
 

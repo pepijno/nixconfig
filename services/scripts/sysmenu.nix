@@ -26,10 +26,10 @@ pkgs.writeShellScriptBin "sysmenu" ''
           ${pkgs.i3-gaps}/bin/i3-msg exit
           ;;
       *Suspend)
-          ${pkgs.betterlockscreen}/bin/betterlockscreen --lock blur; ${systemctl} suspend
+          ${systemctl} suspend
           ;;
       *Hibernate)
-          ${pkgs.betterlockscreen}/bin/betterlockscreen --lock blur; ${systemctl} hibernate
+          ${systemctl} hibernate
           ;;
       *Reboot)
           ${systemctl} reboot
