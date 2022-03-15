@@ -1,5 +1,39 @@
 {
   "nodes": {
+    "ayu-light-bat": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1647346581,
+        "narHash": "sha256-H6W5Pl4vkP+CXn74MjAQ6UesaB0Jll5WnaRbwtqcefg=",
+        "owner": "pepijno",
+        "repo": "ayu-light-bat",
+        "rev": "b2634512d702dd893f547e76e53a1849391fd383",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pepijno",
+        "repo": "ayu-light-bat",
+        "type": "github"
+      }
+    },
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1644229661,
+        "narHash": "sha256-1YdnJAsNy69bpcjuoKdOYQX0YxZBiCYZo4Twxerqv7k=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "3cecb5b042f7f209c56ffd8371b2711a290ec797",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -24,6 +58,22 @@
       "locked": {
         "lastModified": 1647125019,
         "narHash": "sha256-PXA76/iIqtbrA0ydCyc7Wpdw7TQTnfEowM87YtTXfB4=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "b0e141e3fe13ec21f50429773d2e3890e02a80da",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1647125019,
+        "narHash": "sha256-PXA76/iIqtbrA0ydCyc7Wpdw7TQTnfEowM87YtTXfB4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "b0e141e3fe13ec21f50429773d2e3890e02a80da",
@@ -37,8 +87,9 @@
     },
     "root": {
       "inputs": {
+        "ayu-light-bat": "ayu-light-bat",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_2"
       }
     }
   },

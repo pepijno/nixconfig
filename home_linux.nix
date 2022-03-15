@@ -9,7 +9,7 @@
     ./applications/fish.nix
     ./applications/git.nix
     ./applications/tmux.nix
-    # ./applications/bat.nix
+    ./applications/bat.nix
 
     ./applications/ranger/ranger.nix
     # ./applications/vim/vim.nix

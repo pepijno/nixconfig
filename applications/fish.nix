@@ -18,6 +18,7 @@
 
     shellAliases = {
       lvim = "/home/pepijn/.local/bin/lvim";
+      vim = "/home/pepijn/.local/bin/lvim";
     };
 
     shellInit = ''
