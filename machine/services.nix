@@ -7,10 +7,17 @@
 
       desktopManager = {
         xterm.enable = false;
-        # xfce.enable = true;
       };
 
-      displayManager.lightdm.enable = true;
+      displayManager = {
+        lightdm = {
+          enable = true;
+        };
+        autoLogin = {
+          enable = true;
+          user = "pepijn";
+        };
+      };
 
       windowManager.i3 = {
         enable = true;
