@@ -11,13 +11,13 @@ in
     i3lock-color
   ];
 
-  xsession = {
-    pointerCursor = {
-      package = pkgs.capitaine-cursors;
-      name = "capitaine-cursors";
-      size = 25;
-    };
+  gtk.cursorTheme = {
+    package = pkgs.bibata-cursors;
+    name = "bibata-classic";
+    size = 25;
+  };
 
+  xsession = {
     windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;

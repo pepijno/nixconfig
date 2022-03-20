@@ -28,8 +28,6 @@
       };
     };
 
-    mullvad-vpn.enable = true;
-
     udev = {
       path = [ "/etc/udev/rules.d/50-oryx.rules" ];
       extraRules = ''

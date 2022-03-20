@@ -39,9 +39,12 @@ in
     electrum
     discord
     torbrowserWithAudio
-    firefox-bin
+    firefox
     vivaldi
     vivaldi-widevine
     vivaldi-ffmpeg-codecs
+
+    ytmdl
+    spotdl
   ];
 }
