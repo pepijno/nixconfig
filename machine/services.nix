@@ -4,28 +4,8 @@
   services = {
     xserver = {
       enable = true;
-
-      desktopManager = {
-        xterm.enable = false;
-      };
-
-      displayManager = {
-        lightdm = {
-          enable = true;
-        };
-        autoLogin = {
-          enable = true;
-          user = "pepijn";
-        };
-      };
-
-      windowManager.i3 = {
-        enable = true;
-        package = pkgs.i3-gaps;
-        extraPackages = with pkgs; [
-          i3lock #default i3 screen locker
-        ];
-      };
+      desktopManager.xterm.enable = false;
+      displayManager.startx.enable = true;
     };
 
     udev = {

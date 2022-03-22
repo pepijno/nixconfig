@@ -7,15 +7,23 @@ let
   mod = "Mod1";
 in
 {
+  home.file.".xinitc".text = ''
+    #!/usr/bin/env sh
+
+    if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
+            eval $(dbus-launch --exit-with-session --sh-syntax)
+    fi
+    systemctl --user import-environment DISPLAY XAUTHORITY
+
+    if command -v dbus-update-activation-environment >/dev/null 2>&1; then
+            dbus-update-activation-environment DISPLAY XAUTHORITY
+    fi
+    exec dbus-launch --sh-syntax --exit-with-session i3
+  '';
+
   home.packages = with pkgs; [
     i3lock-color
   ];
-
-  gtk.cursorTheme = {
-    package = pkgs.bibata-cursors;
-    name = "bibata-classic";
-    size = 25;
-  };
 
   xsession = {
     windowManager.i3 = {
@@ -45,6 +53,10 @@ in
           { command = "${pkgs.pywal}/bin/wal -R"; }
           { command = "${restart-dunst}/bin/restart-dunst"; always = true; }
           { command = "${pkgs.betterlockscreen}/bin/betterlockscreen -u ~/Pictures/Wallpapers/"; always = true; notification = false; }
+          { command = "systemctl --user start dunst.service"; }
+          { command = "systemctl --user restart picom.service"; always = true; notification = false; }
+          { command = "systemctl --user restart polybar.service"; always = true; notification = false; }
+          { command = "systemctl --user restart redshift.service"; always = true; notification = false; }
         ];
         assigns = {
           "2: vivaldi" = [{ class = "Vivaldi"; }];
