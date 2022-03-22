@@ -22,6 +22,8 @@
     ./modules/services/polybar.nix
   ];
 
+  xdg.configFile."lvim/config.lua".source = ./config.lua;
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
