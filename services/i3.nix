@@ -38,7 +38,11 @@ in
           outer = 5;
           top = 47;
         };
-        fonts = [ "Noto sans 10" "FontAwesome 10" ];
+        fonts = {
+          names = [ "Noto" "FontAwesome" ];
+          style = "sans";
+          size = 10.0;
+        };
         window = {
           border = 0;
           hideEdgeBorders = "both";
