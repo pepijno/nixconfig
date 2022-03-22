@@ -2,25 +2,24 @@
 
 {
   imports = [
-    ./fonts.nix
-    ./packages.nix
+    ./modules/fonts.nix
+    ./modules/packages.nix
 
-    ./applications/alacritty.nix
-    ./applications/fish.nix
-    ./applications/git.nix
-    ./applications/tmux.nix
-    ./applications/bat.nix
+    ./modules/applications/alacritty.nix
+    ./modules/applications/fish.nix
+    ./modules/applications/git.nix
+    ./modules/applications/tmux.nix
+    ./modules/applications/bat.nix
 
-    ./applications/ranger/ranger.nix
-    # ./applications/vim/vim.nix
+    ./modules/applications/ranger/ranger.nix
 
-    ./services/backup.nix
-    ./services/betterlockscreen.nix
-    ./services/compton.nix
-    ./services/dunst.nix
-    ./services/i3.nix
-    ./services/redshift.nix
-    ./services/polybar.nix
+    ./modules/services/backup.nix
+    ./modules/services/betterlockscreen.nix
+    ./modules/services/compton.nix
+    ./modules/services/dunst.nix
+    ./modules/services/i3.nix
+    ./modules/services/redshift.nix
+    ./modules/services/polybar.nix
   ];
 
   # Let Home Manager install and manage itself.
