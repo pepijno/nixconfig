@@ -10,6 +10,7 @@
     ./modules/applications/git.nix
     ./modules/applications/tmux.nix
     ./modules/applications/bat.nix
+    ./modules/applications/neovim/neovim.nix
 
     ./modules/applications/ranger/ranger.nix
 
@@ -21,8 +22,6 @@
     ./modules/services/redshift.nix
     ./modules/services/polybar.nix
   ];
-
-  xdg.configFile."lvim/config.lua".source = ./config.lua;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

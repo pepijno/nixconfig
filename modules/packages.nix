@@ -33,7 +33,6 @@ in
     jdk11
     cargo
     maven
-    neovim
     ripgrep
 
     electrum
@@ -46,5 +45,6 @@ in
 
     ytmdl
     spotdl
+
   ];
 }
