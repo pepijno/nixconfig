@@ -10,7 +10,7 @@ pkgs.writeShellScriptBin "sysmenu" ''
   HIGHLIGHT_BACKGROUND=$color6
   HIGHLIGHT_FOREGROUND=$color0
   MENU="$(echo -e "  Lock\n  Logout\n  Suspend\n⏾  Hibernate\n  Reboot\n  Shutdown" \
-    | ${pkgs.dmenu}/bin/dmenu -i -l 6 \
+    | ${pkgs.dmenu}/bin/dmenu -i -l 20 \
     -p "System :" \
     -fn "Fantasque Sans Mono 10" \
     -nb $BACKGROUND \

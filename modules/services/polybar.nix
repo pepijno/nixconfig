@@ -27,6 +27,8 @@ in
 {
   home.packages = with pkgs; [
     libnotify
+    menu
+    sysmenu
   ];
 
   services.polybar = {

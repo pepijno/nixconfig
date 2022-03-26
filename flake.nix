@@ -16,11 +16,6 @@
     let
       localOverlay = self: super: {
         alb = ayu-light-bat;
-        dmenu = super.dmenu.overrideAttrs (oldAttrs: rec {
-          patches = [
-            ./patches/dmenu-mousesupport-5.1.diff
-          ];
-        });
       };
 
       pkgs = import nixpkgs {
