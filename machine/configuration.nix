@@ -11,6 +11,7 @@
       ./services.nix
       ./hardware.nix
       ./nix.nix
+      ./mullvad.nix
     ];
 
   networking = {
