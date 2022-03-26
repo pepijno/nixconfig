@@ -6,7 +6,7 @@ pkgs.writeShellScriptBin "menu" ''
   BACKGROUND=$color0
   HIGHLIGHT_BACKGROUND=$color6
   HIGHLIGHT_FOREGROUND=$color0
-  ${pkgs.dmenu}/bin/dmenu_run -i -l 20 \
+  ${pkgs.dmenu}/bin/dmenu_run -bw 8 -c -i -l 20 \
     -p "Applications :" \
     -fn "Fantasque Sans Mono 10" \
     -nb $BACKGROUND \

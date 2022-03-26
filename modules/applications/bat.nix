@@ -8,7 +8,7 @@
     };
 
     themes = {
-      ayu-light = builtins.readFile "${pkgs.alb}/ayu-light.tmTheme";
+      ayu-light = builtins.readFile "${pkgs.ayu-light-bat}/ayu-light.tmTheme";
     };
   };
 }

@@ -10,12 +10,15 @@
     };
 
     ayu-light-bat.url = "github:pepijno/ayu-light-bat";
+
+    dmenu.url = "github:pepijno/dmenu";
   };
 
-  outputs = { self, nixpkgs, home-manager, ayu-light-bat }@inputs:
+  outputs = { self, nixpkgs, home-manager, ayu-light-bat, dmenu }@inputs:
     let
       localOverlay = self: super: {
-        alb = ayu-light-bat;
+        inherit ayu-light-bat;
+        dmenu = dmenu.defaultPackage.${system};
       };
 
       pkgs = import nixpkgs {
