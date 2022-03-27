@@ -25,11 +25,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1648331457,
-        "narHash": "sha256-rd6XeOH1ApVMvOuRDDLlHMrU84kcvehLCcmacImAXe0=",
+        "lastModified": 1648336350,
+        "narHash": "sha256-Vpqo4f93lH1Cm/5hiNCE71N+I/nUS3NMvhLymvEJU8U=",
         "owner": "pepijno",
         "repo": "dmenu",
-        "rev": "a0e37bb5fbe9163414e32b62831cda81f11b6c68",
+        "rev": "1997b5ffbff9b8058b3ba9183671b7b13bb03ce2",
         "type": "github"
       },
       "original": {
