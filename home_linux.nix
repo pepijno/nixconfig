@@ -16,7 +16,7 @@
 
     ./modules/services/backup.nix
     ./modules/services/betterlockscreen.nix
-    ./modules/services/compton.nix
+    ./modules/services/picom.nix
     ./modules/services/dunst.nix
     # ./modules/services/i3.nix
     ./modules/services/xmonad.nix
