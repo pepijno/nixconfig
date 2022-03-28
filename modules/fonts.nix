@@ -13,5 +13,6 @@
     source-code-pro
     material-design-icons
     tamsyn
+    jetbrains-mono
   ];
 }

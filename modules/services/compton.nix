@@ -3,13 +3,14 @@
 {
   services.picom = {
     enable = true;
+    activeOpacity = "1.0";
+    inactiveOpacity = "0.8";
     backend = "glx";
     experimentalBackends = true;
     fade = true;
     fadeDelta = 5;
-    activeOpacity = "1.0";
-    inactiveOpacity = "1.0";
     vSync = true;
+    shadow = false;
     extraOptions = ''
       detect-client-opacity = true;
       detect-rounded-corners = true;

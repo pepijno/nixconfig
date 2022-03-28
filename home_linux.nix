@@ -18,7 +18,8 @@
     ./modules/services/betterlockscreen.nix
     ./modules/services/compton.nix
     ./modules/services/dunst.nix
-    ./modules/services/i3.nix
+    # ./modules/services/i3.nix
+    ./modules/services/xmonad.nix
     ./modules/services/redshift.nix
     ./modules/services/polybar.nix
   ];

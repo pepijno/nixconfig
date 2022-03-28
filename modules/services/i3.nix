@@ -7,7 +7,7 @@ let
   mod = "Mod1";
 in
 {
-  home.file.".xinitc".text = ''
+  home.file.".xinitrc".text = ''
     #!/usr/bin/env sh
 
     if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
@@ -18,7 +18,15 @@ in
     if command -v dbus-update-activation-environment >/dev/null 2>&1; then
             dbus-update-activation-environment DISPLAY XAUTHORITY
     fi
-    exec dbus-launch --sh-syntax --exit-with-session i3
+    exec ${pkgs.i3-gaps}/bin/i3
+  '';
+    # dbus-daemon --session --address="unix:path=/run/user/$(id -u)/bus" &
+    # systemctl --user import-environment DISPLAY XAUTHORITY
+    # systemctl --user start graphical-session.target
+
+  home.file.".xserverrc".text = ''
+    #!/usr/bin/env sh
+    exec /run/current-system/sw/bin/Xorg -nolisten tcp -nolisten local "$@" "vt""$XDG_VTNR"
   '';
 
   home.packages = with pkgs; [

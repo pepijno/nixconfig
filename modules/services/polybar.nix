@@ -40,9 +40,9 @@ in
     };
 
     script = ''
-      polybar -q -r primary &
-      polybar -q -r secondary &
-      polybar -q -r tertiary &
+      ${pkgs.polybar}/bin/polybar -q -r primary &
+      ${pkgs.polybar}/bin/polybar -q -r secondary &
+      ${pkgs.polybar}/bin/polybar -q -r tertiary &
     '';
 
     config = {
@@ -59,25 +59,15 @@ in
         line-size = 2;
         line-color = fg;
         override-redirect = true;
-        wm-restack = "i3";
 
         background = bg;
         foreground = fg;
 
-        font-0 = "Fantasque Sans Mono:pixelsize=10;3";
-        font-1 = "Iosevka Nerd Font:pixelsize=13;3";
-        # font-0 = "Tamsyn:pixelsize=12;0";
-        # font-1 = "Roboto:size=11:weight=bold;2";
-        # font-2 = "Noto Sans:size=11;1";
-        # font-3 = "Iosevka Nerd Font:size=18;3";
+        font-0 = "DejaVu Sans Mono:pixelsize=9;3";
+        font-1 = "Fantasque Sans Mono:pixelsize=10;3";
+        font-2 = "Iosevka Nerd Font:pixelsize=13;3";
 
         enable-ipc = true;
-
-        scroll-up = "i3wm-wsnext";
-        scroll-down = "i3wm-wsprev";
-
-        # modules-left = "menu workspaces terminal vivaldi firefox tor steam";
-        # modules-right = "filesystem swap memory cpu volume network date powermenu";
 
         offset-x = "10";
         offset-y = "10";
@@ -179,46 +169,6 @@ in
         label-occupied-foreground = coccupied;
       };
 
-      "module/terminal" = {
-        type = "custom/text";
-        content = "";
-        content-padding = 1;
-        content-foreground = fg-alt;
-        click-left = "${pkgs.rxvt-unicode-unwrapped}/bin/urxvt &";
-      };
-
-      "module/vivaldi" = {
-        type = "custom/text";
-        content = "";
-        content-padding = 1;
-        content-foreground = fg-alt;
-        click-left = "vivaldi &";
-      };
-
-      "module/firefox" = {
-        type = "custom/text";
-        content = "";
-        content-padding = 1;
-        content-foreground = fg-alt;
-        click-left = "firefox &";
-      };
-
-      "module/tor" = {
-        type = "custom/text";
-        content = "";
-        content-padding = 1;
-        content-foreground = fg-alt;
-        click-left = "tor-browser &";
-      };
-
-      "module/steam" = {
-        type = "custom/text";
-        content = "";
-        content-padding = 1;
-        content-foreground = fg-alt;
-        click-left = "steam &";
-      };
-
       "module/filesystem" = {
         type = "internal/fs";
         mount-0 = "/";
@@ -289,10 +239,7 @@ in
         type = "internal/date";
         interval = 1;
         label = " %time%";
-        # label-padding = 2;
-        # label-background = shade3;
         time = " %m-%d %H:%M:%S";
-        # time-alt = " %Y-%m-%d";
       };
 
       "module/powermenu" = {
