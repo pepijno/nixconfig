@@ -1,21 +1,31 @@
 { config, pkgs, ... }:
 
 {
+  systemd.services.upower.enable = true;
+
   services = {
+    upower.enable = true;
+
+    dbus = {
+      enable = true;
+      packages = [ pkgs.dconf ];
+    };
+
     xserver = {
       enable = true;
       desktopManager.xterm.enable = false;
-      displayManager = {
-        lightdm.enable = true;
-        autoLogin = {
-          enable = true;
-          user = "pepijn";
-        };
-      };
-      windowManager.i3 = {
-        enable = true;
-        package = pkgs.i3-gaps;
-      };
+      displayManager.startx.enable = true;
+      # displayManager = {
+      #   lightdm.enable = true;
+      #   autoLogin = {
+      #     enable = true;
+      #     user = "pepijn";
+      #   };
+      # };
+      # windowManager.i3 = {
+      #   enable = true;
+      #   package = pkgs.i3-gaps;
+      # };
     };
 
     udev = {
