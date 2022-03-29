@@ -17,51 +17,13 @@ in
     if command -v dbus-update-activation-environment >/dev/null 2>&1; then
             dbus-update-activation-environment DISPLAY XAUTHORITY
     fi
-    exec ${pkgs.haskellPackages.xmonad}/bin/xmonad
+    exec ${pkgs.haskellPackages.xmonad_0_17_0}/bin/xmonad
   '';
 
   home.file.".xserverrc".text = ''
     #!/usr/bin/env sh
     exec /run/current-system/sw/bin/Xorg -nolisten tcp -nolisten local "$@" "vt""$XDG_VTNR"
   '';
-
-  programs.xmobar = {
-    enable = true;
-    extraConfig = ''
-      Config { font = "xft:Liberation Mono:size=9:medium:antialias=true"
-         , bgColor = "#002b36" --"#1d1f21" --"#1c1c1c"
-         , fgColor = "#657b83"
-         , position = Top
-         --, position = TopSize C 100 35 -- use this if only using one monitor
-         --, position = Static { xpos = 0 , ypos = 0, width = 1920, height = 24 } --manually position bar to display on left monitor 
-         , lowerOnStart = False
-         , allDesktops = True
-         , overrideRedirect = False
-         , border = BottomBM 0
-         , borderColor = "#b58900"
-         , commands = [ Run Cpu
-                            ["-L","3","-H","50","--normal","#657b83","--high","#dc322f"] 10 
-                             
-                                  
-          -- cpu core temperature monitor
-          , Run CoreTemp       [ "--template" , "± <core0>°±<core1>°"
-                               , "--Low"      , "70"        -- units: °C
-                               , "--High"     , "80"        -- units: °C
-                               , "--low"      , "#657b83"
-                               , "--normal"   , "#859900"
-                               , "--high"     , "#dc322f"
-                               ] 50
-            , Run Network "enp3s0" ["-S", "True", "-t", "eth: <fc=#4eb4fa><rx></fc>/<fc=#4eb4fa><tx></fc>"] 10
-            , Run Memory ["-t","mem: <fc=#4eb4fa><usedbar> <usedratio>%</fc>"] 10
-            , Run Date "date: <fc=#4eb4fa>%a %d %b %Y %H:%M:%S </fc>" "date" 10
-            , Run StdinReader
-                      ]
-         , sepChar = "%"
-         , alignSep = "}{"
-         , template = " %StdinReader% }{ <fc=#6c71c4>%cpu%</fc> | <fc=#cb4b16>%coretemp%</fc>k | %network% | %memory% | %date%"
-         }
-    '';
-  };
 
   home.packages = with pkgs; [
     xorg.xmessage
@@ -74,7 +36,9 @@ in
       extraPackages = hp: [
         hp.dbus
         hp.monad-logger
-        hp.xmonad-contrib
+        hp.xmonad_0_17_0
+        hp.xmonad-contrib_0_17_0
+        hp.xmonad-extras_0_17_0
       ];
       config = pkgs.writeText "xmonad.hs" ''
         import Data.Monoid
@@ -84,10 +48,12 @@ in
         import XMonad.Hooks.DynamicLog
         import XMonad.Hooks.EwmhDesktops
         import XMonad.Hooks.ManageDocks
+        import XMonad.Hooks.ManageHelpers
         import XMonad.Layout.Gaps
         import XMonad.Layout.Spacing
         import XMonad.Util.Run
         import XMonad.Util.SpawnOnce
+        import XMonad.Actions.CopyWindow
 
         import qualified Codec.Binary.UTF8.String              as UTF8
         import qualified DBus                                  as D
@@ -119,7 +85,7 @@ in
             , ((modm,               xK_d     ), spawn "${menu}/bin/menu")
             , ((modm .|. shiftMask, xK_e     ), spawn "${sysmenu}/bin/sysmenu")
             , ((modm .|. shiftMask, xK_q     ), kill)
-            , ((modm,               xK_space ), sendMessage NextLayout)
+            , ((modm,               xK_f     ), sendMessage NextLayout)
             , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
             , ((modm,               xK_n     ), refresh)
             , ((modm,               xK_Tab   ), windows W.focusDown)
@@ -135,15 +101,20 @@ in
             , ((modm,               xK_t     ), withFocused $ windows . W.sink)
             , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
             , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
-            -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
+            , ((modm              , xK_b     ), sendMessage ToggleStruts)
             , ((modm .|. shiftMask, xK_c     ), io (exitWith ExitSuccess))
-            , ((modm              , xK_r     ), spawn "xmonad --restart")
+            , ((modm              , xK_r     ), spawn "${pkgs.haskellPackages.xmonad_0_17_0}/bin/xmonad --restart")
             , ((modm .|. shiftMask, xK_h     ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
             ]
             ++
             [((m .|. modm, k), windows $ f i)
                 | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
                 , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+            ++
+            [ ((modm .|. shiftMask .|. controlMask, xK_a), windows copyToAll)
+            , ((modm .|. shiftMask .|. controlMask, xK_z), killAllOtherCopies)
+            --, ((modm,                               xK_f), sendMessage $ Toggle Full)
+            ]
             ++
             [ ((modm .|. shiftMask, xK_b), spawn "${pkgs.vivaldi}/bin/vivaldi")
             , ((modm .|. shiftMask, xK_f), spawn "${pkgs.firefox}/bin/firefox")
@@ -168,17 +139,26 @@ in
                                                >> windows W.shiftMaster))
             ]
 
-        --myLayout = avoidStruts (spacingRaw True (Border 0 10 10 10) True (Border 10 10 10 10) True $ (gaps [(U,10), (D,10), (R,10), (L,10)] $ tiled ||| Full))
-        myLayout = avoidStruts (spacing 10 $ tiled ||| Full)
+        myLayout = avoidStruts (spacing 10 (tiled)) ||| Full
           where
              tiled   = Tall nmaster delta ratio
              nmaster = 1
              ratio   = 1/2
              delta   = 3/100
 
-        myManageHook = composeAll []
+        myManageHook = composeAll
+          [ manageDocks
+          , manageHook defaultConfig
+          , isFullscreen                                      --> (doF W.focusDown <+> doFullFloat)
+          , isDialog                                          --> doFloat
+          , className =? "Vivaldi-stable"                     --> doF (W.shift "2")
+          , className =? "firefox"                            --> doF (W.shift "3")
+          , className =? "Tor Browser"                        --> doF (W.shift "4")
+          , className =? "Steam"                              --> doF (W.shift "5")
+          , className =? "firefox" <&&> resource =? "Toolkit" --> doFloat
+          ]
 
-        myEventHook = mempty
+        myEventHook = fullscreenEventHook
 
         myLogHook = return ()
 
@@ -187,13 +167,15 @@ in
           spawnOnce "${pkgs.solaar}/bin/solaar"
           spawnOnce "/usr/lib/polkit-gnome-polkit-gnome-authentication-agent-1"
           spawnOnce  "systemctl --user start dunst.service"
-          spawnOnce "systemctl --user restart redshift.service"
+          spawnOnce "systemctl --user start redshift.service"
+          spawnOnce "systemctl --user start polybar.service"
+          spawnOnce "systemctl --user start xidlehook.service"
           spawn "${pkgs.xorg.xrandr}/bin/xrandr -s 1920x1080"
           spawn "${restart-dunst}/bin/restart-dunst"
           spawn "${pkgs.betterlockscreen}/bin/betterlockscreen -u ~/Pictures/Wallpapers/"
           spawn "systemctl --user restart picom.service"
 
-        defaults dbus = def {
+        defaults dbus = defaultConfig {
               -- simple stuff
                 terminal           = myTerminal,
                 focusFollowsMouse  = myFocusFollowsMouse,
@@ -212,7 +194,7 @@ in
                 layoutHook         = myLayout,
                 manageHook         = myManageHook,
                 handleEventHook    = myEventHook,
-                logHook            = myPolybarLogHook dbus,
+                logHook            = myLogHook,
                 startupHook        = myStartupHook
             }
 
@@ -271,15 +253,9 @@ in
             "mod-Shift-s Steam"]
 
         main' dbus = do
-          xmonad $ docks $ ewmh $ defaults dbus
+          xmonad $ docks $ ewmhFullscreen $ ewmh $ defaults dbus
 
         main = mkDbusClient >>= main'
-
-        myBar = "xmobar"
-
-        myPP = xmobarPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">" }
-
-        toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
         ------------------------------------------------------------------------
         -- Polybar settings (needs DBus client).
