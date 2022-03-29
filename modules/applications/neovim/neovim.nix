@@ -12,6 +12,10 @@
 
     sumneko-lua-language-server
     stylua
+
+    ghc
+    haskell-language-server
+    haskellPackages.brittany
   ];
 
   xdg.configFile."nvim".source = ./nvim;
