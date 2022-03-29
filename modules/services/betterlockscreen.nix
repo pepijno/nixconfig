@@ -2,14 +2,19 @@
 
 {
 
-  services.screen-locker = {
+  services.xidlehook = {
     enable = true;
-    inactiveInterval = 5;
-    lockCmd = "${pkgs.betterlockscreen}/bin/betterlockscreen -l dim";
-    xautolock = {
-      extraOptions = [
-        "Xautolock.killer: systemctl suspend"
-      ];
-    };
+    not-when-fullscreen = true;
+    not-when-audio = true;
+    timers = [
+      {
+        delay = 600;
+        command = "${pkgs.betterlockscreen}/bin/betterlockscreen -l dim";
+      }
+      {
+        delay = 600;
+        command = "systemctl hibernate";
+      }
+    ];
   };
 }
