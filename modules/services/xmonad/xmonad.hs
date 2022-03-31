@@ -16,6 +16,7 @@ import XMonad.Layout.Spacing
 import qualified XMonad.StackSet as W
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
+import Data.Maybe (fromJust)
 
 myTerminal = "${alacritty}/bin/alacritty"
 
@@ -30,6 +31,17 @@ myBorderWidth = 0
 myModMask = mod1Mask
 
 myWorkspaces = ["1", "2", "3", "4", "5"]
+
+actionPrefix, actionButton, actionSuffix :: [Char]
+actionPrefix = "<action=`xdotool key super+"
+actionButton = "` button="
+actionSuffix = "</action>"
+
+addActions :: [(String, Int)] -> String -> String
+addActions [] ws = ws
+addActions (x:xs) ws = addActions xs (actionPrefix ++ k ++ actionButton ++ show b ++ ">" ++ ws ++ actionSuffix)
+    where k = fst x
+          b = snd x
 
 myNormalBorderColor = "#dddddd"
 
@@ -59,7 +71,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
       ((modm, xK_period), sendMessage (IncMasterN (-1))),
       ((modm, xK_b), sendMessage ToggleStruts),
       ((modm .|. shiftMask, xK_c), io (exitWith ExitSuccess)),
-      ((modm, xK_r), spawn "${xmonad}/bin/xmonad --restart"),
+      ((modm, xK_r), spawn "pkill xmobar; ${xmonad}/bin/xmonad --restart"),
       ((modm .|. shiftMask, xK_h), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
     ]
       ++ [ ((m .|. modm, k), windows $ f i)
@@ -135,8 +147,9 @@ myStartupHook = do
   spawn "${restart-dunst}/bin/restart-dunst"
   spawn "${betterlockscreen}/bin/betterlockscreen -u ~/Pictures/Wallpapers/"
   spawn "systemctl --user restart picom.service"
+  spawn "killall trayer; ${trayer}/bin/trayer --monitor 2 --edge top --align right --widthtype request --padding 7 --iconspacing 10 --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 55 --tint 0x2B2E37  --height 29 --distance 5 &"
 
-defaults dbus =
+defaults =
   defaultConfig
     { -- simple stuff
       terminal = myTerminal,
@@ -215,50 +228,44 @@ help =
       "mod-Shift-s Steam"
     ]
 
-main' dbus = do
-  xmonad $ docks $ ewmhFullscreen $ ewmh $ defaults dbus
+main = xmonad =<< statusBar myBar myPP toggleStrutsKey defaults
 
-main = mkDbusClient >>= main'
+-- Command to launch the bar.
+myBar = "xmobar"
 
-------------------------------------------------------------------------
--- Polybar settings (needs DBus client).
---
-mkDbusClient :: IO D.Client
-mkDbusClient = do
-  dbus <- D.connectSession
-  D.requestName dbus (D.busName_ "org.xmonad.log") opts
-  return dbus
+
+grey1, grey2, grey3, grey4, cyan, orange :: String
+grey1  = "#2B2E37"
+grey2  = "#555E70"
+grey3  = "#697180"
+grey4  = "#8691A8"
+cyan   = "#8BABF0"
+orange = "#C45500"
+
+myWorkspaceIndices :: M.Map [Char] Integer
+myWorkspaceIndices = M.fromList $ zip myWorkspaces [1..]
+
+clickable :: [Char] -> [Char] -> [Char]
+clickable icon ws = addActions [ (show i, 1), ("q", 2), ("Left", 4), ("Right", 5) ] icon
+                    where i = fromJust $ M.lookup ws myWorkspaceIndices
+
+-- Custom PP, configure it as you like. It determines what is being written to the bar.
+myPP = xmobarPP
+  { ppSep =""
+  , ppWsSep = ""
+  , ppCurrent = xmobarColor cyan "" . clickable wsIconFull
+  , ppVisible = xmobarColor grey4 "" . clickable wsIconFull
+  , ppVisibleNoWindows = Just (xmobarColor grey4 "" . clickable wsIconFull)
+  , ppHidden = xmobarColor grey2 "" . clickable wsIconHidden
+  , ppHiddenNoWindows = xmobarColor grey2 "" . clickable wsIconEmpty
+  , ppUrgent = xmobarColor orange "" . clickable wsIconFull
+  , ppTitle = xmobarColor "#B4BCCD" "" . shorten 20
+  , ppOrder = \(ws:_:_:_) -> [ws]
+  }
   where
-    opts = [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
+    wsIconFull   = "  <fn=1>\xf111</fn>   "
+    wsIconHidden = "  <fn=1>\xf111</fn>   "
+    wsIconEmpty  = "  <fn=1>\xf10c</fn>   "
 
--- Emit a DBus signal on log updates
-dbusOutput :: D.Client -> String -> IO ()
-dbusOutput dbus str =
-  let opath = D.objectPath_ "/org/xmonad/Log"
-      iname = D.interfaceName_ "org.xmonad.Log"
-      mname = D.memberName_ "Update"
-      signal = D.signal opath iname mname
-      body = [D.toVariant $ UTF8.decodeString str]
-   in D.emit dbus $ signal {D.signalBody = body}
-
-polybarHook :: D.Client -> PP
-polybarHook dbus =
-  let wrapper c s
-        | s /= "NSP" = wrap ("%{F" <> c <> "} ") " %{F-}" s
-        | otherwise = mempty
-      blue = "#2E9AFE"
-      gray = "#7F7F7F"
-      orange = "#ea4300"
-      purple = "#9058c7"
-      red = "#722222"
-   in def
-        { ppOutput = dbusOutput dbus,
-          ppCurrent = wrapper blue,
-          ppVisible = wrapper gray,
-          ppUrgent = wrapper orange,
-          ppHidden = wrapper gray,
-          ppHiddenNoWindows = wrapper red,
-          ppTitle = wrapper purple . shorten 90
-        }
-
-myPolybarLogHook dbus = myLogHook <+> dynamicLogWithPP (polybarHook dbus)
+-- Key binding to toggle the gap for the bar.
+toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)

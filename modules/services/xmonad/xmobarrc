@@ -1,0 +1,61 @@
+Config
+   { font        = "xft:Ubuntu:weight=bold:pixelsize=12:antialias=true:hinting=true"
+   , additionalFonts = [ "xft:mononoki Nerd Font:pixelsize=15:antialias=true:hinting=true"
+                       , "xft:Font Awesome 5 Free Regular:pixelsize=13"
+                       , "xft:FontAwesome 5 Free Solid:pixelsize=14"
+                       , "xft:FontAwesome:pixelsize=10:bold"
+                       , "xft:FontAwesome 5 Free Solid:pixelsize=16"
+                       , "xft:Hack Nerd Font Mono:pixelsize=21"
+                       , "xft:Hack Nerd Font Mono:pixelsize=25"
+                       ]
+   , bgColor          = "#2B2E37"
+   , fgColor          = "#B4BCCD"
+   , position         = TopSize C 100 40
+   , textOffset       = 24
+   , textOffsets      = [ 25, 24 ]
+   , iconOffset       = -1
+   , alpha            = 200
+   , lowerOnStart     = True
+   , hideOnStart      = False
+   , allDesktops      = True
+   , overrideRedirect = True
+   , pickBroadest     = False
+   , persistent       = False
+   , sepChar          = "%"
+   , iconRoot         = "/home/pepijn/.config/xmobar/icons/"
+   , alignSep         = "}{"
+   , template         = "      <action=`${xdotool}/bin/xdotool key alt+d` button=1><icon=menu.xpm/></action>      %UnsafeStdinReader%}%date%{%dynnetwork% || %coretemp% || %multicpu% | %memory% | %swap% || %default:Master% || %disku% %trayerpad%"
+   , commands         = [ Run MultiCpu [ "--template" , "<fn=1>﬙</fn>  <total> %"
+                                       , "--Low"      , "50"        -- units: %
+                                       , "--High"     , "85"        -- units: %
+                                       , "--low"      , "#B4BCCD"
+                                       , "--normal"   , "#B4BCCD"
+                                       , "--high"     , "#fd0537"
+									   , "-m", "2", "-c", "0"
+                                       ] 10
+
+                        , Run CoreTemp [ "--template" , "<fn=1></fn> <core0> °C"
+                                       , "--Low"      , "2"         -- units: °C
+                                       , "--High"     , "80"        -- units: °C
+                                       , "--low"      , "#B4BCCD"
+                                       , "--normal"   , "#B4BCCD"
+                                       , "--high"     , "#fd0537"
+									   , "-m", "2", "-c", "  "
+                                       ] 10
+
+                        , Run Memory   [ "--template" ,"<fn=1></fn>  <usedratio> %"
+									   , "-m", "2", "-c", "0"
+                                       ] 10
+						, Run Swap [ "--template", "<fn=1></fn>   <usedratio> %"
+								   , "-m", "2", "-c", "0"
+								   ] 10
+						, Run Volume "default" "Master" ["-t", "<status><volume>%", "--", "-C", "#B4BCCD", "-O", "<fn=1>墳</fn>  ", "-o", "<fn=1>婢</fn>  "] 10
+						, Run DiskU [("/", "<fn=1>ﲂ</fn>  <free> |"), ("/home", "<fn=1>ﮟ</fn>  <free> |"), ("/backups", "<fn=1></fn>  <free>")] ["-S", "True"] 20
+                        , Run UnsafeStdinReader
+                        , Run Date "%Y-%m-%d  %H:%M:%S" "date" 10
+                        , Run Com "${trayer-padding}/bin/trayer-padding" [] "trayerpad" 10
+						, Run UnsafeXPropertyLog "_XMONAD_LOG_1"
+						, Run DynNetwork ["-L","0","-H","100", "-t", "<fn=1></fn>  <rx>KB|<fn=1></fn>  <tx>KB"] 10
+                        ]
+
+}
