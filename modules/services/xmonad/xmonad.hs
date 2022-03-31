@@ -30,10 +30,13 @@ myBorderWidth = 0
 
 myModMask = mod1Mask
 
-myWorkspaces = ["1", "2", "3", "4", "5"]
+-- myWorkspaces = ["1", "2", "3", "4", "5"]
+myWorkspaces = [" term ", " vivaldi ", " firefox ", " tor ", " steam "]
+myWorkspaceIndices = M.fromList $ zip myWorkspaces [1..]
+
 
 actionPrefix, actionButton, actionSuffix :: [Char]
-actionPrefix = "<action=`xdotool key super+"
+actionPrefix = "<action=`xdotool key alt+"
 actionButton = "` button="
 actionSuffix = "</action>"
 
@@ -124,10 +127,10 @@ myManageHook =
       manageHook defaultConfig,
       isFullscreen --> (doF W.focusDown <+> doFullFloat),
       isDialog --> doFloat,
-      className =? "Vivaldi-stable" --> doF (W.shift "2"),
-      className =? "firefox" --> doF (W.shift "3"),
-      className =? "Tor Browser" --> doF (W.shift "4"),
-      className =? "Steam" --> doF (W.shift "5"),
+      className =? "Vivaldi-stable" --> doF (W.shift $ myWorkspaces !! 1),
+      className =? "firefox" --> doF (W.shift $ myWorkspaces !! 2),
+      className =? "Tor Browser" --> doF (W.shift $ myWorkspaces !! 3),
+      className =? "Steam" --> doF (W.shift $ myWorkspaces !! 4),
       className =? "firefox" <&&> resource =? "Toolkit" --> doFloat
     ]
 
@@ -147,7 +150,7 @@ myStartupHook = do
   spawn "${restart-dunst}/bin/restart-dunst"
   spawn "${betterlockscreen}/bin/betterlockscreen -u ~/Pictures/Wallpapers/"
   spawn "systemctl --user restart picom.service"
-  spawn "killall trayer; ${trayer}/bin/trayer --monitor 2 --edge top --align right --widthtype request --padding 7 --iconspacing 10 --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 55 --tint 0x2B2E37  --height 29 --distance 5 &"
+  spawn "killall trayer; ${trayer}/bin/trayer --monitor 2 --edge top --align right --widthtype request --padding 7 --iconspacing 10 --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 35 --tint 0x2B2E37  --height 29 --distance 5 &"
 
 defaults =
   defaultConfig
@@ -239,28 +242,25 @@ grey1  = "#2B2E37"
 grey2  = "#555E70"
 grey3  = "#697180"
 grey4  = "#8691A8"
-cyan   = "#8BABF0"
+cyan   = "#98be65"
+cyan2   = "#8BABF0"
 orange = "#C45500"
 
-myWorkspaceIndices :: M.Map [Char] Integer
-myWorkspaceIndices = M.fromList $ zip myWorkspaces [1..]
-
-clickable :: [Char] -> [Char] -> [Char]
-clickable icon ws = addActions [ (show i, 1), ("q", 2), ("Left", 4), ("Right", 5) ] icon
+clickable ws = addActions [ (show i, 1), ("Left", 4), ("Right", 5) ] ws
                     where i = fromJust $ M.lookup ws myWorkspaceIndices
 
 -- Custom PP, configure it as you like. It determines what is being written to the bar.
 myPP = xmobarPP
-  { ppSep =""
-  , ppWsSep = ""
-  , ppCurrent = xmobarColor cyan "" . clickable wsIconFull
-  , ppVisible = xmobarColor grey4 "" . clickable wsIconFull
-  , ppVisibleNoWindows = Just (xmobarColor grey4 "" . clickable wsIconFull)
-  , ppHidden = xmobarColor grey2 "" . clickable wsIconHidden
-  , ppHiddenNoWindows = xmobarColor grey2 "" . clickable wsIconEmpty
-  , ppUrgent = xmobarColor orange "" . clickable wsIconFull
-  , ppTitle = xmobarColor "#B4BCCD" "" . shorten 20
-  , ppOrder = \(ws:_:_:_) -> [ws]
+  { ppSep ="<fc=" ++ orange ++ "> <fn=1>|</fn> </fc>"
+  , ppWsSep = "  "
+  , ppCurrent = xmobarColor cyan "" . wrap ("<box type=Bottom width=2 mb=2 color=" ++ cyan ++ ">") "</box>"
+  , ppVisible = xmobarColor grey4 "" . clickable
+  , ppHidden = xmobarColor grey4 "" . wrap ("<box type=Top width=2 mt=2 color=" ++ grey4 ++ ">") "</box>" . clickable
+  -- , ppHidden = xmobarColor grey2 "" . clickable
+  , ppHiddenNoWindows = xmobarColor grey2 "" . clickable
+  , ppUrgent = xmobarColor orange "" . clickable
+  , ppTitle = xmobarColor "#B4BCCD" "" . shorten 50
+  , ppOrder = \(ws:l:t:_) -> [ws, t]
   }
   where
     wsIconFull   = "  <fn=1>\xf111</fn>   "
