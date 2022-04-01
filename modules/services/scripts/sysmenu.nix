@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  systemctl = "/run/current-system/sw/bin/systemctl";
+  sw = "/run/current-system/sw";
 in
 pkgs.writeShellScriptBin "sysmenu" ''
   . ${config.home.homeDirectory}/.cache/wal/colors.sh
@@ -23,19 +23,19 @@ pkgs.writeShellScriptBin "sysmenu" ''
           ${pkgs.betterlockscreen}/bin/betterlockscreen --lock blur
           ;;
       *Logout)
-          ${pkgs.i3-gaps}/bin/i3-msg exit
+          ${pkgs.busybox}/bin/killall xmonad
           ;;
       *Suspend)
-          ${systemctl} suspend
+          ${sw}/bin/systemctl suspend
           ;;
       *Hibernate)
-          ${systemctl} hibernate
+          ${sw}/bin/systemctl hibernate
           ;;
       *Reboot)
-          ${systemctl} reboot
+          ${sw}/bin/systemctl reboot
           ;;
       *Shutdown)
-          ${systemctl} -i poweroff
+          ${sw}/bin/systemctl -i poweroff
           ;;
     esac
 ''

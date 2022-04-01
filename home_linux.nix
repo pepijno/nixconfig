@@ -18,10 +18,8 @@
     ./modules/services/betterlockscreen.nix
     ./modules/services/picom.nix
     ./modules/services/dunst.nix
-    # ./modules/services/i3.nix
     ./modules/services/xmonad/xmonad.nix
     ./modules/services/redshift.nix
-    ./modules/services/polybar.nix
   ];
 
   # Let Home Manager install and manage itself.

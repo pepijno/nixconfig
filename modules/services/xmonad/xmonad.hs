@@ -59,7 +59,7 @@ myKeys = [ ("M-<Return>",   spawn myTerminal)
          , ("M-t",          withFocused $ windows . W.sink)
          , ("M-b",          sendMessage ToggleStruts)
          , ("M-S-c",        io exitSuccess)
-         , ("M-r",          spawn "pkill xmobar; ${xmonad}/bin/xmonad --restart")
+         , ("M-r",          spawn "${busybox}/bin/killall xmobar; ${xmonad}/bin/xmonad --restart")
          , ("M-S-h",        spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
 
          , ("M-C-a", windows copyToAll)
@@ -102,13 +102,13 @@ myStartupHook = do
   spawnOnce "${pywal}/bin/wal -R"
   spawnOnce "${solaar}/bin/solaar"
   spawnOnce "/usr/lib/polkit-gnome-polkit-gnome-authentication-agent-1"
-  spawnOnce "systemctl --user start dunst.service"
-  spawnOnce "systemctl --user start redshift.service"
-  spawnOnce "systemctl --user start xidlehook.service"
+  spawnOnce "${sw}/bin/systemctl --user start dunst.service"
+  spawnOnce "${sw}/bin/systemctl --user start redshift.service"
+  spawnOnce "${sw}/bin/systemctl --user start xidlehook.service"
   spawn "${xrandr}/bin/xrandr -s 1920x1080"
   spawn "${betterlockscreen}/bin/betterlockscreen -u ~/Pictures/Wallpapers/"
-  spawn "systemctl --user restart picom.service"
-  spawn "killall trayer; ${start-trayer}/bin/start-trayer"
+  spawn "${sw}/bin/systemctl --user restart picom.service"
+  spawn "${busybox}/bin/killall trayer; ${start-trayer}/bin/start-trayer"
 
 defaults =
   defaultConfig { terminal          = myTerminal

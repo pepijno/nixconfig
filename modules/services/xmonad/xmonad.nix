@@ -5,6 +5,7 @@ let
   sysmenu = pkgs.callPackage ../scripts/sysmenu.nix { config = config; };
   trayer-padding = pkgs.callPackage ../scripts/trayer-padding.nix { config = config; };
   start-trayer = pkgs.callPackage ../scripts/start-trayer.nix { config = config; };
+  sw = "/run/current-system/sw";
 in
 {
   home.file.".xinitrc".text = ''
@@ -13,7 +14,7 @@ in
     if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
             eval $(dbus-launch --exit-with-session --sh-syntax)
     fi
-    systemctl --user import-environment DISPLAY XAUTHORITY
+    ${sw}/bin/systemctl --user import-environment DISPLAY XAUTHORITY
 
     if command -v dbus-update-activation-environment >/dev/null 2>&1; then
             dbus-update-activation-environment DISPLAY XAUTHORITY
@@ -41,8 +42,6 @@ in
       "${pkgs.xdotool}"
     ] (builtins.readFile ./xmobarrc);
   };
-
-  xdg.configFile."xmobar/icons/menu.xpm".source = ./menu.xpm;
 
   xsession = {
     windowManager.xmonad = {
@@ -72,6 +71,8 @@ in
         "\${trayer}"
         "\${xdotool}"
         "\${start-trayer}"
+        "\${busybox}"
+        "\${sw}"
       ] [
         "${pkgs.alacritty}"
         "${menu}"
@@ -89,6 +90,8 @@ in
         "${pkgs.trayer}"
         "${pkgs.xdotool}"
         "${start-trayer}"
+        "${pkgs.busybox}"
+        sw
       ]
         (builtins.readFile ./xmonad.hs)
       );

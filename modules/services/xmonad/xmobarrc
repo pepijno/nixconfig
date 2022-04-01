@@ -22,7 +22,6 @@ Config
    , pickBroadest     = False
    , persistent       = False
    , sepChar          = "%"
-   , iconRoot         = "/home/pepijn/.config/xmobar/icons/"
    , alignSep         = "}{"
    , template         = "  %UnsafeStdinReader%}{\
 						\<box type=Bottom width=2 mb=2 color=#c678dd><fc=#c678dd>%diskio%</fc></box>      \

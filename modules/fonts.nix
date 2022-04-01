@@ -7,7 +7,6 @@
     noto-fonts
     fantasque-sans-mono
     # nerdfonts
-    # these are manually installed because we don't want all fonts
-    (pkgs.nerdfonts.override { fonts = [ "Mononoki" "Hack" ]; })
+    (pkgs.nerdfonts.override { fonts = [ "Mononoki" "Iosevka" "DroidSansMono" ]; })
   ];
 }

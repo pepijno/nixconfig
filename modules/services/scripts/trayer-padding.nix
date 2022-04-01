@@ -1,8 +1,5 @@
 { config, pkgs, ... }:
 
-let
-  systemctl = "/run/current-system/sw/bin/systemctl";
-in
 pkgs.writeShellScriptBin "trayer-padding" ''
   # Detects the width of running window with name given as first
   # argument (xprop name '$1') and creates an XPM icon of that width,

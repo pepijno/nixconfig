@@ -1,7 +1,9 @@
 { config, pkgs, ... }:
 
+let
+  sw = "/run/current-system/sw";
+in
 {
-
   services.xidlehook = {
     enable = true;
     not-when-fullscreen = true;
@@ -13,7 +15,7 @@
       }
       {
         delay = 600;
-        command = "systemctl hibernate";
+        command = "${sw}/bin/systemctl hibernate";
       }
     ];
   };
