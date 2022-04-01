@@ -1,42 +1,34 @@
-import qualified Codec.Binary.UTF8.String as UTF8
-import qualified DBus as D
-import qualified DBus.Client as D
 import qualified Data.Map as M
-import Data.Monoid
-import Graphics.X11.ExtraTypes.XF86
-import System.Exit
+import System.Exit (exitSuccess)
 import XMonad
-import XMonad.Actions.CopyWindow
+import XMonad.Actions.CopyWindow (copy, killAllOtherCopies, copyToAll)
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.EwmhDesktops (ewmh, ewmhFullscreen)
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers
-import XMonad.Layout.Gaps
-import XMonad.Layout.Spacing
+import XMonad.Hooks.ManageHelpers (isDialog, doFullFloat, isFullscreen)
+import XMonad.Layout.Spacing (spacing)
 import qualified XMonad.StackSet as W
-import XMonad.Util.Run
-import XMonad.Util.SpawnOnce
+import XMonad.Util.SpawnOnce (spawnOnce)
+import XMonad.Util.EZConfig (additionalKeysP)
+import XMonad.Actions.MouseResize (mouseResize)
+import XMonad.Layout.WindowArranger (windowArrange)
+import XMonad.Layout.Fullscreen (fullscreenFull, fullscreenFloat)
+import qualified XMonad.Util.Hacks as Hacks
+
 import Data.Maybe (fromJust)
 
+myTerminal :: String
 myTerminal = "${alacritty}/bin/alacritty"
 
-myFocusFollowsMouse :: Bool
-myFocusFollowsMouse = True
-
-myClickJustFocuses :: Bool
-myClickJustFocuses = False
-
-myBorderWidth = 0
-
-myModMask = mod1Mask
-
--- myWorkspaces = ["1", "2", "3", "4", "5"]
+myWorkspaces :: [String]
 myWorkspaces = [" term ", " vivaldi ", " firefox ", " tor ", " steam "]
+
+myWorkspaceIndices :: M.Map String Int
 myWorkspaceIndices = M.fromList $ zip myWorkspaces [1..]
 
 
 actionPrefix, actionButton, actionSuffix :: [Char]
-actionPrefix = "<action=`xdotool key alt+"
+actionPrefix = "<action=`${xdotool}/bin/xdotool key alt+"
 actionButton = "` button="
 actionSuffix = "</action>"
 
@@ -46,97 +38,65 @@ addActions (x:xs) ws = addActions xs (actionPrefix ++ k ++ actionButton ++ show 
     where k = fst x
           b = snd x
 
-myNormalBorderColor = "#dddddd"
+myKeys :: [(String, X())]
+myKeys = [ ("M-<Return>",   spawn myTerminal)
+         , ("M-d",          spawn "${menu}/bin/menu")
+         , ("M-S-e",        spawn "${sysmenu}/bin/sysmenu")
+         , ("M-S-q",        kill)
+         , ("M-f",          sendMessage NextLayout >> sendMessage ToggleStruts)
+         -- , ("M-S-<Space>", setLayout myLayout)
+         , ("M-n",          refresh)
+         , ("M-<Tab>",      windows W.focusDown)
+         , ("M-S-<Tab>",    windows W.focusUp)
+         , ("M-j",          windows W.focusDown)
+         , ("M-k",          windows W.focusUp)
+         , ("M-m",          windows W.focusMaster)
+         , ("M-S-<Return>", windows W.swapMaster)
+         , ("M-S-j",        windows W.swapDown)
+         , ("M-S-k",        windows W.swapUp)
+         , ("M-h",          sendMessage Shrink)
+         , ("M-l",          sendMessage Expand)
+         , ("M-t",          withFocused $ windows . W.sink)
+         , ("M-b",          sendMessage ToggleStruts)
+         , ("M-S-c",        io exitSuccess)
+         , ("M-r",          spawn "pkill xmobar; ${xmonad}/bin/xmonad --restart")
+         , ("M-S-h",        spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
 
-myFocusedBorderColor = "#ff0000"
+         , ("M-C-a", windows copyToAll)
+         , ("M-C-z", killAllOtherCopies)
 
-myKeys conf@XConfig {XMonad.modMask = modm} =
-  M.fromList $
-    [ ((modm, xK_Return), spawn $ XMonad.terminal conf),
-      ((modm, xK_d), spawn "${menu}/bin/menu"),
-      ((modm .|. shiftMask, xK_e), spawn "${sysmenu}/bin/sysmenu"),
-      ((modm .|. shiftMask, xK_q), kill),
-      ((modm, xK_f), sendMessage NextLayout),
-      ((modm .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf),
-      ((modm, xK_n), refresh),
-      ((modm, xK_Tab), windows W.focusDown),
-      ((modm .|. shiftMask, xK_Tab), windows W.focusUp),
-      ((modm, xK_j), windows W.focusDown),
-      ((modm, xK_k), windows W.focusUp),
-      ((modm, xK_m), windows W.focusMaster),
-      ((modm .|. shiftMask, xK_Return), windows W.swapMaster),
-      ((modm .|. shiftMask, xK_j), windows W.swapDown),
-      ((modm .|. shiftMask, xK_k), windows W.swapUp),
-      ((modm, xK_h), sendMessage Shrink),
-      ((modm, xK_l), sendMessage Expand),
-      ((modm, xK_t), withFocused $ windows . W.sink),
-      ((modm, xK_comma), sendMessage (IncMasterN 1)),
-      ((modm, xK_period), sendMessage (IncMasterN (-1))),
-      ((modm, xK_b), sendMessage ToggleStruts),
-      ((modm .|. shiftMask, xK_c), io (exitWith ExitSuccess)),
-      ((modm, xK_r), spawn "pkill xmobar; ${xmonad}/bin/xmonad --restart"),
-      ((modm .|. shiftMask, xK_h), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
-    ]
-      ++ [ ((m .|. modm, k), windows $ f i)
-           | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9],
-             (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
-         ]
-      ++ [ ((modm .|. shiftMask .|. controlMask, xK_a), windows copyToAll),
-           ((modm .|. shiftMask .|. controlMask, xK_z), killAllOtherCopies)
-           --, ((modm,                               xK_f), sendMessage $ Toggle Full)
-         ]
-      ++ [ ((modm .|. shiftMask, xK_b), spawn "${vivaldi}/bin/vivaldi"),
-           ((modm .|. shiftMask, xK_f), spawn "${firefox}/bin/firefox"),
-           ((modm .|. shiftMask, xK_o), spawn "${tor}/bin/tor-browser"),
-           ((modm .|. shiftMask, xK_s), spawn "${steam}/bin/steam")
-         ]
-      ++ [ ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%"),
-           ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%"),
-           ((0, xF86XK_AudioMute), spawn "pactl set-sink-volume @DEFAULT_SINK@ toggle"),
-           ((0, xF86XK_AudioPlay), spawn "${playerctl}/bin/playerctl play"),
-           ((0, xF86XK_AudioPause), spawn "${playerctl}/bin/playerctl pause"),
-           ((0, xF86XK_AudioNext), spawn "${playerctl}/bin/playerctl next"),
-           ((0, xF86XK_AudioPrev), spawn "${playerctl}/bin/playerctl previous")
-         ]
+         , ("M-S-b", spawn "${vivaldi}/bin/vivaldi")
+         , ("M-S-f", spawn "${firefox}/bin/firefox")
+         , ("M-S-o", spawn "${tor}/bin/tor-browser")
+         , ("M-S-s", spawn "${steam}/bin/steam")
 
-myMouseBindings XConfig {XMonad.modMask = modm} =
-  M.fromList
-    [ ( (modm, button1),
-        \w ->
-          focus w >> mouseMoveWindow w
-            >> windows W.shiftMaster
-      ),
-      ((modm, button2), \w -> focus w >> windows W.shiftMaster),
-      ( (modm, button3),
-        \w ->
-          focus w >> mouseResizeWindow w
-            >> windows W.shiftMaster
-      )
-    ]
+         , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
+         , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
+         , ("<XF86AudioMute>",        spawn "pactl set-sink-volume @DEFAULT_SINK@ toggle")
+         , ("<XF86AudioPlay>",        spawn "${playerctl}/bin/playerctl play")
+         , ("<XF86AudioPause>",       spawn "${playerctl}/bin/playerctl pause")
+         , ("<XF86AudioNext>",        spawn "${playerctl}/bin/playerctl next")
+         , ("<XF86AudioPrev>",        spawn "${playerctl}/bin/playerctl previous")
+         ]
+      ++ [ ("M-" ++ show k, windows $ W.greedyView i)| (i, k) <- zip myWorkspaces [1..9]]
+      ++ [ ("M-S-" ++ show k, windows $ W.shift i)| (i, k) <- zip myWorkspaces [1..9]]
+      ++ [ ("M-C-" ++ show k, windows $ copy i)| (i, k) <- zip myWorkspaces [1..9]]
 
-myLayout = avoidStruts (spacing 10 tiled) ||| Full
+myLayout = mouseResize $ windowArrange layouts
   where
-    tiled = Tall nmaster delta ratio
-    nmaster = 1
-    ratio = 1 / 2
-    delta = 3 / 100
+    layouts = avoidStruts (spacing 10 tiled) ||| (fullscreenFloat . fullscreenFull) Full
+    tiled = Tall 1 (1/2) (3/100)
 
 myManageHook =
   composeAll
-    [ manageDocks,
-      manageHook defaultConfig,
-      isFullscreen --> (doF W.focusDown <+> doFullFloat),
-      isDialog --> doFloat,
-      className =? "Vivaldi-stable" --> doF (W.shift $ myWorkspaces !! 1),
-      className =? "firefox" --> doF (W.shift $ myWorkspaces !! 2),
-      className =? "Tor Browser" --> doF (W.shift $ myWorkspaces !! 3),
-      className =? "Steam" --> doF (W.shift $ myWorkspaces !! 4),
+    [ isFullscreen                                      --> (doF W.focusDown <+> doFullFloat),
+      isDialog                                          --> doFloat,
+      className =? "Vivaldi-stable"                     --> doShift (myWorkspaces !! 1),
+      className =? "firefox"                            --> doShift (myWorkspaces !! 2),
+      className =? "Tor Browser"                        --> doShift (myWorkspaces !! 3),
+      className =? "Steam"                              --> doShift (myWorkspaces !! 4),
       className =? "firefox" <&&> resource =? "Toolkit" --> doFloat
-    ]
-
-myEventHook = fullscreenEventHook
-
-myLogHook = return ()
+    ] <+> manageDocks
 
 myStartupHook = do
   spawnOnce "${pywal}/bin/wal -R"
@@ -150,29 +110,21 @@ myStartupHook = do
   spawn "${restart-dunst}/bin/restart-dunst"
   spawn "${betterlockscreen}/bin/betterlockscreen -u ~/Pictures/Wallpapers/"
   spawn "systemctl --user restart picom.service"
-  spawn "killall trayer; ${trayer}/bin/trayer --monitor 2 --edge top --align right --widthtype request --padding 7 --iconspacing 10 --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 35 --tint 0x2B2E37  --height 29 --distance 5 &"
+  spawn "killall trayer; ${start-trayer}/bin/start-trayer"
 
 defaults =
-  defaultConfig
-    { -- simple stuff
-      terminal = myTerminal,
-      focusFollowsMouse = myFocusFollowsMouse,
-      clickJustFocuses = myClickJustFocuses,
-      borderWidth = myBorderWidth,
-      modMask = myModMask,
-      workspaces = myWorkspaces,
-      normalBorderColor = myNormalBorderColor,
-      focusedBorderColor = myFocusedBorderColor,
-      -- key bindings
-      keys = myKeys,
-      mouseBindings = myMouseBindings,
-      -- hooks, layouts
-      layoutHook = myLayout,
-      manageHook = myManageHook,
-      handleEventHook = myEventHook,
-      logHook = myLogHook,
-      startupHook = myStartupHook
-    }
+  defaultConfig { terminal          = myTerminal
+                , focusFollowsMouse = True
+                , clickJustFocuses  = False
+                , borderWidth       = 0
+                , modMask           = mod1Mask
+                , workspaces        = myWorkspaces
+
+                , layoutHook        = myLayout
+                , manageHook        = myManageHook
+                , startupHook       = myStartupHook
+                , handleEventHook   = Hacks.trayerAboveXmobarEventHook
+    } `additionalKeysP` myKeys
 
 help :: String
 help =
@@ -231,41 +183,30 @@ help =
       "mod-Shift-s Steam"
     ]
 
-main = xmonad =<< statusBar myBar myPP toggleStrutsKey defaults
+main = xmonad =<< statusBar myBar myPP toggleStrutsKey (ewmhFullscreen $ ewmh defaults)
 
--- Command to launch the bar.
 myBar = "xmobar"
 
-
-grey1, grey2, grey3, grey4, cyan, orange :: String
-grey1  = "#2B2E37"
+grey1, grey2, gray3, green, orange :: String
+grey1  = "#B4BCCD"
 grey2  = "#555E70"
-grey3  = "#697180"
-grey4  = "#8691A8"
-cyan   = "#98be65"
-cyan2   = "#8BABF0"
+gray3  = "#8691A8"
+green  = "#98be65"
 orange = "#C45500"
 
 clickable ws = addActions [ (show i, 1), ("Left", 4), ("Right", 5) ] ws
                     where i = fromJust $ M.lookup ws myWorkspaceIndices
 
--- Custom PP, configure it as you like. It determines what is being written to the bar.
 myPP = xmobarPP
   { ppSep ="<fc=" ++ orange ++ "> <fn=1>|</fn> </fc>"
   , ppWsSep = "  "
-  , ppCurrent = xmobarColor cyan "" . wrap ("<box type=Bottom width=2 mb=2 color=" ++ cyan ++ ">") "</box>"
-  , ppVisible = xmobarColor grey4 "" . clickable
-  , ppHidden = xmobarColor grey4 "" . wrap ("<box type=Top width=2 mt=2 color=" ++ grey4 ++ ">") "</box>" . clickable
-  -- , ppHidden = xmobarColor grey2 "" . clickable
+  , ppCurrent = xmobarColor green "" . wrap ("<box type=Bottom width=2 mb=2 color=" ++ green ++ ">") "</box>"
+  , ppVisible = xmobarColor gray3 "" . clickable
+  , ppHidden = xmobarColor gray3 "" . wrap ("<box type=Top width=2 mt=2 color=" ++ gray3 ++ ">") "</box>" . clickable
   , ppHiddenNoWindows = xmobarColor grey2 "" . clickable
   , ppUrgent = xmobarColor orange "" . clickable
-  , ppTitle = xmobarColor "#B4BCCD" "" . shorten 50
+  , ppTitle = xmobarColor grey1 "" . shorten 50
   , ppOrder = \(ws:l:t:_) -> [ws, t]
   }
-  where
-    wsIconFull   = "  <fn=1>\xf111</fn>   "
-    wsIconHidden = "  <fn=1>\xf111</fn>   "
-    wsIconEmpty  = "  <fn=1>\xf10c</fn>   "
 
--- Key binding to toggle the gap for the bar.
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)

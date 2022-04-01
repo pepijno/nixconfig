@@ -5,6 +5,7 @@ let
   menu = pkgs.callPackage ../scripts/menu.nix { config = config; };
   sysmenu = pkgs.callPackage ../scripts/sysmenu.nix { config = config; };
   trayer-padding = pkgs.callPackage ../scripts/trayer-padding.nix { config = config; };
+  start-trayer = pkgs.callPackage ../scripts/start-trayer.nix { config = config; };
 in
 {
   home.file.".xinitrc".text = ''
@@ -29,7 +30,6 @@ in
 
   home.packages = with pkgs; [
     xorg.xmessage
-    xdotool
   ];
 
   programs.xmobar = {
@@ -72,6 +72,8 @@ in
         "\${restart-dunst}"
         "\${betterlockscreen}"
         "\${trayer}"
+        "\${xdotool}"
+        "\${start-trayer}"
       ] [
         "${pkgs.alacritty}"
         "${menu}"
@@ -88,6 +90,8 @@ in
         "${restart-dunst}"
         "${pkgs.betterlockscreen}"
         "${pkgs.trayer}"
+        "${pkgs.xdotool}"
+        "${start-trayer}"
       ]
         (builtins.readFile ./xmonad.hs)
       );
