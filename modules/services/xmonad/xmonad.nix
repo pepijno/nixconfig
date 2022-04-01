@@ -1,7 +1,6 @@
 { config, pkgs, libs, ... }:
 
 let
-  restart-dunst = pkgs.callPackage ../scripts/restart-dunst.nix { config = config; };
   menu = pkgs.callPackage ../scripts/menu.nix { config = config; };
   sysmenu = pkgs.callPackage ../scripts/sysmenu.nix { config = config; };
   trayer-padding = pkgs.callPackage ../scripts/trayer-padding.nix { config = config; };
@@ -69,7 +68,6 @@ in
         "\${pywal}"
         "\${solaar}"
         "\${xrandr}"
-        "\${restart-dunst}"
         "\${betterlockscreen}"
         "\${trayer}"
         "\${xdotool}"
@@ -87,7 +85,6 @@ in
         "${pkgs.pywal}"
         "${pkgs.solaar}"
         "${pkgs.xorg.xrandr}"
-        "${restart-dunst}"
         "${pkgs.betterlockscreen}"
         "${pkgs.trayer}"
         "${pkgs.xdotool}"

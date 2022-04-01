@@ -1,134 +1,80 @@
 { config, pkgs, lib, ... }:
 
-with lib;
-
-let
-
-  toDunstIni = generators.toINI {
-    mkKeyValue = key: value:
-      let
-        value' = if isBool value then
-          (if value then "yes" else "no")
-        else if isString value then
-          ''"${value}"''
-        else
-          toString value;
-      in "${key}=${value'}";
-  };
-
-  launch-dunst = pkgs.callPackage ./scripts/launch-dunst.nix {};
-
-in {
-  home.packages = [
-    pkgs.dunst
-    launch-dunst
-  ];
-
-  xdg.dataFile."dbus-1/services/org.knopwob.dunst.service".source =
-    "${pkgs.dunst}/share/dbus-1/services/org.knopwob.dunst.service";
-
-  services.dunst.settings.global.icon_path = let
-    basePaths = [
-      "/run/current-system/sw"
-      config.home.profileDirectory
-    ];
-
-    themes = [
-    ];
-
-    categories = [
-      "actions"
-      "animations"
-      "apps"
-      "categories"
-      "devices"
-      "emblems"
-      "emotes"
-      "filesystem"
-      "intl"
-      "legacy"
-      "mimetypes"
-      "places"
-      "status"
-      "stock"
-    ];
-  in concatStringsSep ":" (concatMap (theme:
-    concatMap (basePath:
-      map (category:
-        "${basePath}/share/icons/${theme.name}/${theme.size}/${category}")
-      categories) basePaths) themes);
-
-  systemd.user.services.dunst = {
-    Unit = {
-      Description = "Dunst notification daemon";
-      After = [ "graphical-session-pre.target" ];
-      PartOf = [ "graphical-session.target" ];
-    };
-
-    Service = {
-      Type = "dbus";
-      BusName = "org.freedesktop.Notifications";
-      ExecStart = "${launch-dunst}/bin/launch-dunst ${config.home.homeDirectory}/.cache/wal/colors.sh";
-      Environment = "DISPLAY=:0";
-    };
-  };
-
-  xdg.configFile."dunst/dunstrc" = {
-    text = toDunstIni {
+{
+  services.dunst = {
+    enable = true;
+    settings = {
       global = {
-        monitor = 0;
-        follow = "mouse";
-        geometry = "300x5-30+20";
+        notification_limit = 0;
+        follow = "none";
+        width = 250;
+        height = 250;
+        origin = "top-right";
+        scale = 0;
+        offset = "15x55";
+        progress_bar = true;
+        progress_bar_height = 10;
+        progress_bar_frame_width = 1;
+        progress_bar_min_width = 150;
+        progress_bar_max_width = 400;
         indicate_hidden = "yes";
-        shrink = "no";
-        transparency = 10;
-        notification_height = 0;
-        separator_height = 2;
-        padding = 8;
-        horizontal_padding = 8;
-        frame_width = 3;
-        frame_color = "#aaaaaa";
-        separator_color = "frame";
+        transparency = 30;
+        separator_height = 3;
+        padding = 20;
+        horizontal_padding = 20;
+        text_icon_padding = 0;
+        frame_width = 0;
+        frame_color = "#8BABF000";
         sort = "yes";
-        idle_threshold = 120;
-        font = "DejaVu Sans Mono 10";
-        line_height = 4;
+        font = "xft:Ubuntu:weight=bold:pixelsize=12:antialias=true:hinting=true";
+        line_height = 0;
         markup = "full";
-        format = "%s %p %I\\n%b";
-        alignment = "left";
-        show_age_threshold = 30;
-        word_wrap = "yes";
+        format = "<b>%s</b>\n%b";
+        alignment = "center";
+        vertical_alignment = "center";
+        show_age_threshold = 60;
         ellipsize = "middle";
-        stack_duplicates = true;
         ignore_newline = "no";
+        stack_duplicates = true;
         hide_duplicate_count = false;
         show_indicators = "yes";
         icon_position = "left";
-        max_icon_size = 32;
+        min_icon_size = 0;
+        max_icon_size = 128;
         sticky_history = "yes";
         history_length = 20;
-        startup_notification = false;
+        always_run_script = true;
+        title = "Dunst";
+        class = "Dunst";
+        corner_radius = 2;
+        ignore_dbusclose = false;
+        force_xwayland = false;
+        force_xinerama = false;
+        mouse_left_click = "close_current";
+        mouse_middle_click = "do_action, close_current";
+        mouse_right_click = "close_all";
+        startup_notification = true;
       };
 
       urgency_low = {
+        background = "#2B2E37";
+        foreground = "#929AAD";
         timeout = 10;
       };
 
       urgency_normal = {
+        background = "#2B2E37";
+        foreground = "#929AAD";
         timeout = 10;
       };
 
       urgency_critical = {
+        background = "#ff6c6b";
+        foreground = "#e8e8e8";
+        frame_color = "#eade00";
+        frame_width = 4;
         timeout = 0;
       };
     };
-    onChange = ''
-      pkillVerbose=""
-      if [[ -v VERBOSE ]]; then
-        pkillVerbose="-e"
-      fi
-      $DRY_RUN_CMD ${pkgs.procps}/bin/pkill -u $USER $pkillVerbose dunst || true
-      unset pkillVerbose
-    '';
   };
 }
