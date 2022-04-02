@@ -107,7 +107,6 @@ myStartupHook = do
   spawnOnce "${sw}/bin/systemctl --user start xidlehook.service"
   spawn "${xrandr}/bin/xrandr -s 1920x1080"
   spawn "${betterlockscreen}/bin/betterlockscreen -u ~/Pictures/Wallpapers/"
-  spawn "${sw}/bin/systemctl --user restart picom.service"
   spawn "${busybox}/bin/killall trayer; ${start-trayer}/bin/start-trayer"
 
 defaults =

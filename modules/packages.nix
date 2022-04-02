@@ -46,5 +46,6 @@ in
     ytmdl
     spotdl
 
+    libnotify
   ];
 }
