@@ -20,7 +20,7 @@ in
             dbus-update-activation-environment DISPLAY XAUTHORITY
     fi
     xsetroot -cursor_name left_ptr
-    exec dbus-launch --sh-syntax --exit-with-session ${pkgs.haskellPackages.xmonad_0_17_0}/bin/xmonad
+    exec dbus-launch --sh-syntax --exit-with-session ${pkgs.haskellPackages.xmonad}/bin/xmonad
   '';
 
   home.file.".xserverrc".text = ''
@@ -50,9 +50,9 @@ in
       extraPackages = hp: [
         hp.dbus
         hp.monad-logger
-        hp.xmonad_0_17_0
-        hp.xmonad-contrib_0_17_0
-        hp.xmonad-extras_0_17_0
+        hp.xmonad
+        hp.xmonad-contrib
+        hp.xmonad-extras
       ];
       config = pkgs.writeText "xmonad.hs" (builtins.replaceStrings [
         "\${alacritty}"
@@ -77,7 +77,7 @@ in
         "${pkgs.alacritty}"
         "${menu}"
         "${sysmenu}"
-        "${pkgs.haskellPackages.xmonad_0_17_0}"
+        "${pkgs.haskellPackages.xmonad}"
         "${pkgs.vivaldi}"
         "${pkgs.firefox}"
         "${pkgs.tor-browser-bundle-bin}"
