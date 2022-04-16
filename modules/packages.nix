@@ -47,5 +47,7 @@ in
     spotdl
 
     libnotify
+
+    obsidian
   ];
 }

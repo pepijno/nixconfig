@@ -4,9 +4,6 @@
   home.packages = with pkgs; [
     neovim
 
-    rnix-lsp
-    nixfmt
-
     uncrustify
     clang-tools
 

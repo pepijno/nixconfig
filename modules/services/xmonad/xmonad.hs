@@ -99,7 +99,6 @@ myManageHook =
     ] <+> manageDocks
 
 myStartupHook = do
-  spawnOnce "${pywal}/bin/wal -R"
   spawnOnce "${solaar}/bin/solaar"
   spawnOnce "/usr/lib/polkit-gnome-polkit-gnome-authentication-agent-1"
   spawnOnce "${sw}/bin/systemctl --user start dunst.service"

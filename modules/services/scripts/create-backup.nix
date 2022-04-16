@@ -75,6 +75,7 @@ pkgs.writeShellScriptBin "create-backup" ''
           --human-readable \
           --inplace \
           --numeric-ids \
+          --exclude ".local/share/Steam/"
           $source_dir \
           $bkp_dir/full_$time
       if [ $? -ne 0 ]; then
@@ -94,6 +95,7 @@ pkgs.writeShellScriptBin "create-backup" ''
           --numeric-ids \
           --delete \
           --link-dest=$prev \
+          --exclude ".local/share/Steam/"
           $source_dir \
           $bkp_dir/$time
       if [ $? -ne 0 ]; then

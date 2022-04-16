@@ -25,6 +25,11 @@
         inherit system;
       };
 
+      buildInputs = with pkgs; [
+        rnix-lsp
+        nixfmt
+      ];
+
       system = "x86_64-linux";
     in
     {
@@ -59,5 +64,9 @@
         };
       };
       # pepijn = self.homeConfigurations.pepijn.activationPackage;
+
+      devShell.${system} = pkgs.mkShell {
+        inherit buildInputs;
+      };
     };
 }
