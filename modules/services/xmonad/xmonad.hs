@@ -14,6 +14,7 @@ import XMonad.Actions.MouseResize (mouseResize)
 import XMonad.Layout.WindowArranger (windowArrange)
 import XMonad.Layout.Fullscreen (fullscreenFull, fullscreenFloat)
 import qualified XMonad.Util.Hacks as Hacks
+import XMonad.Layout.NoBorders
 
 import Data.Maybe (fromJust)
 
@@ -84,8 +85,8 @@ myKeys = [ ("M-<Return>",   spawn myTerminal)
 
 myLayout = mouseResize $ windowArrange layouts
   where
-    layouts = avoidStruts (spacing 10 tiled) ||| (fullscreenFloat . fullscreenFull) Full
-    tiled = Tall 1 (1/2) (3/100)
+    layouts = avoidStruts $ smartBorders tiled ||| (fullscreenFloat . fullscreenFull) Full
+    tiled = Tall 1 (3/100) (1/2)
 
 myManageHook =
   composeAll
@@ -112,7 +113,8 @@ defaults =
   defaultConfig { terminal          = myTerminal
                 , focusFollowsMouse = True
                 , clickJustFocuses  = False
-                , borderWidth       = 0
+                , focusedBorderColor = "#888"
+                , borderWidth       = 4
                 , modMask           = mod1Mask
                 , workspaces        = myWorkspaces
 

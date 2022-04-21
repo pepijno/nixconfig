@@ -4,6 +4,9 @@
   home.packages = with pkgs; [
     neovim
 
+    rnix-lsp
+    nixfmt
+
     uncrustify
     clang-tools
 
@@ -13,6 +16,9 @@
     ghc
     haskell-language-server
     haskellPackages.brittany
+
+    zig
+    zls
   ];
 
   xdg.configFile."nvim".source = ./nvim;
