@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 
 {
+  home.packages = with pkgs; [
+    tmux-mem-cpu-load
+  ];
   programs.tmux = {
     enable = true;
     baseIndex = 1;
@@ -10,13 +13,11 @@
     terminal = "screen-256color-bce";
 
     extraConfig = ''
+      # reload source file with '<C-a>r'
       unbind r
       bind r source-file ~/.config/tmux/tmux.conf \; display 'Reloaded tmux config.'
 
-      bind -n M-Left select-pane -L
-      bind -n M-Right select-pane -R
-      bind -n M-Up select-pane -U
-      bind -n M-Down select-pane -D
+      # enable mouse support
       set -g mouse on
 
       set-option -g default-terminal "screen-256color-bce"
@@ -27,16 +28,6 @@
 
       # Redraw the client (if interrupted by wall, etc)
       bind R refresh-client
-
-      unbind v
-      unbind C-v
-      bind-key v split-window -h
-      bind-key C-v split-window -h
-
-      unbind h
-      unbind C-h
-      bind-key h split-window
-      bind-key C-h split-window
 
       # Ctrl - w or w to kill panes
       unbind w
@@ -50,21 +41,35 @@
       bind-key q kill-session
       bind-key C-q kill-session
 
-      set-option -g status on
-      set-option -g status-interval 1
-      set-option -g status-justify centre
-      set-option -g status-keys vi
+      # enable utf8 status line
+      set -g status-utf8 on
+
+      # status line
+      set -g status-style bg='#2b2e37',fg='#ecbe7b'
+      set -g status-interval 1
       set-option -g status-position bottom
-      set-option -g status-left-length 20
-      set-option -g status-left-style default
-      set-option -g status-left "#H • #(uname -r)"
-      set-option -g status-right-length 140
-      set-option -g status-right-style default
-      set-option -g status-right "#(tmux-mem-cpu-load) "
-      set-option -ag status-right "#(uptime | cut -f 7-7 -d ' ' | cut -f 1-1 -d ',') "
-      set-option -ag status-right " %H:%M:%S %Y-%m-%d"
-      set -sa terminal-overrides ",xterm-256color:RGB"
-      set -ga terminal-overrides ",xterm-256color:Tc"
+
+      # status left
+      # are we controlling tmux or the content of the panes?
+      set -g status-left '#[bg=#b4bccd]#[fg=#2b2e37]#{?client_prefix,#[bg=#c678dd],} ☺ '
+      # are we zoomed into a pane?
+      set -ga status-left '#[bg=#2b2e37]#[fg=#ff6c6b] #{?window_zoomed_flag, ↕  ,   }'
+
+      set -g status-left-length 6
+      set -g status-right-length 250
+
+      # window status
+      set -g status-justify left
+      set-window-option -g window-status-style fg='#ecbe7b',bg=default
+      set-window-option -g window-status-current-style fg='#ff79c6',bg='#2b2e36'
+      set -g window-status-current-format "#[fg=#2b2e37]#[bg=#ecbe7b]#[fg=#2b2e37]#[bg=#ecbe7b] #I #W #[fg=#ecbe7b]#[bg=#2b2e37]"
+      set -g window-status-format "#[fg=#f8f8f2]#[bg=#2b2e37]#I #W#[fg=#2b2e37]"
+      set-window-option -g window-status-activity-style fg='#2b2e37',bg='#51afef'
+
+      # status right
+      set -g status-right '#[fg=#ff6c6b,bg=#2b2e37]#[fg=#2b2e37,bg=#ff6c6b] #(tmux-mem-cpu-load -g 5 --interval 1) '
+      set -ga status-right '#[fg=#98be65,bg=#ff6c6b]#[fg=#2b2e37,bg=#98be65] #(uptime | cut -f 4-5 -d " " | cut -f 1 -d ",") '
+      set -ga status-right '#[fg=#51afef,bg=#98be65]#[fg=#f8f8f2,bg=#51afef] %a %H:%M %d-%m-%Y '
 
       set-option -sg escape-time 10
       set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support

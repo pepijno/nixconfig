@@ -7,6 +7,6 @@
     noto-fonts
     fantasque-sans-mono
     # nerdfonts
-    (pkgs.nerdfonts.override { fonts = [ "Mononoki" "Iosevka" "DroidSansMono" ]; })
+    (pkgs.nerdfonts.override { fonts = [ "DejaVuSansMono" "FiraCode" "Mononoki" "Iosevka" "DroidSansMono" ]; })
   ];
 }

@@ -13,7 +13,6 @@ in
   nixpkgs.config.pulseaudio = true;
   home.packages = with pkgs; [
     bash
-    pywal
     imagemagick
     # nix-du
     wget
