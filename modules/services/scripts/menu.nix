@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 pkgs.writeShellScriptBin "menu" ''
-  ${pkgs.dmenu}/bin/dmenu_run -bw 8 -c -i -l 20 \
-    -p "Applications :" \
-    -fn "Fantasque Sans Mono 10"
+  ${pkgs.rofi}/bin/rofi -no-lazy-grab -show drun \
+      -display-drun "Applications :" -drun-display-format "{name}" \
+      -hide-scrollbar true
 ''

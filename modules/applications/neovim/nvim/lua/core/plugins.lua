@@ -53,6 +53,12 @@ packer.startup({
 				require("configs.lualine").config()
 			end,
 		})
+		use({
+			"norcalli/nvim-colorizer.lua",
+			config = function()
+				require("configs.colorizer").config()
+			end,
+		})
 
 		----------------
 		-- Nvim Tree  --

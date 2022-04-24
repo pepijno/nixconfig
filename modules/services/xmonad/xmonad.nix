@@ -28,10 +28,6 @@ in
     exec /run/current-system/sw/bin/Xorg -nolisten tcp -nolisten local "$@" "vt""$XDG_VTNR"
   '';
 
-  home.packages = with pkgs; [
-    xorg.xmessage
-  ];
-
   programs.xmobar = {
     enable = true;
     extraConfig = builtins.replaceStrings [

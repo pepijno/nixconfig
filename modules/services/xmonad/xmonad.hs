@@ -60,7 +60,6 @@ myKeys = [ ("M-<Return>",   spawn myTerminal)
          , ("M-b",          sendMessage ToggleStruts)
          , ("M-S-c",        io exitSuccess)
          , ("M-r",          spawn "${busybox}/bin/killall xmobar; ${xmonad}/bin/xmonad --restart")
-         , ("M-S-h",        spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
 
          , ("M-C-a", windows copyToAll)
          , ("M-C-z", killAllOtherCopies)
@@ -121,63 +120,6 @@ defaults =
                 , startupHook       = myStartupHook
                 , handleEventHook   = Hacks.trayerAboveXmobarEventHook
     } `additionalKeysP` myKeys
-
-help :: String
-help =
-  unlines
-    [ "The default modifier key is 'alt'. Default keybindings:",
-      "",
-      "-- launching and killing programs",
-      "mod-Enter        Launch xterminal",
-      "mod-d            Launch menu",
-      "mod-Shift-e      Launch sydmenu",
-      "mod-Shift-q      Close/kill the focused window",
-      "mod-Space        Rotate through the available layout algorithms",
-      "mod-Shift-Space  Reset the layouts on the current workSpace to default",
-      "mod-n            Resize/refresh viewed windows to the correct size",
-      "",
-      "-- move focus up or down the window stack",
-      "mod-Tab        Move focus to the next window",
-      "mod-Shift-Tab  Move focus to the previous window",
-      "mod-j          Move focus to the next window",
-      "mod-k          Move focus to the previous window",
-      "mod-m          Move focus to the master window",
-      "",
-      "-- modifying the window order",
-      "mod-Shift-Return   Swap the focused window and the master window",
-      "mod-Shift-j        Swap the focused window with the next window",
-      "mod-Shift-k        Swap the focused window with the previous window",
-      "",
-      "-- resizing the master/slave ratio",
-      "mod-h  Shrink the master area",
-      "mod-l  Expand the master area",
-      "",
-      "-- floating layer support",
-      "mod-t  Push window back into tiling; unfloat and re-tile it",
-      "",
-      "-- increase or decrease number of windows in the master area",
-      "mod-comma  (mod-,)   Increment the number of windows in the master area",
-      "mod-period (mod-.)   Deincrement the number of windows in the master area",
-      "",
-      "-- quit, or restart",
-      "mod-Shift-c  Quit xmonad",
-      "mod-r        Restart xmonad",
-      "",
-      "-- Workspaces & screens",
-      "mod-[1..9]   Switch to workSpace N",
-      "mod-Shift-[1..9]   Move client to workspace N",
-      "",
-      "-- Mouse bindings: default actions bound to mouse events",
-      "mod-button1  Set the window to floating mode and move by dragging",
-      "mod-button2  Raise the window to the top of the stack",
-      "mod-button3  Set the window to floating mode and resize by dragging",
-      "",
-      "-- Programs",
-      "mod-Shift-b Vivaldi",
-      "mod-Shift-f Firefox",
-      "mod-Shift-o Tor",
-      "mod-Shift-s Steam"
-    ]
 
 main = xmonad =<< statusBar myBar myPP toggleStrutsKey (ewmhFullscreen $ ewmh defaults)
 

@@ -4,11 +4,11 @@ let
   sw = "/run/current-system/sw";
 in
 pkgs.writeShellScriptBin "sysmenu" ''
-  MENU="$(echo -e "  Lock\n  Logout\n  Suspend\n⏾  Hibernate\n  Reboot\n  Shutdown" \
-    | ${pkgs.dmenu}/bin/dmenu -bw 8 -c -i -l 20 \
-    -p "System :" \
-    -fn "Fantasque Sans Mono 10" \
-    )"
+  MENU="$(${pkgs.rofi}/bin/rofi -no-lazy-grab -sep "|" -dmenu -i -p 'System :' \
+    -hide-scrollbar true \
+    -show-icons \
+    -icon-theme "Papirus" \
+    <<< "  Lock|  Logout|  Suspend|⏾  Hibernate|  Reboot|  Shutdown")"
     case "$MENU" in
       *Lock)
           ${pkgs.betterlockscreen}/bin/betterlockscreen --lock blur

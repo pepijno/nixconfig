@@ -66,8 +66,10 @@
 
       # status right
       set -g status-right '#[fg=#ff6c6b,bg=#2b2e37]#[fg=#2b2e37,bg=#ff6c6b] #(tmux-mem-cpu-load -g 5 --interval 1) '
-      set -ga status-right '#[fg=#98be65,bg=#ff6c6b]#[fg=#2b2e37,bg=#98be65] #(uptime | cut -f 4-5 -d " " | cut -f 1 -d ",") '
-      set -ga status-right '#[fg=#51afef,bg=#98be65]#[fg=#f8f8f2,bg=#51afef] %a %H:%M %d-%m-%Y '
+      set -ga status-right '#[fg=#2b2e37,bg=#ff6c6b]'
+      set -ga status-right '#[fg=#98be65,bg=#2b2e37]#[fg=#2b2e37,bg=#98be65] #(uptime | cut -f 4-5 -d " " | cut -f 1 -d ",") '
+      set -ga status-right '#[fg=#2b2e37,bg=#98be65]'
+      set -ga status-right '#[fg=#51afef,bg=#2b2e37]#[fg=#f8f8f2,bg=#51afef] %a %H:%M %d-%m-%Y '
 
       set-option -sg escape-time 10
       set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support

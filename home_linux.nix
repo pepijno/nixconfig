@@ -10,6 +10,7 @@
     ./modules/applications/git.nix
     ./modules/applications/tmux.nix
     ./modules/applications/bat.nix
+    ./modules/applications/rofi.nix
     ./modules/applications/neovim/neovim.nix
 
     ./modules/applications/ranger/ranger.nix
