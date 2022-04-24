@@ -1,7 +1,7 @@
 local M = {}
 
 vim.opt.fileencoding = "utf-8" -- File content encoding for the buffer
-vim.opt.mouse = "a" -- Enable mouse support
+vim.opt.mouse = "n" -- Disable mouse support
 vim.opt.relativenumber = true -- Show relative numberline
 vim.opt.number = true -- Show numberline
 vim.opt.hlsearch = true -- Highlight all the matches of search pattern

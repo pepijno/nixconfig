@@ -39,6 +39,15 @@ function M.setup()
 	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
 		border = "rounded",
 	})
+
+	local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+	local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+	if not status_ok then
+		return
+	end
+
+	M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 end
 
 local function lsp_highlight_document(client)
@@ -56,50 +65,22 @@ local function lsp_highlight_document(client)
 	end
 end
 
-local function lsp_keymaps(bufnr)
-	local opts = { noremap = true, silent = true }
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "go", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
-	vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
-end
-
 M.on_attach = function(client, bufnr)
-	if client.name == "tsserver" then
-		client.resolved_capabilities.document_formatting = false
-	elseif client.name == "jsonls" then
-		client.resolved_capabilities.document_formatting = false
-	elseif client.name == "html" then
-		client.resolved_capabilities.document_formatting = false
-	elseif client.name == "sumneko_lua" then
-		client.resolved_capabilities.document_formatting = false
-	end
-
-	lsp_keymaps(bufnr)
 	lsp_highlight_document(client)
 end
 
-M.load_server = function(server)
+M.load_server = function(server, configs)
 	local status_ok, lsp_config = pcall(require, "lspconfig")
 	if not status_ok then
 		return
 	end
-	lsp_config[server].setup({})
+	if not configs then
+		configs = {}
+	end
+	configs.on_attach = M.on_attach
+	lsp_config[server].setup(configs)
 	local bufnr = vim.api.nvim_get_current_buf()
 	lsp_config[server].manager.try_add_wrapper(bufnr)
 end
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not status_ok then
-	return
-end
-
-M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 
 return M

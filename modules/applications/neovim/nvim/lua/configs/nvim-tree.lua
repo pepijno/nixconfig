@@ -6,11 +6,7 @@ function M.config()
 		return
 	end
 
-	local g = vim.g
-
-	g.nvim_tree_indent_markers = 1
-
-	g.nvim_tree_icons = {
+	vim.g.nvim_tree_icons = {
 		default = "",
 		symlink = "",
 		git = {
@@ -49,12 +45,12 @@ function M.config()
 			"startify",
 			"alpha",
 		},
-		auto_close = true,
 		open_on_tab = false,
 		quit_on_open = false,
 		hijack_cursor = true,
 		hide_root_folder = true,
 		update_cwd = true,
+		nvim_tree_indent_markers = true,
 		update_focused_file = {
 			enable = true,
 			update_cwd = true,

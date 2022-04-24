@@ -75,11 +75,13 @@ function M.config()
 					["<C-k>"] = actions.cycle_history_prev,
 					["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
 					["<CR>"] = actions.select_default + actions.center,
+					["kj"] = actions.close,
 				},
 				n = {
 					["<C-n>"] = actions.move_selection_next,
 					["<C-p>"] = actions.move_selection_previous,
 					["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+					["kj"] = actions.close,
 				},
 			},
 		},
