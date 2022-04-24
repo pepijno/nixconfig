@@ -51,11 +51,9 @@
 
       # status left
       # are we controlling tmux or the content of the panes?
-      set -g status-left '#[bg=#b4bccd]#[fg=#2b2e37]#{?client_prefix,#[bg=#c678dd],} ☺ '
-      # are we zoomed into a pane?
-      set -ga status-left '#[bg=#2b2e37]#[fg=#ff6c6b] #{?window_zoomed_flag, ↕  ,   }'
+      set -g status-left "#[bg=#b4bccd]#[fg=#2b2e37]#{?client_prefix,#[bg=#c678dd],} ☺ #[bg=#2b2e37]#[fg=#b4bccd]#{?client_prefix,#[fg=#c678dd],}"
 
-      set -g status-left-length 6
+      set -g status-left-length 4
       set -g status-right-length 250
 
       # window status
@@ -63,7 +61,7 @@
       set-window-option -g window-status-style fg='#ecbe7b',bg=default
       set-window-option -g window-status-current-style fg='#ff79c6',bg='#2b2e36'
       set -g window-status-current-format "#[fg=#2b2e37]#[bg=#ecbe7b]#[fg=#2b2e37]#[bg=#ecbe7b] #I #W #[fg=#ecbe7b]#[bg=#2b2e37]"
-      set -g window-status-format "#[fg=#f8f8f2]#[bg=#2b2e37]#I #W#[fg=#2b2e37]"
+      set -g window-status-format "#[fg=#f8f8f2]#[bg=#2b2e37] #I #W#[fg=#2b2e37]"
       set-window-option -g window-status-activity-style fg='#2b2e37',bg='#51afef'
 
       # status right
