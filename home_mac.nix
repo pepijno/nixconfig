@@ -2,13 +2,13 @@
 
 {
   imports = [
-    ./fonts.nix
+    ./modules/fonts.nix
 
-    ./applications/alacritty.nix
-    ./applications/tmux.nix
+    ./modules/applications/alacritty.nix
+    ./modules/applications/tmux.nix
 
-    ./applications/ranger/ranger.nix
-    ./applications/vim/vim.nix
+    ./modules/applications/ranger/ranger.nix
+    ./modules/applications/neovim/neovim.nix
   ];
 
   home.packages = with pkgs; [

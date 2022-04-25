@@ -28,6 +28,7 @@
       ];
 
       system = "x86_64-linux";
+	  system_darwin = "x86_64-darwin";
     in
     {
       homeConfigurations = {
@@ -49,6 +50,25 @@
               ];
             };
 
+        };
+        pepijn_mac = home-manager.lib.homeManagerConfiguration {
+          system = system_darwin;
+          username = "poverbeeke";
+          homeDirectory = "/Users/poverbeeke";
+          stateVersion = "21.03";
+          configuration = { config, pkgs, ayu-light-bat, ... }:
+            {
+              nixpkgs.overlays = [
+                localOverlay
+              ];
+              nixpkgs.config = {
+                allowUnfree = true;
+                allowBroken = true;
+              };
+              imports = [
+                ./home_mac.nix
+              ];
+            };
         };
       };
       nixosConfigurations = {
