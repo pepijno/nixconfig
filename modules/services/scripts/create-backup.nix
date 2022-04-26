@@ -66,6 +66,12 @@ pkgs.writeShellScriptBin "create-backup" ''
       fi
   done
 
+  dirs=(.local/share/Steam .cache/)
+  excludes=()
+  for f in "''${dirs[@]}"
+  do
+      excludes+=(--exclude "$f")
+  done
   if [ "$prev" == "0" ]; then
       ${echo} "Creating full backup..."
       ${pkgs.rsync}/bin/rsync \
@@ -75,7 +81,7 @@ pkgs.writeShellScriptBin "create-backup" ''
           --human-readable \
           --inplace \
           --numeric-ids \
-          --exclude ".local/share/Steam/" \
+          "''${excludes[@]}" \
           $source_dir \
           $bkp_dir/full_$time
       if [ $? -ne 0 ]; then
@@ -95,7 +101,7 @@ pkgs.writeShellScriptBin "create-backup" ''
           --numeric-ids \
           --delete \
           --link-dest=$prev \
-          --exclude ".local/share/Steam/" \
+          "''${excludes[@]}" \
           $source_dir \
           $bkp_dir/$time
       if [ $? -ne 0 ]; then
