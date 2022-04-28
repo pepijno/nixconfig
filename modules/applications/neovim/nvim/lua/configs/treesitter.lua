@@ -27,6 +27,7 @@ function M.config()
 			"fish",
 			"make",
 			"vim",
+			"java",
 		},
 		highlight = {
 			enable = true,

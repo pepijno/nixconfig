@@ -76,7 +76,6 @@ packer.startup({
 		----------------
 		use({
 			"nvim-treesitter/nvim-treesitter",
-			branch = vim.fn.has("nvim-0.6") == 1 and "master" or "0.5-compat",
 			run = ":TSUpdate",
 			event = "BufRead",
 			cmd = {

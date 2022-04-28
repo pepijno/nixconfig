@@ -48,5 +48,7 @@ in
     libnotify
 
     obsidian
+    openrct2
+    wine
   ];
 }
