@@ -44,6 +44,8 @@
               ];
               nixpkgs.config = {
                 allowUnfree = true;
+                allowNonfree = true;
+                allowUnfreePredicate = (pkg: true);
               };
               imports = [
                 ./home_linux.nix
@@ -82,7 +84,7 @@
       };
       # pepijn = self.homeConfigurations.pepijn.activationPackage;
 
-      devShell.${system} = pkgs.mkShell {
+      devShells.${system}.default = pkgs.mkShell {
         inherit buildInputs;
       };
     };

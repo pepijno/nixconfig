@@ -9,10 +9,16 @@
     };
 
     opengl = {
+      enable = true;
+      driSupport = true;
       driSupport32Bit = true;
-      extraPackages32 = with pkgs.pkgsi686Linux;
-        [ libva ]
-        ++ lib.optionals config.services.pipewire.enable [ pipewire ];
+      extraPackages = with pkgs; [
+        amdvlk
+      ];
+      extraPackages32 = with pkgs; [
+        pkgsi686Linux.libva
+        driversi686Linux.amdvlk
+      ] ++ lib.optionals config.services.pipewire.enable [ pipewire ];
     };
 
     logitech.wireless = {

@@ -1,9 +1,6 @@
 { pkgs, config, ... }:
 
 let
-  steam = pkgs.steam.override {
-    extraPkgs = pkgs: with pkgs; [ pango harfbuzz libthai ];
-  };
   torbrowserWithAudio = pkgs.tor-browser-bundle-bin.override {
     audioSupport = true;
     mediaSupport = true;
@@ -23,6 +20,7 @@ in
     # minecraft
     steam
     steam-run
+    lutris
     hicolor-icon-theme
     # dosbox
     ltunify
@@ -49,6 +47,5 @@ in
 
     obsidian
     openrct2
-    wine
   ];
 }

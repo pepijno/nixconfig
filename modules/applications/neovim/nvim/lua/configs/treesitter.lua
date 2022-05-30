@@ -43,7 +43,7 @@ function M.config()
 		},
 		incremental_selection = {
 			enable = true,
-			keymaps ={
+			keymaps = {
 				node_incremental = "<C-h>",
 				node_decremental = "<C-l>",
 			},
