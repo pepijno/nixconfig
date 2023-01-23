@@ -9,7 +9,7 @@
     ./modules/applications/fish.nix
     ./modules/applications/git.nix
     ./modules/applications/tmux.nix
-    ./modules/applications/bat.nix
+    # ./modules/applications/bat.nix
     ./modules/applications/rofi.nix
     ./modules/applications/neovim/neovim.nix
 
@@ -18,10 +18,12 @@
     ./modules/services/backup.nix
     ./modules/services/betterlockscreen.nix
     ./modules/services/dunst.nix
-    ./modules/services/picom.nix
     ./modules/services/xmonad/xmonad.nix
     ./modules/services/redshift.nix
   ];
+  home.username = "pepijn";
+  home.homeDirectory = "/home/pepijn";
+  home.stateVersion = "21.03";
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

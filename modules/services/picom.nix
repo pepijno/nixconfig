@@ -3,7 +3,7 @@
 {
   services.picom = {
     enable = true;
-    blur = true;
+    # blur = true;
     opacityRule = [ "91:class_i ?= 'alacritty'" ];
     activeOpacity = "1.0";
     inactiveOpacity = "1.0";
@@ -13,7 +13,7 @@
     fadeDelta = 5;
     vSync = true;
     shadow = false;
-    extraOptions = ''
+    settings = ''
       detect-client-opacity = true;
       detect-rounded-corners = true;
       corner-radius = 0;

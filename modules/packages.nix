@@ -47,5 +47,9 @@ in
 
     obsidian
     openrct2
+
+    playonlinux
+
+    # nixgl.nixGLIntel
   ];
 }

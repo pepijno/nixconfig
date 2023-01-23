@@ -82,7 +82,7 @@ function M.config()
 			s = { "<cmd>Telescope lsp_document_symbols bufnr=0 theme=get_ivy<cr>", "Document Symbols" },
 			S = { "<cmd>Telescope lsp_dynamic_workspace_symbols bufnr=0 theme=get_ivy<cr>", "Workspace Symbols" },
 			a = { "<cmd>Telescope lsp_code_actions bufnr=0 theme=get_ivy<cr>", "Workspace Symbols" },
-			f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
+			f = { "<cmd>lua vim.lsp.buf.format { async = true }<cr>", "Format" },
 			r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
 			h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "Hover" },
 			j = { "<cmd>lua vim.diagnostic.goto_next()<cr>", "Next Diagnostic" },

@@ -29,7 +29,6 @@ function M.config()
 					path = "[path]",
 					luasnip = "[snip]",
 					gh_issues = "[issues]",
-					tn = "[TabNine]",
 				},
 			}),
 		},
@@ -74,11 +73,11 @@ function M.config()
 			["<tab>"] = cmp.config.disable,
 		},
 		sources = {
+			{ name = "buffer" },
 			{ name = "nvim_lua" },
 			{ name = "nvim_lsp" },
 			{ name = "path" },
 			{ name = "luasnip" },
-			{ name = "buffer", keyword_length = 5 },
 		},
 	})
 end

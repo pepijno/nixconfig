@@ -12,7 +12,7 @@ function M.config()
 		["namespace.type"] = "TSNamespaceType",
 	}
 
-	require("nvim-treesitter.highlight").set_custom_captures(custom_captures)
+	-- require("nvim-treesitter.highlight").set_custom_captures(custom_captures)
 
 	treesitter.setup({
 		sync_install = false,

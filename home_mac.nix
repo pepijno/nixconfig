@@ -12,7 +12,7 @@
   ];
 
   home.packages = with pkgs; [
-    bat
+    # bat
     fd
     nix-prefetch-git
   ];

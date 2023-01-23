@@ -242,12 +242,12 @@ packer.startup({
 		------------------------
 		-- Indentation guides --
 		------------------------
-		use({
-			"lukas-reineke/indent-blankline.nvim",
-			config = function()
-				require("configs.indent-line").config()
-			end,
-		})
+		--[[ use({ ]]
+		--[[ 	"lukas-reineke/indent-blankline.nvim", ]]
+		--[[ 	config = function() ]]
+		--[[ 		require("configs.indent-line").config() ]]
+		--[[ 	end, ]]
+		--[[ }) ]]
 
 		---------------
 		-- Which key --

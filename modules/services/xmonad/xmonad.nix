@@ -68,6 +68,7 @@ in
         "\${start-trayer}"
         "\${busybox}"
         "\${sw}"
+        "\${feh}"
       ] [
         "${pkgs.alacritty}"
         "${menu}"
@@ -86,6 +87,7 @@ in
         "${start-trayer}"
         "${pkgs.busybox}"
         sw
+        "${pkgs.feh}"
       ]
         (builtins.readFile ./xmonad.hs)
       );

@@ -9,5 +9,5 @@ require("core.autocmds")
 require("core.plugins")
 require("core.mappings")
 
-require("configs.gruvbox").config()
 require("configs.treesitter").config()
+require("configs.gruvbox").config()

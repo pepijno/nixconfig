@@ -1,18 +1,18 @@
 Config
-   { font        = "xft:Ubuntu:weight=bold:pixelsize=12:antialias=true:hinting=true"
-   , additionalFonts = [ "xft:mononoki Nerd Font:pixelsize=15:antialias=true:hinting=true"
-                       , "xft:Font Awesome 5 Free Regular:pixelsize=13"
-                       , "xft:FontAwesome 5 Free Solid:pixelsize=14"
-                       , "xft:FontAwesome:pixelsize=10:bold"
-                       , "xft:FontAwesome 5 Free Solid:pixelsize=16"
-                       , "xft:Hack Nerd Font Mono:pixelsize=21"
-                       , "xft:Hack Nerd Font Mono:pixelsize=25"
+   { font        = "Ubuntu bold 10"
+   , additionalFonts = [ "Mononoki Nerd Font 12"
+                       , "Font Awesome 5 Free Regular 13"
+                       , "FontAwesome 5 Free Solid 14"
+                       , "FontAwesome Bold 10"
+                       , "FontAwesome 5 Free Solid 16"
+                       , "Hack Nerd Font Mono 21"
+                       , "Hack Nerd Font Mono 25"
                        ]
    , bgColor          = "#2B2E37"
    , fgColor          = "#B4BCCD"
    , position         = TopSize C 100 40
-   , textOffset       = 24
-   , textOffsets      = [ 25, 24 ]
+   , textOffset       = 0
+   , textOffsets      = [ 0, 0 ]
    , iconOffset       = -1
    , alpha            = 220
    , lowerOnStart     = True

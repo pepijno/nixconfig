@@ -2,23 +2,33 @@
   description = "System config";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "nixpkgs/nixos-22.11";
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-22.11";
+      # inputs.unstable.follows = "nixpkgs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    ayu-light-bat.url = "github:pepijno/ayu-light-bat";
   };
 
-  outputs = { self, nixpkgs, home-manager, ayu-light-bat }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager }@inputs:
     let
-      localOverlay = self: super: {
-        inherit ayu-light-bat;
-      };
+      # localOverlay = self: super: {
+      #   inherit ayu-light-bat;
+      # };
 
       pkgs = import nixpkgs {
+        config = {
+          allowUnfree = true;
+          allowNonfree = true;
+          allowUnfreePredicate = (pkg: true);
+        };
+        # overlays = [
+        #   localOverlay
+        #   nixgl.overlay
+        # ];
         inherit system;
       };
 
@@ -28,50 +38,56 @@
       ];
 
       system = "x86_64-linux";
-	  system_darwin = "x86_64-darwin";
+      system_darwin = "x86_64-darwin";
     in
     {
       homeConfigurations = {
         pepijn = home-manager.lib.homeManagerConfiguration {
-          inherit system;
-          username = "pepijn";
-          homeDirectory = "/home/pepijn";
-          stateVersion = "21.03";
-          configuration = { config, pkgs, ayu-light-bat, ... }:
-            {
-              nixpkgs.overlays = [
-                localOverlay
-              ];
-              nixpkgs.config = {
-                allowUnfree = true;
-                allowNonfree = true;
-                allowUnfreePredicate = (pkg: true);
-              };
-              imports = [
-                ./home_linux.nix
-              ];
-            };
+          inherit pkgs;
+          modules = [
+            ./home_linux.nix
+          ];
+          # inherit system;
+          # inherit pkgs;
+          # username = "pepijn";
+          # homeDirectory = "/home/pepijn";
+          # stateVersion = "21.03";
+          # configuration = { config, pkgs, ayu-light-bat, ... }:
+          #   {
+          #     # unstable.overlays = [
+          #     #   localOverlay
+          #     #   nixgl.overlay
+          #     # ];
+          #     # unstable.config = {
+          #     #   allowUnfree = true;
+          #     #   allowNonfree = true;
+          #     #   allowUnfreePredicate = (pkg: true);
+          #     # };
+          #     imports = [
+          #       ./home_linux.nix
+          #     ];
+          #   };
 
         };
-        pepijn_mac = home-manager.lib.homeManagerConfiguration {
-          system = system_darwin;
-          username = "poverbeeke";
-          homeDirectory = "/Users/poverbeeke";
-          stateVersion = "21.03";
-          configuration = { config, pkgs, ayu-light-bat, ... }:
-            {
-              nixpkgs.overlays = [
-                localOverlay
-              ];
-              nixpkgs.config = {
-                allowUnfree = true;
-                allowBroken = true;
-              };
-              imports = [
-                ./home_mac.nix
-              ];
-            };
-        };
+      #   pepijn_mac = home-manager.lib.homeManagerConfiguration {
+      #     system = system_darwin;
+      #     username = "poverbeeke";
+      #     homeDirectory = "/Users/poverbeeke";
+      #     stateVersion = "21.03";
+      #     configuration = { config, pkgs, ayu-light-bat, ... }:
+      #       {
+      #         unstable.overlays = [
+      #           localOverlay
+      #         ];
+      #         unstable.config = {
+      #           allowUnfree = true;
+      #           allowBroken = true;
+      #         };
+      #         imports = [
+      #           ./home_mac.nix
+      #         ];
+      #       };
+      #   };
       };
       nixosConfigurations = {
         desktop = nixpkgs.lib.nixosSystem {

@@ -103,6 +103,7 @@ myStartupHook = do
   spawnOnce "${sw}/bin/systemctl --user start dunst.service"
   spawnOnce "${sw}/bin/systemctl --user start redshift.service"
   spawnOnce "${sw}/bin/systemctl --user start xidlehook.service"
+  spawnOnce "${feh}/bin/feh --randomize --bg-fill ~/Pictures/Wallpapers/"
   spawn "${xrandr}/bin/xrandr -s 1920x1080"
   spawn "${betterlockscreen}/bin/betterlockscreen -u ~/Pictures/Wallpapers/"
   spawn "${busybox}/bin/killall trayer; ${start-trayer}/bin/start-trayer"
