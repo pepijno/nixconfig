@@ -4,20 +4,25 @@
   home.packages = with pkgs; [
     neovim
 
-    rnix-lsp
-    nixfmt
+    # needed for Mason
+    unzip
+    patchelf
+    gcc
 
-    uncrustify
-    clang-tools
+    # rnix-lsp
+    # nixfmt
 
-    sumneko-lua-language-server
-    stylua
+    # uncrustify
+    # clang-tools
 
-    ghc
-    haskell-language-server
-    haskellPackages.brittany
+    # sumneko-lua-language-server
+    # stylua
 
-    zig
+    # ghc
+    # haskell-language-server
+    # haskellPackages.brittany
+
+    # zig
     zls
   ];
 

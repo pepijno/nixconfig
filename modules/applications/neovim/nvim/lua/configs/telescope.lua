@@ -1,13 +1,15 @@
 local M = {}
 
 function M.config()
-	local status_ok, telescope = pcall(require, "telescope")
+	local status_ok, telescope = pcall(require, 'telescope')
 	if not status_ok then
+		print 'error requiring telescope'
 		return
 	end
 
-	local ok, actions = pcall(require, "telescope.actions")
+	local ok, actions = pcall(require, 'telescope.actions')
 	if not ok then
+		print 'error requiring telescope actions'
 		return
 	end
 
@@ -15,36 +17,13 @@ function M.config()
 		defaults = {
 			prompt_prefix = " ",
 			selection_caret = "❯ ",
-			initial_mode = "insert",
-			path_display = { "truncate" },
-			selection_strategy = "reset",
 			sorting_strategy = "ascending",
 			layout_strategy = "horizontal",
 			layout_config = {
 				horizontal = {
 					prompt_position = "top",
-					results_width = 0.8,
-					preview_width = function(_, cols, _)
-						if cols < 120 then
-							return math.floor(cols * 0.5)
-						end
-						return math.floor(cols * 0.6)
-					end,
-					mirror = false,
 				},
-				vertical = {
-					mirror = false,
-				},
-				width = 0.87,
-				height = 0.80,
-				preview_cutoff = 120,
 			},
-			file_ignore_patterns = {},
-			path_display = { shorten = 5 },
-			winblend = 0,
-			border = {},
-			borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-			color_devicons = true,
 			set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
 			pickers = {
 				find_files = {
@@ -68,24 +47,21 @@ function M.config()
 			},
 			mappings = {
 				i = {
-					["<C-n>"] = actions.move_selection_next,
-					["<C-p>"] = actions.move_selection_previous,
-					["<C-c>"] = actions.close,
-					["<C-j>"] = actions.cycle_history_next,
-					["<C-k>"] = actions.cycle_history_prev,
-					["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-					["<CR>"] = actions.select_default + actions.center,
-					["kj"] = actions.close,
+					['<C-n>'] = actions.move_selection_next,
+					['<C-p>'] = actions.move_selection_previous,
+					['kj'] = actions.close,
 				},
 				n = {
-					["<C-n>"] = actions.move_selection_next,
-					["<C-p>"] = actions.move_selection_previous,
-					["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-					["kj"] = actions.close,
+					['<C-n>'] = actions.move_selection_next,
+					['<C-p>'] = actions.move_selection_previous,
+					['kj'] = actions.close,
 				},
 			},
 		},
 	})
+
+	vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[F]ind [F]iles' })
+	vim.keymap.set('n', '<leader>fr', require('telescope.builtin').live_grep, { desc = '[F]ind [R]ipgrep' })
 end
 
 return M

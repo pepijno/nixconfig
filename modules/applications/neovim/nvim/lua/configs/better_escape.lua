@@ -7,7 +7,7 @@ function M.config()
 	end
 
 	better_escape.setup({
-		mapping = { "jk", "kj" },
+		mapping = { "kj" },
 		timeout = vim.o.timeoutlen,
 		keys = "<ESC>",
 	})

@@ -16,10 +16,6 @@ vim.cmd([[
 ]])
 
 vim.cmd([[
-  command! NVimUpdate lua require('core.utils').update()
-]])
-
-vim.cmd([[
   augroup LuaHighlight
     autocmd!
     autocmd TextYankPost * lua require'vim.highlight'.on_yank{higroup="IncSearch", timeout=3000}

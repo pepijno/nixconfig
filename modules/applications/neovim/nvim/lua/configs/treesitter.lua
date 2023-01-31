@@ -6,33 +6,18 @@ function M.config()
 		return
 	end
 
-	local custom_captures = {
-		["function.call"] = "LuaFunctionCall",
-		["function.bracket"] = "Type",
-		["namespace.type"] = "TSNamespaceType",
-	}
-
-	-- require("nvim-treesitter.highlight").set_custom_captures(custom_captures)
-
 	treesitter.setup({
-		sync_install = false,
 		ensure_installed = {
 			"nix",
-			"rust",
 			"zig",
 			"haskell",
 			"lua",
 			"c",
 			"cpp",
 			"fish",
-			"make",
-			"vim",
-			"java",
 		},
 		highlight = {
 			enable = true,
-			additional_vim_regex_highlighting = false,
-			custom_captures = custom_captures,
 		},
 		context_commentstring = {
 			enable = true,
@@ -51,38 +36,48 @@ function M.config()
 		indent = {
 			enable = true,
 		},
-		rainbow = {
-			enable = true,
-			disable = { "html" },
-			extended_mode = false,
-			max_file_lines = nil,
-		},
-		autotag = {
-			enable = true,
-		},
-		matchup = {
-			enable = true,
-		},
-	})
-end
-
-function M.context_config()
-	require("treesitter-context").setup({
-		enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-		throttle = true, -- Throttles plugin updates (may improve performance)
-		max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-
-		patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
-			-- For all filetypes
-			default = {
-				"class",
-				"function",
-				"method",
-				"for",
-				"while",
-				"if",
-				"switch",
-				"case",
+		textobjects = {
+			select = {
+				enable = true,
+				lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+				keymaps = {
+					-- You can use the capture groups defined in textobjects.scm
+					['aa'] = '@parameter.outer',
+					['ia'] = '@parameter.inner',
+					['af'] = '@function.outer',
+					['if'] = '@function.inner',
+					['ac'] = '@class.outer',
+					['ic'] = '@class.inner',
+				},
+			},
+			move = {
+				enable = true,
+				set_jumps = true, -- whether to set jumps in the jumplist
+				goto_next_start = {
+					[']m'] = '@function.outer',
+					[']]'] = '@class.outer',
+				},
+				goto_next_end = {
+					[']M'] = '@function.outer',
+					[']['] = '@class.outer',
+				},
+				goto_previous_start = {
+					['[m'] = '@function.outer',
+					['[['] = '@class.outer',
+				},
+				goto_previous_end = {
+					['[M'] = '@function.outer',
+					['[]'] = '@class.outer',
+				},
+			},
+			swap = {
+				enable = true,
+				swap_next = {
+					['<leader>a'] = '@parameter.inner',
+				},
+				swap_previous = {
+					['<leader>A'] = '@parameter.inner',
+				},
 			},
 		},
 	})

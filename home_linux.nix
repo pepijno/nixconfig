@@ -18,6 +18,7 @@
     ./modules/services/backup.nix
     ./modules/services/betterlockscreen.nix
     ./modules/services/dunst.nix
+    ./modules/services/picom.nix
     ./modules/services/xmonad/xmonad.nix
     ./modules/services/redshift.nix
   ];

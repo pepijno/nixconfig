@@ -30,64 +30,24 @@ function M.config()
 
 	nvimtree.setup({
 		filters = {
-			dotfiles = false,
+			dotfiles = true,
 			custom = {
 				".git",
-				"node_modules",
-				".cache",
-				"__pycache__",
 			},
 		},
 		disable_netrw = true,
 		hijack_netrw = true,
-		ignore_ft_on_setup = {
-			"dashboard",
-			"startify",
-			"alpha",
-		},
-		open_on_tab = false,
-		quit_on_open = false,
 		hijack_cursor = true,
-		hide_root_folder = true,
 		update_cwd = true,
-		nvim_tree_indent_markers = true,
 		update_focused_file = {
 			enable = true,
 			update_cwd = true,
 			ignore_list = {},
 		},
-		diagnostics = {
-			enable = false,
-			icons = {
-				hint = "",
-				info = "",
-				warning = "",
-				error = "",
-			},
-		},
-		view = {
-			width = 25,
-			height = 30,
-			side = "left",
-			allow_resize = true,
-			hide_root_folder = false,
-			number = false,
-			relativenumber = false,
-			signcolumn = "yes",
-		},
-		git = {
-			enable = true,
-			ignore = false,
-			timeout = 500,
-		},
-		show_icons = {
-			git = 1,
-			folders = 1,
-			files = 1,
-			folder_arrows = 0,
-			tree_width = 30,
-		},
 	})
+
+	vim.keymap.set('n', '<leader>e', "<cmd>NvimTreeToggle<CR>", { desc = 'Toggle Nvim tree' })
+	vim.keymap.set('n', '<leader>o', "<cmd>NvimTreeFocus<CR>", { desc = 'Focus to Nvim tree' })
 end
 
 return M
