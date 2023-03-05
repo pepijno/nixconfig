@@ -13,7 +13,7 @@
     # nixfmt
 
     # uncrustify
-    # clang-tools
+    clang-tools
 
     # sumneko-lua-language-server
     # stylua

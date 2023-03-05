@@ -1,7 +1,7 @@
 local M = {}
 
 local opts = { noremap = true, silent = true }
-local map = vim.api.nvim_set_keymap
+local map = vim.keymap.set
 
 -- Remap space as leader key
 map("", "<Space>", "<Nop>", opts)
@@ -33,5 +33,8 @@ map("v", "<C-k>", ":m '<-2<CR>gv=gv", opts)
 -- Stay in indent mode
 map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
+
+-- Explorer
+map("n", "<leader>pv", vim.cmd.Ex, opts)
 
 return M

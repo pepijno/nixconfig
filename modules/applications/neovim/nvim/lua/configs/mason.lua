@@ -53,7 +53,6 @@ function M.config()
 	end
 
 	local servers = {
-		clangd = {},
 		rnix = {},
 
 		sumneko_lua = {
@@ -80,6 +79,7 @@ function M.config()
 	}
 
 	require("lspconfig").zls.setup {}
+	require("lspconfig").clangd.setup {}
 
 	mason_lspconfig.setup_handlers {
 		function(server_name)

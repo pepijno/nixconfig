@@ -6,9 +6,9 @@ function M.disabled_builtins()
 	vim.g.loaded_getscriptPlugin = false
 	vim.g.loaded_gzip = false
 	vim.g.loaded_logipat = false
-	vim.g.loaded_netrwFileHandlers = false
-	vim.g.loaded_netrwPlugin = false
-	vim.g.loaded_netrwSettngs = false
+	-- vim.g.loaded_netrwFileHandlers = false
+	-- vim.g.loaded_netrwPlugin = false
+	-- vim.g.loaded_netrwSettngs = false
 	vim.g.loaded_remote_plugins = false
 	vim.g.loaded_tar = false
 	vim.g.loaded_tarPlugin = false

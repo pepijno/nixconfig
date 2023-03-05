@@ -20,12 +20,10 @@ in
     # minecraft
     steam
     steam-run
-    lutris
     hicolor-icon-theme
     # dosbox
     ltunify
     mullvad-vpn
-    dosbox
     playerctl
     jdk11
     cargo
@@ -33,7 +31,6 @@ in
     ripgrep
 
     electrum
-    discord
     torbrowserWithAudio
     firefox
     vivaldi
@@ -45,10 +42,7 @@ in
 
     libnotify
 
-    obsidian
     openrct2
-
-    playonlinux
 
     # nixgl.nixGLIntel
   ];
