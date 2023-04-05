@@ -71,9 +71,9 @@ myKeys = [ ("M-<Return>",   spawn myTerminal)
 
          , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
          , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
-         , ("<XF86AudioMute>",        spawn "pactl set-sink-volume @DEFAULT_SINK@ toggle")
-         , ("<XF86AudioPlay>",        spawn "${playerctl}/bin/playerctl play")
-         , ("<XF86AudioPause>",       spawn "${playerctl}/bin/playerctl pause")
+         , ("<XF86AudioMute>",        spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
+         , ("<XF86AudioPlay>",        spawn "${playerctl}/bin/playerctl play-pause")
+         , ("<XF86AudioStop>",        spawn "${playerctl}/bin/playerctl stop")
          , ("<XF86AudioNext>",        spawn "${playerctl}/bin/playerctl next")
          , ("<XF86AudioPrev>",        spawn "${playerctl}/bin/playerctl previous")
          ]

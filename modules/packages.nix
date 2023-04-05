@@ -44,6 +44,6 @@ in
 
     openrct2
 
-    # nixgl.nixGLIntel
+    discord
   ];
 }
