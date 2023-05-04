@@ -9,7 +9,7 @@ let
 in
 pkgs.writeShellScriptBin "create-backup" ''
   function send_message {
-      eval "XDG_RUNTIME_DIR=/run/user/$(id -u) $(command -v ${pkgs.libnotify}/bin/notify-send) \"$2\" \"$(${echo} -e $3)\" -u $1"
+      echo $1
   }
 
   function show_fail {

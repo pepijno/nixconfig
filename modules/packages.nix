@@ -45,5 +45,7 @@ in
     openrct2
 
     discord
+    # kicad-small
+    # vial
   ];
 }
