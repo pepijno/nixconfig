@@ -38,7 +38,7 @@ in
     vivaldi-ffmpeg-codecs
 
     ytmdl
-    spotdl
+    # spotdl
 
     libnotify
 

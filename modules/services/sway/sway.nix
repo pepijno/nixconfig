@@ -10,12 +10,13 @@ in
     swaybg
     swayidle
     swaylock
+    wlogout
   ];
   services.swayidle = {
     enable = true;
     timeouts = [
-      { timeout = 300; command = "${pkgs.sway}/bin/swaymsg \"output * dpms off\""; resumeCommand = "${pkgs.sway}/bin/swaymsg \"output * dpms on\"; ${sw}/bin/systemctl --user restart wlsunset.service"; }
-      { timeout = 600; command = "${sw}/bin/systemctl hibernate"; }
+      { timeout = 600; command = "${pkgs.sway}/bin/swaymsg \"output * dpms off\""; resumeCommand = "${pkgs.sway}/bin/swaymsg \"output * dpms on\"; ${sw}/bin/systemctl --user restart wlsunset.service; ${pkgs.wlr-randr}/bin/wlr-randr --output HDMI-A-1 --off"; }
+      { timeout = 1200; command = "${sw}/bin/systemctl hibernate"; }
     ];
   };
 
@@ -66,7 +67,7 @@ in
           "${mod}+Shift+s" = "exec steam";
           # "${mod}+Shift+l" = "exec ${customLock}/bin/customLock";
           "${mod}+d" = "exec --no-startup-id ${pkgs.sirula}/bin/sirula";
-          # "${mod}+Shift+e" = "exec --no-startup-id ${sysmenu}/bin/sysmenu";
+          "${mod}+Shift+e" = "exec --no-startup-id ${pkgs.wlogout}/bin/wlogout";
           # "${mod}+p" = "exec --no-startup-id ${pkgs.grim}/bin/grim -o $(swaymsg -t get_outputs | ${pkgs.jq}/bin/jq -r '.[] | select(.focused) | .name') - | ${pkgs.wl-clipboard}/bin/wl-copy";
           "XF86AudioRaiseVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%";
           "XF86AudioLowerVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%";

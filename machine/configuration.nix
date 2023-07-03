@@ -24,14 +24,22 @@
 
   time.timeZone = "Europe/Amsterdam";
 
-  security.doas = {
-    enable = true;
-    extraRules = [
+  security = {
+    polkit.enable = true;
+    doas = {
+      enable = true;
+      extraRules = [
       {
         users = [ "pepijn" ];
         keepEnv = true;
       }
-    ];
+      ];
+    };
+    pam.services.swaylock.text = ''
+      # PAM configuration file for the swaylock screen locker. By default, it includes
+      # the 'login' configuration file (see /etc/pam.d/login)
+      auth include login
+    '';
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -40,6 +48,22 @@
     git.enable = true;
     fish.enable = true;
     # steam.enable = true;
+  };
+
+
+  environment.systemPackages = with pkgs; [
+    greetd.tuigreet
+  ];
+
+  services.greetd = {
+    enable = true;
+    settings = rec {
+      initial_session = {
+        command = "${pkgs.sway}/bin/sway";
+        user = "pepijn";
+      };
+      default_session = initial_session;
+    };
   };
 
   users = {

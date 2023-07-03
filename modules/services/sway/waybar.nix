@@ -57,15 +57,17 @@
             path = "/";
           };
           "cpu" = {
+            interval = 1;
             format = "CPU {usage}%";
           };
           "memory" = {
+            interval = 1;
             format = "RAM {}%";
           };
           "network" = {
             format-ethernet = "{bandwidthUpBits}   {bandwidthDownBits}   泌";
             format-disconnected = "睊";
-            interval = 2;
+            interval = 1;
           };
           "pulseaudio" = {
             # scroll-step = 1;

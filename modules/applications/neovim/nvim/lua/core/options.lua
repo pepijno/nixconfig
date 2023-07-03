@@ -35,5 +35,6 @@ vim.opt.foldmethod = "manual" -- Create folds manually
 vim.opt.smartindent = true -- Do auto indenting when starting a new line
 vim.opt.splitbelow = true -- Splitting a new window below the current one
 vim.opt.splitright = true -- Splitting a new window at the right of the current one
+vim.api.nvim_command('filetype plugin indent on')
 
 return M

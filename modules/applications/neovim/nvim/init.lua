@@ -61,6 +61,8 @@ require('packer').startup(function(use)
 
 	use 'folke/which-key.nvim'
 
+	use 'm4xshen/autoclose.nvim'
+
 	local has_plugins, plugins = pcall(require, 'custom.plugins')
 	if has_plugins then
 		plugins(use)
@@ -79,3 +81,4 @@ require('configs.mason').config()
 require('configs.cmp').config()
 require('configs.which-key').config()
 require("configs.gruvbox").config()
+require("autoclose").setup()
