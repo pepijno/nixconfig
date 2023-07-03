@@ -1,12 +1,11 @@
 local M = {}
 
 function M.config()
-
 	local signs = {
 		{ name = "DiagnosticSignError", text = "" },
-		{ name = "DiagnosticSignWarn", text = "" },
-		{ name = "DiagnosticSignHint", text = "" },
-		{ name = "DiagnosticSignInfo", text = "" },
+		{ name = "DiagnosticSignWarn",  text = "" },
+		{ name = "DiagnosticSignHint",  text = "" },
+		{ name = "DiagnosticSignInfo",  text = "" },
 	}
 
 	for _, sign in ipairs(signs) do
@@ -54,13 +53,6 @@ function M.config()
 
 	local servers = {
 		rnix = {},
-
-		sumneko_lua = {
-			Lua = {
-				workspace = { checkThirdParty = false },
-				telemetry = { enable = false },
-			},
-		},
 	}
 
 	require('neodev').setup()
@@ -80,6 +72,7 @@ function M.config()
 
 	require("lspconfig").zls.setup {}
 	require("lspconfig").clangd.setup {}
+	require("lspconfig").lua_ls.setup {}
 
 	mason_lspconfig.setup_handlers {
 		function(server_name)
@@ -94,20 +87,19 @@ function M.config()
 	local mason_registry = require("mason-registry")
 	mason_registry:on("package:install:success", function(pkg)
 		pkg:get_receipt():if_present(function(receipt)
-
 			-- Figure out the interpreter inspecting nvim itself
 			-- This is the same for all packages, so compute only once
 
 			for _, rel_path in pairs(receipt.links.bin) do
 				local bin_abs_path = pkg:get_install_path() .. "/" .. rel_path
 				if pkg.name == "lua-language-server" then
-					bin_abs_path = pkg:get_install_path() .. "/extension/server/bin/lua-language-server"
+					bin_abs_path = pkg:get_install_path() .. "/libexec/bin/lua-language-server"
 				end
 
 				-- Set the interpreter on the binary
 				os.execute(
 					(
-					"/bin/sh -c \"patchelf --set-interpreter $(patchelf --print-interpreter $(grep -oE '\\/nix\\/store\\/[a-z0-9]+-neovim-unwrapped-[0-9]+\\.[0-9]+\\.[0-9]+\\/bin\\/nvim' $(which nvim))) %q\""
+						"/bin/sh -c \"patchelf --set-interpreter $(patchelf --print-interpreter $(grep -oE '\\/nix\\/store\\/[a-z0-9]+-neovim-unwrapped-[0-9]+\\.[0-9]+\\.[0-9]+\\/bin\\/nvim' $(which nvim))) %q\""
 					):format(bin_abs_path)
 				)
 			end
