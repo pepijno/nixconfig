@@ -112,7 +112,7 @@ function M.config()
 
 	vim.keymap.set('n', '<leader>ld', '<cmd>Telescope diagnostics<cr>', { desc = 'Buffer [D]iagnostics' })
 	vim.keymap.set('n', '<leader>ls', '<cmd>Telescope lsp_document_symbols<cr>', { desc = 'LSP Document [S]ymbols' })
-	vim.keymap.set('n', '<leader>la', '<cmd>Telescope lsp_code_actions<cr>', { desc = 'LSP Code [A]ctions' })
+	vim.keymap.set('n', '<leader>la', '<cmd>lua vim.lsp.buf.code_action()<cr>', { desc = 'LSP Code [A]ctions' })
 	vim.keymap.set('n', '<leader>lf', '<cmd>lua vim.lsp.buf.format { async = true }<cr>', { desc = '[F]ormat' })
 	vim.keymap.set('n', '<leader>lr', '<cmd>lua vim.lsp.buf.rename()<cr>', { desc = '[R]ename' })
 	vim.keymap.set('n', '<leader>lh', '<cmd>lua vim.lsp.buf.hover()<cr>', { desc = '[H]over' })
