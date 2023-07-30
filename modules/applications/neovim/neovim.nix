@@ -16,7 +16,7 @@
     clang-tools
 
     # sumneko-lua-language-server
-    # stylua
+    stylua
 
     # ghc
     # haskell-language-server

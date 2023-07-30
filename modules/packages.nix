@@ -34,7 +34,7 @@ in
     torbrowserWithAudio
     firefox
     vivaldi
-    vivaldi-widevine
+    widevine-cdm
     vivaldi-ffmpeg-codecs
 
     ytmdl
