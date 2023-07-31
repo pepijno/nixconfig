@@ -1,0 +1,135 @@
+@define-color critical #ff0000;
+@define-color warning #f3f809;
+@define-color fgcolor #ffffff;
+@define-color bgcolor #303030;
+@define-color alert   #df3320;
+
+@define-color accent1 #eb6f92;
+@define-color accent2 #9ccfd8;
+@define-color accent3 #f6c177;
+@define-color accent4 #31748f;
+@define-color accent5 #c4a7e7;
+@define-color accent6 #ebbcba;
+
+* {
+  border: none;
+  border-radius: 0px;
+  font-family: "JetBrainsMono Bold", "Roboto Mono Medium", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  min-height: 0;
+}
+
+#custom-nix {
+  color: @accent2;
+  font-size: 22px;
+  padding: 2px 8px;
+}
+
+window#waybar {
+  background: rgba(43, 46, 55, 0.98);
+  color: @bgcolor;
+}
+
+#workspaces {
+  font-size: 20px;
+}
+
+#workspaces button {
+  border-radius: 3px;
+  padding: 0 0 0 0;
+  margin: 4px 0 6px 0;
+  background-color: transparent;
+  color: @fgcolor;
+  min-width: 36px;
+}
+
+#workspaces button.active {
+  padding: 0 0 0 0;
+  margin: 4px 0 6px 0;
+  background-color: @accent1;
+  color: @bgcolor;
+  min-width: 36px;
+}
+
+#workspaces button:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+#workspaces button.focused {
+  background-color: @accent4;
+  color: #323232;
+}
+
+#workspaces button.urgent {
+  background-color: #eb4d4b;
+}
+
+#custom-separator {
+  color: #606060;
+  margin: 0 1px;
+  padding-bottom: 5px;
+}
+
+#mpris,
+#clock,
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#tray,
+#mode,
+#disk {
+  padding: 1px 6px 0px 6px;
+  margin: 4px 3px 5px 3px;
+  color: @fgcolor;
+  background-color:transparent;
+  border-radius: 3px;
+}
+
+#mpris {
+  color: @accent3;
+}
+
+#mpris.playing {
+  color: @accent2;
+}
+
+#mpris.paused {
+  color: @accent3;
+}
+
+#mpris.stopped {
+  color: @accent4;
+}
+
+#cpu {
+  color: @accent3;
+}
+
+#memory {
+  color: @accent4;
+}
+
+#network {
+  color: @accent2;
+}
+
+#network.disconnected {
+  color: @alert;
+}
+
+#disk {
+  color: @accent1;
+}
+
+#pulseaudio {
+  color: @accent5;
+}
+
+#pulseaudio.muted {
+  color: #a0a0a0;
+}
+
+#clock {
+  color: @accent6;
+}

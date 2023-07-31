@@ -29,10 +29,10 @@
     doas = {
       enable = true;
       extraRules = [
-      {
-        users = [ "pepijn" ];
-        keepEnv = true;
-      }
+        {
+          users = [ "pepijn" ];
+          keepEnv = true;
+        }
       ];
     };
     pam.services.swaylock.text = ''
@@ -48,22 +48,6 @@
     git.enable = true;
     fish.enable = true;
     # steam.enable = true;
-  };
-
-
-  environment.systemPackages = with pkgs; [
-    greetd.tuigreet
-  ];
-
-  services.greetd = {
-    enable = true;
-    settings = rec {
-      initial_session = {
-        command = "${pkgs.sway}/bin/sway";
-        user = "pepijn";
-      };
-      default_session = initial_session;
-    };
   };
 
   users = {

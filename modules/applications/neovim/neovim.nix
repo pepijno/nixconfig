@@ -8,22 +8,10 @@
     unzip
     patchelf
     gcc
+    cargo
+    nodejs_20
 
-    # rnix-lsp
-    # nixfmt
-
-    # uncrustify
-    clang-tools
-
-    # sumneko-lua-language-server
     stylua
-
-    # ghc
-    # haskell-language-server
-    # haskellPackages.brittany
-
-    # zig
-    zls
   ];
 
   xdg.configFile."nvim".source = ./nvim;

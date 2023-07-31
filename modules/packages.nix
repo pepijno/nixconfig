@@ -25,9 +25,6 @@ in
     ltunify
     mullvad-vpn
     playerctl
-    jdk11
-    cargo
-    maven
     ripgrep
 
     electrum
@@ -37,15 +34,10 @@ in
     widevine-cdm
     vivaldi-ffmpeg-codecs
 
-    ytmdl
-    # spotdl
-
     libnotify
 
     openrct2
 
     discord
-    # kicad-small
-    # vial
   ];
 }
