@@ -9,7 +9,6 @@
     ./modules/applications/fish.nix
     ./modules/applications/git.nix
     ./modules/applications/tmux.nix
-    # ./modules/applications/bat.nix
     ./modules/applications/rofi.nix
     ./modules/applications/neovim/neovim.nix
 

@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 
+let
+  colors = import ../colors.nix {};
+in
 {
   home.packages = with pkgs; [
     tmux-mem-cpu-load
@@ -10,7 +13,7 @@
     clock24 = true;
     historyLimit = 10000;
     shortcut = "a";
-    terminal = "screen-256color-bce";
+    terminal = "xterm-256color";
 
     extraConfig = ''
       # reload source file with '<C-a>r'
@@ -20,7 +23,7 @@
       # enable mouse support
       set -g mouse on
 
-      set-option -g default-terminal "screen-256color-bce"
+      set-option -g default-terminal "xterm-256color"
 
       # Keep your finger on ctrl, or don't, same result
       bind-key C-d detach-client
@@ -42,34 +45,37 @@
       bind-key C-q kill-session
 
       # enable utf8 status line
-      set -g status-utf8 on
+      # set -g status-utf8 on
 
       # status line
-      set -g status-style bg='#2b2e37',fg='#ecbe7b'
+      set -g status-style bg='${colors.background}',fg='${colors.foreground}'
       set -g status-interval 1
       set-option -g status-position bottom
 
       # status left
       # are we controlling tmux or the content of the panes?
-      set -g status-left "#[bg=#b4bccd]#[fg=#2b2e37]#{?client_prefix,#[bg=#c678dd],} ☺ #[bg=#2b2e37]#[fg=#b4bccd]#{?client_prefix,#[fg=#c678dd],}"
+      set -g status-left "#[bg=${colors.aqua}]#[fg=${colors.white}]#{?client_prefix,#[bg=${colors.bright_purple}],} ☺ #[bg=${colors.background}]#[fg=${colors.aqua}]#{?client_prefix,#[fg=${colors.bright_purple}],}"
 
       set -g status-left-length 4
       set -g status-right-length 250
+
+      set-window-option -g visual-bell on
+      set-window-option -g bell-action other
 
       # window status
       set -g status-justify left
       set-window-option -g window-status-style fg='#ecbe7b',bg=default
       set-window-option -g window-status-current-style fg='#ff79c6',bg='#2b2e36'
-      set -g window-status-current-format "#[fg=#2b2e37]#[bg=#ecbe7b]#[fg=#2b2e37]#[bg=#ecbe7b] #I #W #[fg=#ecbe7b]#[bg=#2b2e37]"
-      set -g window-status-format "#[fg=#f8f8f2]#[bg=#2b2e37] #I #W#[fg=#2b2e37]"
+      set -g window-status-current-format "#[fg=${colors.background}]#[bg=${colors.bright_orange}]#[fg=${colors.white}]#[bg=${colors.bright_orange}] #I #W #[fg=${colors.bright_orange}]#[bg=${colors.background}]"
+      set -g window-status-format "#[fg=${colors.foreground}]#[bg=${colors.background}] #I #W#[fg=${colors.background}]"
       set-window-option -g window-status-activity-style fg='#2b2e37',bg='#51afef'
 
       # status right
-      set -g status-right '#[fg=#ff6c6b,bg=#2b2e37]#[fg=#2b2e37,bg=#ff6c6b] #(tmux-mem-cpu-load -g 5 --interval 1) '
-      set -ga status-right '#[fg=#2b2e37,bg=#ff6c6b]'
-      set -ga status-right '#[fg=#98be65,bg=#2b2e37]#[fg=#2b2e37,bg=#98be65] #(uptime | cut -f 4-5 -d " " | cut -f 1 -d ",") '
-      set -ga status-right '#[fg=#2b2e37,bg=#98be65]'
-      set -ga status-right '#[fg=#51afef,bg=#2b2e37]#[fg=#2b2e37,bg=#51afef] %a %H:%M:%S %d-%m-%Y '
+      set -g status-right '#[fg=${colors.red},bg=${colors.background}]#[fg=${colors.white},bg=${colors.red}] #(tmux-mem-cpu-load -g 5 --interval 1) '
+      set -ga status-right '#[fg=${colors.background},bg=${colors.red}]'
+      set -ga status-right '#[fg=${colors.bright_green},bg=${colors.background}]#[fg=${colors.white},bg=${colors.bright_green}] #(uptime | cut -f 4-5 -d " " | cut -f 1 -d ",") '
+      set -ga status-right '#[fg=${colors.background},bg=${colors.bright_green}]'
+      set -ga status-right '#[fg=${colors.bright_blue},bg=${colors.background}]#[fg=${colors.white},bg=${colors.bright_blue}] %a %H:%M:%S %d-%m-%Y '
 
       set-option -sg escape-time 10
       set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support

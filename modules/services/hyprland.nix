@@ -67,7 +67,7 @@ in{
     monitor = DP-1,preferred,auto,1
     monitor = HDMI-A-1,disable
 
-    windowrulev2 = workspace 1,class:Alacritty
+    windowrulev2 = workspace 1,class:Kitty
     windowrulev2 = workspace 2,class:Vivaldi
     windowrulev2 = workspace 3,class:Firefox
     windowrulev2 = workspace 4,class:Tor Browser
@@ -87,7 +87,7 @@ in{
     bind  = $mod SHIFT, F,      exec, ${pkgs.firefox}/bin/firefox
     bind  = $mod SHIFT, O,      exec, tor-browser
     bind  = $mod SHIFT, S,      exec, ${pkgs.steam}/bin/steam
-    bind  = $mod,       RETURN, exec, ${pkgs.alacritty}/bin/alacritty
+    bind  = $mod,       RETURN, exec, ${pkgs.kitty}/bin/kitty
     bindr = $mod,       D,      exec, pkill sirula || ${pkgs.sirula}/bin/sirula
     bind  = $mod SHIFT, E,      exec, ${pkgs.wlogout}/bin/wlogout
 
