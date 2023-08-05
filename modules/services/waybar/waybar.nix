@@ -33,6 +33,7 @@
 
           mpris = {
             format = "{status_icon}<span weight='bold'>{artist}</span> | {title}";
+            max-length = 50;
             status-icons = {
               playing = "󰎈 ";
               paused = "󰏤 ";

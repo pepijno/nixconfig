@@ -5,7 +5,7 @@
     ./modules/fonts.nix
     ./modules/packages.nix
 
-    ./modules/applications/alacritty.nix
+    ./modules/applications/kitty.nix
     ./modules/applications/fish.nix
     ./modules/applications/git.nix
     ./modules/applications/tmux.nix

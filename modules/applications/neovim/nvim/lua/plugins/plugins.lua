@@ -4,12 +4,6 @@ return {
 		version = "*"
 	},
 	"tpope/vim-sleuth",
-	{
-		"nathom/filetype.nvim",
-		config = function()
-			vim.g.did_load_filetypes = 1
-		end,
-	},
 	"nvim-tree/nvim-web-devicons",
 	{
 		"lukas-reineke/indent-blankline.nvim",
