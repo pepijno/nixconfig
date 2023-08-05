@@ -9,10 +9,7 @@
     ./modules/applications/fish.nix
     ./modules/applications/git.nix
     ./modules/applications/tmux.nix
-    ./modules/applications/rofi.nix
     ./modules/applications/neovim/neovim.nix
-
-    ./modules/applications/ranger/ranger.nix
 
     ./modules/services/backup.nix
     ./modules/services/hyprland.nix
