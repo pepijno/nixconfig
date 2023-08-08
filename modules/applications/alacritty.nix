@@ -11,19 +11,19 @@ in
 
       colors = {
         primary = {
-          background = colors.background;
-          foreground = colors.foreground;
+          background = colors.foreground;
+          foreground = colors.background;
         };
 
         normal = {
-          black = colors.black;
-          red = colors.red;
-          green = colors.green;
-          yellow = colors.yellow;
-          blue = colors.blue;
-          magenta = colors.purple;
-          cyan = colors.aqua;
-          white = colors.white;
+          black = colors.bright_black;
+          red = colors.bright_red;
+          green = colors.bright_green;
+          yellow = colors.bright_yellow;
+          blue = colors.bright_blue;
+          magenta = colors.bright_purple;
+          cyan = colors.bright_aqua;
+          white = colors.bright_white;
         };
 
         # Bright colors

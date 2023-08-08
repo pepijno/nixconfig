@@ -21,8 +21,8 @@ in
       selection_foreground = "${colors.background}";
       selection_background = "${colors.foreground}";
 
-      cursor = "${colors.bright_black}";
-      cursor_text_color = "${colors.bright_black}";
+      cursor = "${colors.cursor}";
+      cursor_text_color = "${colors.cursor}";
 
       color0 = "${colors.black}";
       color8 = "${colors.bright_black}";
@@ -46,9 +46,10 @@ in
       term = "xterm-256color";
 
       window_padding_width = "15";
+      disable_ligatures = "never";
     };
     font = {
-      name = "Fira Code";
+      name = "Hasklig";
       size = 11;
     };
   };

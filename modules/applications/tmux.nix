@@ -66,16 +66,16 @@ in
       set -g status-justify left
       set-window-option -g window-status-style fg='#ecbe7b',bg=default
       set-window-option -g window-status-current-style fg='#ff79c6',bg='#2b2e36'
-      set -g window-status-current-format "#[fg=${colors.background}]#[bg=${colors.bright_orange}]#[fg=${colors.white}]#[bg=${colors.bright_orange}] #I #W #[fg=${colors.bright_orange}]#[bg=${colors.background}]"
+      set -g window-status-current-format "#[fg=${colors.background}]#[bg=${colors.purple}]#[fg=${colors.white}]#[bg=${colors.purple}] #I #W #[fg=${colors.purple}]#[bg=${colors.background}]"
       set -g window-status-format "#[fg=${colors.foreground}]#[bg=${colors.background}] #I #W#[fg=${colors.background}]"
       set-window-option -g window-status-activity-style fg='#2b2e37',bg='#51afef'
 
       # status right
-      set -g status-right '#[fg=${colors.red},bg=${colors.background}]#[fg=${colors.white},bg=${colors.red}] #(tmux-mem-cpu-load -g 5 --interval 1) '
-      set -ga status-right '#[fg=${colors.background},bg=${colors.red}]'
-      set -ga status-right '#[fg=${colors.bright_green},bg=${colors.background}]#[fg=${colors.white},bg=${colors.bright_green}] #(uptime | cut -f 4-5 -d " " | cut -f 1 -d ",") '
-      set -ga status-right '#[fg=${colors.background},bg=${colors.bright_green}]'
-      set -ga status-right '#[fg=${colors.bright_blue},bg=${colors.background}]#[fg=${colors.white},bg=${colors.bright_blue}] %a %H:%M:%S %d-%m-%Y '
+      set -g status-right '#[fg='${colors.red}',bg='${colors.background}']#[fg='${colors.white}',bg='${colors.red}'] #(tmux-mem-cpu-load -g 5 --interval 1) '
+      set -ga status-right '#[fg='${colors.background}',bg='${colors.red}']'
+      set -ga status-right '#[fg='${colors.green}',bg='${colors.background}']#[fg='${colors.white}',bg='${colors.green}'] #(uptime | cut -f 4-5 -d " " | cut -f 1 -d ",") '
+      set -ga status-right '#[fg='${colors.background}',bg='${colors.green}']'
+      set -ga status-right '#[fg='${colors.blue}',bg='${colors.background}']#[fg='${colors.white}',bg='${colors.blue}'] %a %H:%M:%S %d-%m-%Y '
 
       set-option -sg escape-time 10
       set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support
