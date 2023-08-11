@@ -9,16 +9,6 @@ return {
 		cmd = { "TSUpdateSync" },
 		opts = {
 			ensure_installed = {
-				-- "bash",
-				-- "nix",
-				-- "zig",
-				-- "haskell",
-				"lua",
-				-- "c",
-				-- "cpp",
-				-- "fish",
-				-- "erlang",
-				-- "java",
 			},
 			highlight = {
 				enable = true,

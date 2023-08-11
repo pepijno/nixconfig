@@ -36,6 +36,7 @@
 
       buildInputs = with pkgs; [
         rnix-lsp
+        lua-language-server
       ];
 
       system = "x86_64-linux";

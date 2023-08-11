@@ -18,8 +18,8 @@ in
       background_opacity = "0.95";
       foreground = "${colors.foreground}";
       background = "${colors.background}";
-      selection_foreground = "${colors.background}";
-      selection_background = "${colors.foreground}";
+      selection_foreground = "${colors.selection_background}";
+      selection_background = "${colors.selection_foreground}";
 
       cursor = "${colors.cursor}";
       cursor_text_color = "${colors.cursor}";
@@ -47,9 +47,10 @@ in
 
       window_padding_width = "15";
       disable_ligatures = "never";
+      font_features = "FiraCodeRoman-Regular +ss01 +ss02 +ss03 +ss04 +ss05 +ss07 +cv01 +cv02 +cv30\nfont_features FiraCodeRoman-Bold +ss01 +ss02 +ss03 +ss04 +ss05 +ss07 +cv01 +cv02 +cv30\nfont_features FiraCodeRoman-SemiBold +ss01 +ss02 +ss03 +ss04 +ss05 +ss07 +cv01 +cv02 +cv30\nfont_features FiraCodeRoman-Medium +ss01 +ss02 +ss03 +ss04 +ss05 +ss07 +cv01 +cv02 +cv30";
     };
     font = {
-      name = "Hasklig";
+      name = "Fira Code";
       size = 11;
     };
   };

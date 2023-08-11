@@ -2,28 +2,31 @@
 
 {
 
-  background = "#f1f3f2";
-  foreground = "#2b2b2b";
-  cursor = "#2b2b2b";
+  background = "#eff1f5";
+  foreground = "#4c4f69";
+  selection_background = "#dc8a78";
+  selection_foreground = "#eff1f5";
 
-  black = "#2b2b2b";
-  red = "#af0000";
-  green = "#008700";
-  yellow = "#af5f00";
-  blue = "#27408b";
-  purple = "#8700af";
-  aqua = "#005f87";
-  white = "#fcfcfc";
+  cursor = "#dc8a78";
+
+  black = "#5c5f77";
+  red = "#d20f39";
+  green = "#40a02b";
+  yellow = "#df8e1d";
+  blue = "#1e66f5";
+  purple = "#ea76cb";
+  aqua = "#179299";
+  white = "#acb0be";
   gray = "#7c6f64";
   orange = "#af3a03";
 
-  bright_black = "#444444";
-  bright_red = "#e14133";
-  bright_green = "#50a14f";
-  bright_yellow = "#d75f00";
-  bright_blue = "#0072c1";
-  bright_purple = "#e563ba";
-  bright_aqua = "#0087af";
-  bright_white = "#ffffff";
+  bright_black = "#6c6f85";
+  bright_red = "#d20f39";
+  bright_green = "#40a02b";
+  bright_yellow = "#df8e1d ";
+  bright_blue = "#1e66f5";
+  bright_purple = "#ea76cb";
+  bright_aqua = "#179299";
+  bright_white = "#bcc0cc";
   bright_orange = "#d65d0a";
 }
