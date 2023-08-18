@@ -30,13 +30,6 @@ in{
     decoration {
       rounding = 2
       multisample_edges = true
-
-      blur = true
-      blur_size = 3
-      blur_passes = 3
-      blur_new_optimizations = true
-
-      blurls = lockscreen
     }
 
     misc {
@@ -79,6 +72,7 @@ in{
     bind = $mod, F, fullscreen, 0
     bind = $mod, P, forcerendererreload
     bind = $mod SHIFT, X, exit
+    bind = $mod, V, togglefloating
 
     bindm = $mod, mouse:272, movewindow
     bindm = $mod, mouse:273, resizewindow

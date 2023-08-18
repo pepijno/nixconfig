@@ -21,7 +21,7 @@ in
     steam
     steam-run
     hicolor-icon-theme
-    # dosbox
+    dosbox
     ltunify
     mullvad-vpn
     playerctl

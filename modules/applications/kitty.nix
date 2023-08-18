@@ -47,7 +47,7 @@ in
 
       window_padding_width = "15";
       disable_ligatures = "never";
-      font_features = "FiraCodeRoman-Regular +ss01 +ss02 +ss03 +ss04 +ss05 +ss07 +cv01 +cv02 +cv30\nfont_features FiraCodeRoman-Bold +ss01 +ss02 +ss03 +ss04 +ss05 +ss07 +cv01 +cv02 +cv30\nfont_features FiraCodeRoman-SemiBold +ss01 +ss02 +ss03 +ss04 +ss05 +ss07 +cv01 +cv02 +cv30\nfont_features FiraCodeRoman-Medium +ss01 +ss02 +ss03 +ss04 +ss05 +ss07 +cv01 +cv02 +cv30";
+      font_features = "FiraCodeRoman-Regular +ss01 +ss02 +ss03 +ss04 +ss05 +ss07 +cv02 +cv30\nfont_features FiraCodeRoman-Bold +ss01 +ss02 +ss03 +ss04 +ss05 +ss07 +cv02 +cv30\nfont_features FiraCodeRoman-SemiBold +ss01 +ss02 +ss03 +ss04 +ss05 +ss07 +cv02 +cv30\nfont_features FiraCodeRoman-Medium +ss01 +ss02 +ss03 +ss04 +ss05 +ss07 +cv02 +cv30";
     };
     font = {
       name = "Fira Code";
