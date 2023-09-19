@@ -4,10 +4,9 @@
   imports = [
     ./modules/fonts.nix
 
-    ./modules/applications/alacritty.nix
+    ./modules/applications/kitty.nix
     ./modules/applications/tmux.nix
 
-    ./modules/applications/ranger/ranger.nix
     ./modules/applications/neovim/neovim.nix
   ];
 

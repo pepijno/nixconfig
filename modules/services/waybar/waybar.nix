@@ -16,7 +16,7 @@
         layer = "top";
         position = "top";
         height = 30;
-        modules-left = [ "custom/nix" "custom/separator" "wlr/workspaces" "custom/separator" "mpris" ];
+        modules-left = [ "custom/nix" "custom/separator" "hyprland/workspaces" "custom/separator" "mpris" ];
         modules-right = [ "network" "custom/separator" "disk#root" "disk#home" "disk#backups" "custom/separator" "cpu" "custom/separator" "memory" "custom/separator" "pulseaudio" "custom/separator" "clock" "custom/separator" "tray" ];
 
         modules = {
@@ -24,7 +24,7 @@
             format = "󱄅 ";
           };
 
-          "wlr/workspaces" = {
+          "hyprland/workspaces" = {
             sort-by-number = true;
             on-click = "activate";
             on-scroll-up = "hyprctl dispatch workspace e+1";

@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-23.05";
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-23.05";
@@ -12,15 +11,11 @@
     };
 
     hyprland.url = "github:hyprwm/Hyprland";
-
+    nix-colors.url = "github:misterio77/nix-colors";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, hyprland }@inputs:
+  outputs = { self, nixpkgs, home-manager, hyprland, ... }@inputs:
     let
-      # localOverlay = self: super: {
-      #   inherit ayu-light-bat;
-      # };
-
       pkgs = import nixpkgs {
         config = {
           allowUnfree = true;
@@ -46,32 +41,20 @@
       homeConfigurations = {
         pepijn = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
+          extraSpecialArgs = { inherit inputs; };
           modules = [
             hyprland.homeManagerModules.default
             ./home_linux.nix
             { wayland.windowManager.hyprland.enable = true; }
           ];
-
         };
-        #   pepijn_mac = home-manager.lib.homeManagerConfiguration {
-        #     system = system_darwin;
-        #     username = "poverbeeke";
-        #     homeDirectory = "/Users/poverbeeke";
-        #     stateVersion = "21.03";
-        #     configuration = { config, pkgs, ayu-light-bat, ... }:
-        #       {
-        #         unstable.overlays = [
-        #           localOverlay
-        #         ];
-        #         unstable.config = {
-        #           allowUnfree = true;
-        #           allowBroken = true;
-        #         };
-        #         imports = [
-        #           ./home_mac.nix
-        #         ];
-        #       };
-        #   };
+        pepijn_mac = home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs { system = system_darwin; };
+          extraSpecialArgs = { inherit inputs; };
+          modules = [
+            ./home_mac.nix
+          ];
+        };
       };
       nixosConfigurations = {
         desktop = nixpkgs.lib.nixosSystem {

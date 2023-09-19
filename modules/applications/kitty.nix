@@ -1,13 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
-let
-  colors = import ../colors.nix { };
-in
 {
   programs.kitty = {
     enable = true;
     # theme = "Gruvbox Material Light Soft";
-    settings = {
+    settings = with config.colorScheme.colors; {
       scrollback_lines = 10000;
       enable_audio_bell = false;
       update_check_interval = 0;
@@ -16,30 +13,30 @@ in
       copy_on_select = "yes";
 
       background_opacity = "0.95";
-      foreground = "${colors.foreground}";
-      background = "${colors.background}";
-      selection_foreground = "${colors.selection_background}";
-      selection_background = "${colors.selection_foreground}";
+      foreground = "#${base05}";
+      background = "#${base00}";
+      selection_foreground = "#${base0F}";
+      selection_background = "#${base00}";
 
-      cursor = "${colors.cursor}";
-      cursor_text_color = "${colors.cursor}";
+      cursor = "#${base0F}";
+      cursor_text_color = "#${base0F}";
 
-      color0 = "${colors.black}";
-      color8 = "${colors.bright_black}";
-      color1 = "${colors.red}";
-      color9 = "${colors.bright_red}";
-      color2 = "${colors.green}";
-      color10 = "${colors.bright_green}";
-      color3 = "${colors.yellow}";
-      color11 = "${colors.bright_yellow}";
-      color4 = "${colors.blue}";
-      color12 = "${colors.bright_blue}";
-      color5 = "${colors.purple}";
-      color13 = "${colors.bright_purple}";
-      color6 = "${colors.aqua}";
-      color14 = "${colors.bright_aqua}";
-      color7 = "${colors.white}";
-      color15 = "${colors.bright_white}";
+      color0 = "#${base00}";
+      color8 = "#${base00}";
+      color1 = "#${base08}";
+      color9 = "#${base08}";
+      color2 = "#${base0B}";
+      color10 = "#${base0B}";
+      color3 = "#${base0A}";
+      color11 = "#${base0A}";
+      color4 = "#${base0D}";
+      color12 = "#${base0D}";
+      color5 = "#${base0E}";
+      color13 = "#${base0E}";
+      color6 = "#${base0C}";
+      color14 = "#${base0C}";
+      color7 = "#${base04}";
+      color15 = "#${base03}";
 
       background_blur = "40";
 

@@ -1,11 +1,10 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   imports = [
     ./modules/fonts.nix
     ./modules/packages.nix
 
-    ./modules/applications/alacritty.nix
     ./modules/applications/kitty.nix
     ./modules/applications/fish.nix
     ./modules/applications/git.nix
@@ -17,7 +16,12 @@
     ./modules/services/wlsunset.nix
     ./modules/services/sirula/sirula.nix
     ./modules/services/waybar/waybar.nix
+
+    inputs.nix-colors.homeManagerModules.default
   ];
+
+  colorScheme = inputs.nix-colors.colorSchemes.catppuccin-latte;
+
   home.username = "pepijn";
   home.homeDirectory = "/home/pepijn";
   home.stateVersion = "21.03";

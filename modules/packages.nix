@@ -22,6 +22,9 @@ in
     steam-run
     hicolor-icon-theme
     dosbox
+    inotify-tools
+    timidity
+    soundfont-fluid
     ltunify
     mullvad-vpn
     playerctl

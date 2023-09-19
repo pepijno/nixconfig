@@ -54,8 +54,18 @@
     groups.plugdev = { };
     users.pepijn = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "kvm" "input" "libvirtd" "plugdev" ];
+      extraGroups = [ "wheel" "kvm" "input" "libvirtd" "plugdev" "docker" ];
       shell = pkgs.fish;
+    };
+  };
+
+  virtualisation = {
+    docker = {
+      enable = true;
+      rootless = {
+        enable = true;
+        setSocketVariable = true;
+      };
     };
   };
 

@@ -3,6 +3,11 @@
 let 
   sw = "/run/current-system/sw";
   swaybg = "${pkgs.swaybg}/bin/swaybg -m fill -i $(find ~/Pictures/Wallpapers/. -type f | /run/current-system/sw/bin/shuf -n1)";
+  startup = pkgs.writeShellScriptBin "hyprland-startup" ''
+${pkgs.swww}/bin/swww init &
+${pkgs.solaar}/bin/solaar &
+${pkgs.waybar}/bin/waybar &
+  '';
 in{
   services.swayidle = {
     enable = true;
@@ -13,10 +18,9 @@ in{
   };
 
   wayland.windowManager.hyprland.extraConfig = ''
-    exec-once = ${pkgs.solaar}/bin/solaar
+    exec-once = ${startup}/bin/hyprland-startup
     exec = /usr/lib/polkit-gnome-polkit-gnome-authentication-agent-1
-    exec-once = ${swaybg}
-    exec-once = ${pkgs.waybar}/bin/waybar
+    exec = ${pkgs.swww}/bin/swww img $(${pkgs.findutils}/bin/find ~/Pictures/Wallpapers/. -type f | ${sw}/bin/shuf -n1)
     exec = ${pkgs.wlr-randr}/bin/wlr-randr --output HDMI-A-1 --off
 
     general {
@@ -79,10 +83,10 @@ in{
 
     bind  = $mod SHIFT, B,      exec, ${pkgs.vivaldi}/bin/vivaldi
     bind  = $mod SHIFT, F,      exec, ${pkgs.firefox}/bin/firefox
-    bind  = $mod SHIFT, O,      exec, tor-browser
+    bind  = $mod SHIFT, O,      exec, ${pkgs.tor-browser-bundle-bin}/bin/tor-browser
     bind  = $mod SHIFT, S,      exec, ${pkgs.steam}/bin/steam
     bind  = $mod,       RETURN, exec, ${pkgs.kitty}/bin/kitty
-    bindr = $mod,       D,      exec, pkill sirula || ${pkgs.sirula}/bin/sirula
+    bindr = $mod,       D,      exec, ${pkgs.fuzzel}/bin/fuzzel
     bind  = $mod SHIFT, E,      exec, ${pkgs.wlogout}/bin/wlogout
 
     bindle = , XF86AudioRaiseVolume, exec, ${sw}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%
