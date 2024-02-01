@@ -1,71 +1,54 @@
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+capabilities.textDocument.completion.completionItem = {
+	documentationFormat = { "markdown", "plaintext" },
+	snippetSupport = true,
+	preselectSupport = true,
+	insertReplaceSupport = true,
+	labelDetailsSupport = true,
+	deprecatedSupport = true,
+	commitCharactersSupport = true,
+	tagSupport = { valueSet = { 1 } },
+	resolveSupport = {
+		properties = {
+			"documentation",
+			"detail",
+			"additionalTextEdits",
+		},
+	},
+}
+
 return {
 	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
-		dependencies = {
-			{ "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
-			{ "folke/neodev.nvim", opts = {} },
-			"mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
-			"hrsh7th/cmp-nvim-lsp",
-		},
-		---@class PluginLspOpts
 		opts = {
-			-- options for vim.diagnostic.config()
 			diagnostics = {
 				underline = true,
 				update_in_insert = false,
 				virtual_text = {
 					spacing = 4,
 					source = "if_many",
-					-- prefix = "●",
-					-- this will set set the prefix to a function that returns the diagnostics icon based on the severity
-					-- this only works on a recent 0.10.0 build. Will be set to "●" when not supported
-					-- prefix = "icons",
 				},
 				severity_sort = true,
 			},
-			-- Enable this to enable the builtin LSP inlay hints on Neovim >= 0.10.0
-			-- Be aware that you also will need to properly configure your LSP server to
-			-- provide the inlay hints.
-			-- inlay_hints = {
-			-- 	enabled = false,
-			-- },
-			-- add any global capabilities here
-			capabilities = {},
-			-- Enable this to show formatters used in a notification
-			-- Useful for debugging formatter issues
+			capabilities = capabilities,
 			format_notify = false,
-			-- options for vim.lsp.buf.format
-			-- `bufnr` and `filter` is handled by the LazyVim formatter,
-			-- but can be also overridden when specified
 			format = {
 				formatting_options = nil,
 				timeout_ms = nil,
 			},
-			-- LSP Server Settings
-			---@type lspconfig.options
-			servers = {
-				jsonls = {},
-			},
-			-- you can do any additional lsp server setup here
-			-- return true if you don't want this server to be setup with lspconfig
-			---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
-			setup = {
-				-- example to setup with typescript.nvim
-				-- tsserver = function(_, opts)
-				--   require("typescript").setup({ server = opts })
-				--   return true
-				-- end,
-				-- Specify * to use this function as a fallback for any server
-				-- ["*"] = function(server, opts) end,
-			},
+			setup = {},
 		},
 		config = function(_, opts)
+			vim.diagnostic.config {
+				float = { border = "rounded" },
+			}
+
 			local keys = require("plugins.lsp.keymappings")
-			require("neoconf").setup()
 
 			vim.api.nvim_create_autocmd("LspAttach", {
+				group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 				callback = function(args)
 					local buffer = args.buf
 					local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -85,8 +68,9 @@ return {
 				return ret
 			end
 
-			vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
-			vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
+			vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+			vim.lsp.handlers["textDocument/signatureHelp"] =
+				vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
 			-- diagnostics
 			local diagnostics = {
@@ -180,55 +164,53 @@ return {
 		end,
 	},
 
-	-- formatters
 	{
-		"jose-elias-alvarez/null-ls.nvim",
-		event = { "BufReadPre", "BufNewFile" },
-		dependencies = { "mason.nvim" },
-		opts = function()
-			local nls = require("null-ls")
-			return {
-				root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
-				sources = {
-					nls.builtins.formatting.fish_indent,
-					nls.builtins.diagnostics.fish,
-					nls.builtins.formatting.stylua,
-					nls.builtins.formatting.shfmt,
+		"williamboman/mason.nvim",
+		cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUpdate", "MasonUninstall" },
+		opts = {
+			ensure_installed = {},
+		},
+		config = function(_, opts)
+			require("mason").setup({
+
+				PATH = "skip",
+
+				ui = {
+					icons = {
+						package_pending = " ",
+						package_installed = "󰄳 ",
+						package_uninstalled = " 󰚌",
+					},
+
+					keymaps = {
+						toggle_server_expand = "<CR>",
+						install_server = "i",
+						update_server = "u",
+						check_server_version = "c",
+						update_all_servers = "U",
+						check_outdated_servers = "C",
+						uninstall_server = "X",
+						cancel_installation = "<C-c>",
+					},
 				},
-			}
+
+				max_concurrent_installers = 10,
+			})
+
+			vim.api.nvim_create_user_command("MasonInstallAll", function()
+				if opts.ensure_installed and #opts.ensure_installed > 0 then
+					vim.cmd("MasonInstall " .. table.concat(opts.ensure_installed, " "))
+				end
+			end, {})
+
+			vim.g.mason_binaries_list = opts.ensure_installed
 		end,
 	},
 
-	-- cmdline tools and lsp servers
 	{
-
-		"williamboman/mason.nvim",
-		cmd = "Mason",
-		keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
-		build = ":MasonUpdate",
-		opts = {
-			ensure_installed = {
-				-- "stylua",
-				"shfmt",
-			},
-		},
-		---@param opts MasonSettings | {ensure_installed: string[]}
+		"stevearc/conform.nvim",
 		config = function(_, opts)
-			require("mason").setup(opts)
-			local mr = require("mason-registry")
-			local function ensure_installed()
-				for _, tool in ipairs(opts.ensure_installed) do
-					local p = mr.get_package(tool)
-					if not p:is_installed() then
-						p:install()
-					end
-				end
-			end
-			if mr.refresh then
-				mr.refresh(ensure_installed)
-			else
-				ensure_installed()
-			end
+			require("conform").setup(opts)
 		end,
 	},
 }

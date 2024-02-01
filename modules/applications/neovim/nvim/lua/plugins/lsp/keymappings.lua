@@ -4,19 +4,44 @@ M._keys = nil
 
 function M.get()
 	-- local format = function()
-	-- 	require("lazyvim.plugins.lsp.format").format({ force = true })
+	--      require("lazyvim.plugins.lsp.format").format({ force = true })
 	-- end
 	if not M._keys then
-		M._keys =  {
+		M._keys = {
 			{ "<leader>ld", "<cmd>Telescope diagnostic<cr>", desc = "Buffer [D]iagnostics" },
 			{ "<leader>li", "<cmd>LspInfo<cr>", desc = "Lsp [I]nfo" },
-			{ "<leader>lgd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, desc = "Goto [D]efinition", has = "definition" },
+			{
+				"<leader>lgd",
+				function()
+					require("telescope.builtin").lsp_definitions({ reuse_win = true })
+				end,
+				desc = "Goto [D]efinition",
+				has = "definition",
+			},
 			{ "<leader>lgr", "<cmd>Telescope lsp_references<cr>", desc = "[R]eferences" },
 			{ "<leader>lge", vim.lsp.buf.declaration, desc = "Goto D[e]claration" },
-			{ "<leader>lgi", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, desc = "Goto [I]mplementation" },
-			{ "<leader>lgy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, desc = "Goto T[y]pe Definition" },
+			{
+				"<leader>lgi",
+				function()
+					require("telescope.builtin").lsp_implementations({ reuse_win = true })
+				end,
+				desc = "Goto [I]mplementation",
+			},
+			{
+				"<leader>lgy",
+				function()
+					require("telescope.builtin").lsp_type_definitions({ reuse_win = true })
+				end,
+				desc = "Goto T[y]pe Definition",
+			},
 			{ "<leader>lh", vim.lsp.buf.hover, desc = "[H]over" },
-			{ "<leader>lf", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", desc = "[F]ormat" },
+			{
+				"<leader>lf",
+				function()
+					require("conform").format({ lsp_fallback = true })
+				end,
+				desc = "[F]ormat",
+			},
 			{ "<leader>lH", vim.lsp.buf.signature_help, desc = "Signature [H]elp", has = "signatureHelp" },
 			{ "<c-h>", vim.lsp.buf.signature_help, mode = "i", desc = "Signature Help", has = "signatureHelp" },
 			{ "<leader>ldj", M.diagnostic_goto(true), desc = "Next Diagnostic" },
@@ -30,19 +55,19 @@ function M.get()
 			{ "<leader>la", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
 			{ "<leader>lr", vim.lsp.buf.rename, desc = "Rename", has = "rename" },
 			-- {
-			-- 	"<leader>cA",
-			-- 	function()
-			-- 		vim.lsp.buf.code_action({
-			-- 			context = {
-			-- 				only = {
-			-- 					"source",
-			-- 				},
-			-- 				diagnostics = {},
-			-- 			},
-			-- 		})
-			-- 	end,
-			-- 	desc = "Source Action",
-			-- 	has = "codeAction",
+			--      "<leader>cA",
+			--      function()
+			--              vim.lsp.buf.code_action({
+			--                      context = {
+			--                              only = {
+			--                                      "source",
+			--                              },
+			--                              diagnostics = {},
+			--                      },
+			--              })
+			--      end,
+			--      desc = "Source Action",
+			--      has = "codeAction",
 			-- }
 		}
 	end
@@ -61,41 +86,12 @@ function M.has(buffer, method)
 	return false
 end
 
-function M.resolve(buffer)
+function M.on_attach(_, buffer)
 	local Keys = require("lazy.core.handler.keys")
-	local keymaps = {}
 
-	local function add(keymap)
-		local keys = Keys.parse(keymap)
-		if keys[2] == false then
-			keymaps[keys.id] = nil
-		else
-			keymaps[keys.id] = keys
-		end
-	end
-	for _, keymap in ipairs(M.get()) do
-		add(keymap)
-	end
-
-	-- local opts = require("lazyvim.util").opts("nvim-lspconfig")
-	-- local clients = vim.lsp.get_active_clients({ bufnr = buffer })
-	-- for _, client in ipairs(clients) do
-	-- 	local maps = opts.servers[client.name] and opts.servers[client.name].keys or {}
-	-- 	for _, keymap in ipairs(maps) do
-	-- 		add(keymap)
-	-- 	end
-	-- end
-	return keymaps
-end
-
-function M.on_attach(client, buffer)
-	local Keys = require("lazy.core.handler.keys")
-	local keymaps = M.resolve(buffer)
-
-	for _, keys in pairs(keymaps) do
+	for _, keys in pairs(M.get()) do
 		if not keys.has or M.has(buffer, keys.has) then
 			local opts = Keys.opts(keys)
-			---@diagnostic disable-next-line: no-unknown
 			opts.has = nil
 			opts.silent = opts.silent ~= false
 			opts.buffer = buffer

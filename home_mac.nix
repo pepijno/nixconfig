@@ -8,12 +8,19 @@
     ./modules/applications/tmux.nix
 
     ./modules/applications/neovim/neovim.nix
+    ./modules/applications/kitty.nix
+    ./modules/applications/fish.nix
   ];
 
   home.packages = with pkgs; [
     # bat
     fd
     nix-prefetch-git
+    fzf
+    ripgrep
+    fd
+    screen
+    lazygit
   ];
 
   nixpkgs.config.allowUnfree = true;
