@@ -20,7 +20,7 @@ in{
   wayland.windowManager.hyprland.extraConfig = ''
     exec-once = ${startup}/bin/hyprland-startup
     exec = /usr/lib/polkit-gnome-polkit-gnome-authentication-agent-1
-    exec = ${pkgs.swww}/bin/swww img $(${pkgs.findutils}/bin/find ~/Pictures/Wallpapers/. -type f | ${sw}/bin/shuf -n1)
+    exec = ${pkgs.swaybg}/bin/swaybg -m fill -i $(${pkgs.findutils}/bin/find ~/Pictures/Wallpapers/. -type f | ${sw}/bin/shuf -n1)
     exec = ${pkgs.wlr-randr}/bin/wlr-randr --output HDMI-A-1 --off
 
     general {
@@ -33,7 +33,6 @@ in{
 
     decoration {
       rounding = 2
-      multisample_edges = true
     }
 
     misc {
@@ -61,7 +60,7 @@ in{
 
     $mod = ALT
 
-    monitor = DP-1,preferred,auto,1
+    monitor = DP-1,1920x1080,0x0,1
     monitor = HDMI-A-1,disable
 
     windowrulev2 = workspace 1,class:Kitty
@@ -81,7 +80,6 @@ in{
     bindm = $mod, mouse:272, movewindow
     bindm = $mod, mouse:273, resizewindow
 
-    bind  = $mod SHIFT, B,      exec, ${pkgs.vivaldi}/bin/vivaldi
     bind  = $mod SHIFT, F,      exec, ${pkgs.firefox}/bin/firefox
     bind  = $mod SHIFT, O,      exec, ${pkgs.tor-browser-bundle-bin}/bin/tor-browser
     bind  = $mod SHIFT, S,      exec, ${pkgs.steam}/bin/steam

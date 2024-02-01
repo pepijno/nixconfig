@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ allowed-unfree-packages, pkgs, lib, config, ... }:
 
 let
   torbrowserWithAudio = pkgs.tor-browser-bundle-bin.override {
@@ -7,7 +7,11 @@ let
   };
 in
 {
-  nixpkgs.config.pulseaudio = true;
+  nixpkgs.config = {
+    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) allowed-unfree-packages;
+    pulseaudio = true;
+  };
+
   home.packages = with pkgs; [
     bash
     imagemagick
@@ -21,7 +25,7 @@ in
     steam
     steam-run
     hicolor-icon-theme
-    dosbox
+    dosbox-staging
     inotify-tools
     timidity
     soundfont-fluid
@@ -34,7 +38,7 @@ in
     torbrowserWithAudio
     firefox
     vivaldi
-    widevine-cdm
+    # widevine-cdm
     vivaldi-ffmpeg-codecs
 
     libnotify

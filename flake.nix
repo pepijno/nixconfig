@@ -2,10 +2,10 @@
   description = "System config";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-23.05";
+    nixpkgs.url = "nixpkgs/nixos-23.11";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
+      url = "github:nix-community/home-manager/release-23.11";
       # inputs.unstable.follows = "nixpkgs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -16,6 +16,15 @@
 
   outputs = { self, nixpkgs, home-manager, hyprland, ... }@inputs:
     let
+      allowed-unfree-packages = [
+        "vivaldi"
+        "vivaldi-ffmpeg-codecs"
+        "steam"
+        "steam-original"
+        "steam-run"
+        "widevine-cdm"
+        "discord"
+      ];
       pkgs = import nixpkgs {
         config = {
           allowUnfree = true;
@@ -41,7 +50,7 @@
       homeConfigurations = {
         pepijn = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit inputs; };
+          extraSpecialArgs = { inherit inputs; inherit allowed-unfree-packages; };
           modules = [
             hyprland.homeManagerModules.default
             ./home_linux.nix
