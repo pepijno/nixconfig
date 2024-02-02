@@ -1,19 +1,28 @@
 { config, pkgs, ... }:
 
-let 
+let
   sw = "/run/current-system/sw";
-  swaybg = "${pkgs.swaybg}/bin/swaybg -m fill -i $(find ~/Pictures/Wallpapers/. -type f | /run/current-system/sw/bin/shuf -n1)";
+  swaybg =
+    "${pkgs.swaybg}/bin/swaybg -m fill -i $(find ~/Pictures/Wallpapers/. -type f | /run/current-system/sw/bin/shuf -n1)";
   startup = pkgs.writeShellScriptBin "hyprland-startup" ''
-${pkgs.swww}/bin/swww init &
-${pkgs.solaar}/bin/solaar &
-${pkgs.waybar}/bin/waybar &
+    ${pkgs.swww}/bin/swww init &
+    ${pkgs.solaar}/bin/solaar &
+    ${pkgs.waybar}/bin/waybar &
   '';
-in{
+in {
   services.swayidle = {
     enable = true;
     timeouts = [
-      { timeout = 600; command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off"; resumeCommand = "${pkgs.hyprland}/bin/hyprctl dispatch dpms on; ${sw}/bin/systemctl --user restart wlsunset.service; ${pkgs.wlr-randr}/bin/wlr-randr --output HDMI-A-1 --off"; }
-      { timeout = 1200; command = "${sw}/bin/systemctl hibernate"; }
+      {
+        timeout = 600;
+        command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off";
+        resumeCommand =
+          "${pkgs.hyprland}/bin/hyprctl dispatch dpms on; ${sw}/bin/systemctl --user restart wlsunset.service; ${pkgs.wlr-randr}/bin/wlr-randr --output HDMI-A-1 --off";
+      }
+      {
+        timeout = 1200;
+        command = "${sw}/bin/systemctl hibernate";
+      }
     ];
   };
 

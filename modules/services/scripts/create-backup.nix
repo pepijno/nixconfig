@@ -6,8 +6,7 @@ let
   mountpoint = "/run/current-system/sw/bin/mountpoint";
   date = "/run/current-system/sw/bin/date";
 
-in
-pkgs.writeShellScriptBin "create-backup" ''
+in pkgs.writeShellScriptBin "create-backup" ''
   function send_message {
       echo $1
   }

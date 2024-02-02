@@ -26,10 +26,13 @@
         frame_width = 0;
         frame_color = "#8BABF000";
         sort = "yes";
-        font = "xft:Ubuntu:weight=bold:pixelsize=12:antialias=true:hinting=true";
+        font =
+          "xft:Ubuntu:weight=bold:pixelsize=12:antialias=true:hinting=true";
         line_height = 0;
         markup = "full";
-        format = "<b>%s</b>\n%b";
+        format = ''
+          <b>%s</b>
+          %b'';
         alignment = "center";
         vertical_alignment = "center";
         show_age_threshold = 60;

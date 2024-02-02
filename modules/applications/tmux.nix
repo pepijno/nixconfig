@@ -1,9 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  home.packages = with pkgs; [
-    tmux-mem-cpu-load
-  ];
+  home.packages = with pkgs; [ tmux-mem-cpu-load ];
   programs.tmux = {
     enable = true;
     baseIndex = 1;

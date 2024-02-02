@@ -39,19 +39,18 @@
         inherit system;
       };
 
-      buildInputs = with pkgs; [
-        rnix-lsp
-        lua-language-server
-      ];
+      buildInputs = with pkgs; [ nixd nixfmt lua-language-server stylua ];
 
       system = "x86_64-linux";
       system_darwin = "x86_64-darwin";
-    in
-    {
+    in {
       homeConfigurations = {
         pepijn = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit inputs; inherit allowed-unfree-packages; };
+          extraSpecialArgs = {
+            inherit inputs;
+            inherit allowed-unfree-packages;
+          };
           modules = [
             hyprland.homeManagerModules.default
             ./home_linux.nix
@@ -60,23 +59,17 @@
         };
         pepijn_mac = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [
-            ./home_mac.nix
-          ];
+          modules = [ ./home_mac.nix ];
         };
       };
       nixosConfigurations = {
         desktop = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
-          modules = [
-            ./machine/configuration.nix
-          ];
+          modules = [ ./machine/configuration.nix ];
         };
       };
 
-      devShells.${system}.default = pkgs.mkShell {
-        inherit buildInputs;
-      };
+      devShells.${system}.default = pkgs.mkShell { inherit buildInputs; };
     };
 }

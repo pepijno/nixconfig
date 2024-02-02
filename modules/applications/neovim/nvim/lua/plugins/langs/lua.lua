@@ -47,7 +47,7 @@ return {
 		opts = function(_, opts)
 			local extra = { lua = { "stylua" } }
 			if type(opts.formatters_by_ft) == "table" then
-				vim.list_extend(opts.formatters_by_ft, extra)
+				opts.formatters_by_ft = vim.tbl_extend("force", opts.formatters_by_ft, extra)
 			else
 				opts.formatters_by_ft = extra
 			end

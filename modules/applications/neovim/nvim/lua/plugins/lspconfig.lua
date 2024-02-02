@@ -41,9 +41,9 @@ return {
 			setup = {},
 		},
 		config = function(_, opts)
-			vim.diagnostic.config {
+			vim.diagnostic.config({
 				float = { border = "rounded" },
-			}
+			})
 
 			local keys = require("plugins.lsp.keymappings")
 
@@ -173,7 +173,7 @@ return {
 		config = function(_, opts)
 			require("mason").setup({
 
-				PATH = "skip",
+				PATH = "append",
 
 				ui = {
 					icons = {

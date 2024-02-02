@@ -31,17 +31,15 @@
       set FZF_DEFAULT_COMMAND "rg --files"
     '';
 
-    plugins = [
-      {
-        name = "nix-env";
-        src = pkgs.fetchFromGitHub {
-          owner = "lilyball";
-          repo = "nix-env.fish";
-          rev = "7b65bd228429e852c8fdfa07601159130a818cfa";
-          sha256 = "sha256-RG/0rfhgq6aEKNZ0XwIqOaZ6K5S4+/Y5EEMnIdtfPhk=";
-        };
-      }
-    ];
+    plugins = [{
+      name = "nix-env";
+      src = pkgs.fetchFromGitHub {
+        owner = "lilyball";
+        repo = "nix-env.fish";
+        rev = "7b65bd228429e852c8fdfa07601159130a818cfa";
+        sha256 = "sha256-RG/0rfhgq6aEKNZ0XwIqOaZ6K5S4+/Y5EEMnIdtfPhk=";
+      };
+    }];
   };
 
   programs.starship = {
@@ -56,9 +54,7 @@
       #   [┌───────────────────](bold green) $time$all
       #   [└─](bold green)[\[](bold cyan)$directory[\]](bold cyan)$character
       # '';
-      directory = {
-        format = "[$path]($style)[$read_only]($read_only_style)";
-      };
+      directory = { format = "[$path]($style)[$read_only]($read_only_style)"; };
       scan_timeout = 10;
       right_format = "$cmd_duration";
       cmd_duration = {
@@ -70,17 +66,15 @@
         fish_style_pwd_dir_length = 1;
       };
       add_newline = true;
-      line_break = {
-        disabled = true;
-      };
+      line_break = { disabled = true; };
       time = {
         format = "[$time]($style) ";
         disabled = false;
       };
       nix_shell = {
-          style = "bold red";
-          symbol = "[󱄅](bold blue) ";
-        };
+        style = "bold red";
+        symbol = "[󱄅](bold blue) ";
+      };
     };
   };
 }
