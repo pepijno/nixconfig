@@ -6,12 +6,17 @@ end
 
 return {
 	"nvim-telescope/telescope.nvim",
-	dependencies = { "nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter" },
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		"nvim-treesitter/nvim-treesitter",
+		"nvim-telescope/telescope-ui-select.nvim",
+	},
 	cmd = "Telescope",
 	keys = {
 		-- find
 		{ "<leader>ff", telescope("find_files"), desc = "[F]iles" },
 		{ "<leader>fr", telescope("live_grep"), desc = "[R]ipgrep" },
+		{ "<leader>fR", telescope("grep_string"), desc = "[R]ipgrep string" },
 		-- git
 		-- { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
 		-- { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "status" },
@@ -98,7 +103,7 @@ return {
 				path_display = { "truncate" },
 				winblend = 0,
 				border = {},
-				borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+				borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
 				color_devicons = true,
 				set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
 				pickers = {
@@ -125,6 +130,22 @@ return {
 					"--glob=!.git/",
 				},
 			},
+			extensions = {
+				["ui-select"] = {
+					specific_opts = {
+						--   [kind] = {
+						--     make_indexed = function(items) -> indexed_items, width,
+						--     make_displayer = function(widths) -> displayer
+						--     make_display = function(displayer) -> function(e)
+						--     make_ordinal = function(e) -> string
+						--   },
+						--   -- for example to disable the custom builtin "codeactions" display
+						--      do the following
+						codeactions = false,
+					},
+				},
+			},
 		})
+		require("telescope").load_extension("ui-select")
 	end,
 }

@@ -9,7 +9,7 @@ function M.get()
 	if not M._keys then
 		M._keys = {
 			{ "<leader>ld", "<cmd>Telescope diagnostic<cr>", desc = "Buffer [D]iagnostics" },
-			{ "<leader>li", "<cmd>LspInfo<cr>", desc = "Lsp [I]nfo" },
+			{ "<leader>lI", "<cmd>LspInfo<cr>", desc = "Lsp [I]nfo" },
 			{
 				"<leader>lgd",
 				function()

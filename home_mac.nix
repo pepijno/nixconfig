@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   imports = [
@@ -10,6 +10,8 @@
     ./modules/applications/neovim/neovim.nix
     ./modules/applications/kitty.nix
     ./modules/applications/fish.nix
+
+    inputs.nix-colors.homeManagerModules.default
   ];
 
   home.packages = with pkgs; [
@@ -22,6 +24,8 @@
     screen
     lazygit
   ];
+
+  colorScheme = inputs.nix-colors.colorSchemes.catppuccin-latte;
 
   nixpkgs.config.allowUnfree = true;
 

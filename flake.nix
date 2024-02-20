@@ -41,8 +41,7 @@
 
       buildInputs = with pkgs; [ nixd nixfmt lua-language-server stylua ];
 
-      system = "x86_64-linux";
-      system_darwin = "x86_64-darwin";
+      system = "x86_64-darwin";
     in {
       homeConfigurations = {
         pepijn = home-manager.lib.homeManagerConfiguration {
@@ -59,6 +58,9 @@
         };
         pepijn_mac = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
+          extraSpecialArgs = {
+            inherit inputs;
+          };
           modules = [ ./home_mac.nix ];
         };
       };

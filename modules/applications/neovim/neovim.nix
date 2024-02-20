@@ -12,6 +12,7 @@
     nodejs_20
 
     stylua
+    beautysh
   ];
 
   xdg.configFile."nvim".source = ./nvim;

@@ -1,14 +1,17 @@
 return {
 	{
-		"echasnovski/mini.comment",
-		event = "VeryLazy",
-		opts = {
-			options = {
-				custom_commentstring = function()
-					return require("ts_context_commentstring.internal").calculate_commentstring()
-						or vim.bo.commentstring
-				end,
-			},
-		},
+		"numToStr/Comment.nvim",
+		lazy = false,
+		opts = {},
+		config = function()
+			local comment = require("Comment")
+			local ft = require("Comment.ft")
+
+			local commentstr = "<!--%s-->"
+
+			ft.set("angular", { commentstr, commentstr })
+
+			comment.setup()
+		end,
 	},
 }
