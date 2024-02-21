@@ -31,6 +31,7 @@ in {
     exec = /usr/lib/polkit-gnome-polkit-gnome-authentication-agent-1
     exec = ${pkgs.swaybg}/bin/swaybg -m fill -i $(${pkgs.findutils}/bin/find ~/Pictures/Wallpapers/. -type f | ${sw}/bin/shuf -n1)
     exec = ${pkgs.wlr-randr}/bin/wlr-randr --output HDMI-A-1 --off
+		exec-once = ${pkgs.sway-audio-idle-inhibit}/bin/sway-audio-idle-inhibit
 
     general {
       gaps_in=4

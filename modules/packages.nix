@@ -38,7 +38,7 @@ in {
     torbrowserWithAudio
     firefox
     vivaldi
-    # widevine-cdm
+    widevine-cdm
     vivaldi-ffmpeg-codecs
 
     libnotify

@@ -35,6 +35,11 @@ M.init_keymaps = function()
 	-- Stay in indent mode
 	map("v", "<", "<gv", opts)
 	map("v", ">", ">gv", opts)
+
+	map("n", "<C-u>", "<C-u>zz", opts)
+	map("n", "<C-d>", "<C-d>zz", opts)
+	map("n", "<C-y>", "<C-y>zz", opts)
+	map("n", "<C-e>", "<C-e>zz", opts)
 end
 
 return M
