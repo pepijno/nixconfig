@@ -91,35 +91,39 @@ return {
 			if type(opts.ensure_installed) == "table" then
 				vim.list_extend(
 					opts.ensure_installed,
-					{ "angular-language-server", "typescript-language-server", "prettier", "html-lsp", "css-lsp" }
+					{ "angular-language-server", "typescript-language-server", "eslint_d", "prettier", "html-lsp", "css-lsp" }
 				)
 			end
 		end,
 	},
-	{
-		"stevearc/conform.nvim",
-		opts = function(_, opts)
-			local extra = { angular = { "prettier" } }
-			if type(opts.formatters_by_ft) == "table" then
-				vim.list_extend(opts.formatters_by_ft, extra)
-			else
-				opts.formatters_by_ft = extra
-			end
-			local formatters = {
-				prettier = {
-					printWidth = 120,
-					useTabs = false,
-					semi = true,
-					singleQuote = true,
-					trailingComma = "all",
-					arrowParens = "always",
-				},
-			}
-			if type(opts.formatters) == "table" then
-				vim.list_extend(opts.formatters, formatters)
-			else
-				opts.formatters = formatters
-			end
-		end,
-	},
+	-- {
+	-- 	"stevearc/conform.nvim",
+	-- 	opts = function(_, opts)
+	-- 		local extra = { typescript = { "prettier", "eslint_d" }, angular = { "prettier", "eslint_d" } }
+	-- 		if type(opts.formatters_by_ft) == "table" then
+	-- 			vim.list_extend(opts.formatters_by_ft, extra)
+	-- 		else
+	-- 			opts.formatters_by_ft = extra
+	-- 		end
+	-- 		local formatters = {
+	-- 			prettier = {
+	-- 				printWidth = 40,
+	-- 				useTabs = false,
+	-- 				semi = true,
+	-- 				singleQuote = true,
+	-- 				jsxSingleQuote = true,
+	-- 				trailingComma = "none",
+	-- 				arrowParens = "always",
+	-- 				bracketSpacing = true,
+	-- 				bracketSameLine = true,
+	-- 				singleAttributePerLine = true,
+	-- 			},
+	-- 		}
+	-- 		if type(opts.formatters) == "table" then
+	-- 			vim.list_extend(opts.formatters, formatters)
+	-- 		else
+	-- 			opts.formatters = formatters
+	-- 		end
+	-- 	end,
+	-- },
 }

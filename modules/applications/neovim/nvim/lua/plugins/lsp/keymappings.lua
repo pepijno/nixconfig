@@ -2,6 +2,18 @@ local M = {}
 
 M._keys = nil
 
+vim.api.nvim_create_user_command("Format", function(args)
+	local range = nil
+	if args.count ~= -1 then
+		local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+		range = {
+			start = { args.line1, 0 },
+			["end"] = { args.line2, end_line:len() },
+		}
+	end
+	require("conform").format({ async = true, lsp_fallback = true, range = range })
+end, { range = true })
+
 function M.get()
 	-- local format = function()
 	--      require("lazyvim.plugins.lsp.format").format({ force = true })
@@ -35,13 +47,8 @@ function M.get()
 				desc = "Goto T[y]pe Definition",
 			},
 			{ "<leader>lh", vim.lsp.buf.hover, desc = "[H]over" },
-			{
-				"<leader>lf",
-				function()
-					require("conform").format({ lsp_fallback = true })
-				end,
-				desc = "[F]ormat",
-			},
+			{ "<leader>lf", "<cmd>Format<cr>", desc = "[F]ormat" },
+			{ "f", "<cmd>Format<cr>", desc = "[F]ormat", mode = "v" },
 			{ "<leader>lH", vim.lsp.buf.signature_help, desc = "Signature [H]elp", has = "signatureHelp" },
 			{ "<c-h>", vim.lsp.buf.signature_help, mode = "i", desc = "Signature Help", has = "signatureHelp" },
 			{ "<leader>ldj", M.diagnostic_goto(true), desc = "Next Diagnostic" },
@@ -53,22 +60,8 @@ function M.get()
 			-- { "<leader>cf", format, desc = "Format Document", has = "formatting" },
 			-- { "<leader>cf", format, desc = "Format Range", mode = "v", has = "rangeFormatting" },
 			{ "<leader>la", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
-			{ "<leader>lr", vim.lsp.buf.rename, desc = "Rename", has = "rename" },
-			-- {
-			--      "<leader>cA",
-			--      function()
-			--              vim.lsp.buf.code_action({
-			--                      context = {
-			--                              only = {
-			--                                      "source",
-			--                              },
-			--                              diagnostics = {},
-			--                      },
-			--              })
-			--      end,
-			--      desc = "Source Action",
-			--      has = "codeAction",
-			-- }
+			{ "<leader>lr", vim.lsp.buf.rename, desc = "[r]ename", has = "rename" },
+			{ "<leader>lR", "<cmd>LspRestart<cr>", desc = "[R]estart" },
 		}
 	end
 	return M._keys
