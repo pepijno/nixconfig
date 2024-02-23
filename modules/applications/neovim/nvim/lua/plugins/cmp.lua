@@ -4,34 +4,51 @@ return {
 		event = "InsertEnter",
 		dependencies = {
 			-- autopairing of (){}[] etc
-			{
-				"windwp/nvim-autopairs",
-				opts = {
-					fast_wrap = {},
-					disable_filetype = { "TelescopePrompt", "vim" },
-				},
-				config = function(_, opts)
-					require("nvim-autopairs").setup(opts)
+			-- {
+			-- 	"windwp/nvim-autopairs",
+			-- 	opts = {
+			-- 		fast_wrap = {},
+			-- 		disable_filetype = { "TelescopePrompt", "vim" },
+			-- 	},
+			-- 	config = function(_, opts)
+			-- 		require("nvim-autopairs").setup(opts)
+			--
+			-- 		-- setup cmp for autopairs
+			-- 		local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+			-- 		require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
+			-- 	end,
+			-- },
 
-					-- setup cmp for autopairs
-					local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-					require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
-				end,
+			-- Snippet Engine & its associated nvim-cmp source
+			{
+				"L3MON4D3/LuaSnip",
+				build = (function()
+					-- Build Step is needed for regex support in snippets
+					-- This step is not supported in many windows environments
+					-- Remove the below condition to re-enable on windows
+					if vim.fn.has("win32") == 1 then
+						return
+					end
+					return "make install_jsregexp"
+				end)(),
 			},
 
 			-- cmp sources plugins
 			{
-				-- "saadparwaiz1/cmp_luasnip",
+				"saadparwaiz1/cmp_luasnip",
 				"hrsh7th/cmp-nvim-lua",
 				"hrsh7th/cmp-nvim-lsp",
 				"hrsh7th/cmp-buffer",
 				"hrsh7th/cmp-path",
 				"onsails/lspkind.nvim",
+				-- Adds a number of user-friendly snippets
+				"rafamadriz/friendly-snippets",
 			},
 		},
 		config = function()
 			local cmp = require("cmp")
 			local lspkind = require("lspkind")
+			local luasnip = require("luasnip")
 
 			lspkind.init({
 				mode = "text",
@@ -139,11 +156,11 @@ return {
 						-- winhighlight = "Normal:CmpDoc",
 					},
 				},
-				-- snippet = {
-				-- 	expand = function(args)
-				-- 		require("luasnip").lsp_expand(args.body)
-				-- 	end,
-				-- },
+				snippet = {
+					expand = function(args)
+						luasnip.lsp_expand(args.body)
+					end,
+				},
 
 				formatting = formatting_style,
 
@@ -158,41 +175,26 @@ return {
 					["<C-d>"] = cmp.mapping.scroll_docs(-4),
 					["<C-f>"] = cmp.mapping.scroll_docs(4),
 					["<C-Space>"] = cmp.mapping.complete(),
-					["<C-e>"] = cmp.mapping.close(),
-					["<CR>"] = cmp.mapping.confirm({
+					["<C-y>"] = cmp.mapping.confirm({
 						behavior = cmp.ConfirmBehavior.Insert,
 						select = true,
 					}),
-					["<Tab>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							cmp.select_next_item()
-						-- elseif require("luasnip").expand_or_jumpable() then
-						-- 	vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
-						else
-							fallback()
+					["<C-l>"] = cmp.mapping(function()
+						if luasnip.expand_or_locally_jumpable() then
+							luasnip.expand_or_jump()
 						end
-					end, {
-						"i",
-						"s",
-					}),
-					["<S-Tab>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							cmp.select_prev_item()
-						-- elseif require("luasnip").jumpable(-1) then
-						-- 	vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
-						else
-							fallback()
+					end, { "i", "s" }),
+					["<C-h>"] = cmp.mapping(function()
+						if luasnip.locally_jumpable(-1) then
+							luasnip.jump(-1)
 						end
-					end, {
-						"i",
-						"s",
-					}),
+					end, { "i", "s" }),
 				},
 				sources = {
 					{ name = "nvim_lsp_signature_help" },
 					{ name = "nvim_lsp" },
 					{ name = "nvim_lua" },
-					-- { name = "luasnip" },
+					{ name = "luasnip" },
 					{ name = "path" },
 					{ name = "buffer" },
 				},

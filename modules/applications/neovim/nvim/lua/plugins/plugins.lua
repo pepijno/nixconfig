@@ -5,14 +5,6 @@ return {
 	},
 	"nvim-tree/nvim-web-devicons",
 	{
-		"echasnovski/mini.indentscope",
-		event = { "BufReadPre", "BufNewFile" },
-		opts = {
-			symbol = "│",
-			options = { try_as_border = true },
-		},
-	},
-	{
 		"stevearc/oil.nvim",
 		keys = {
 			{ "-", "<cmd>Oil<cr>", desc = "Open Oil", mode = "n" },
@@ -32,7 +24,13 @@ return {
 	{
 		"j-hui/fidget.nvim",
 		config = function()
-			require("fidget").setup()
+			require("fidget").setup({
+				notification = {
+					window = {
+						winblend = 100,
+					},
+				},
+			})
 		end,
 	},
 	-- {
@@ -81,8 +79,5 @@ return {
 				{ noremap = true, silent = true, desc = "Toggle neotree" }
 			)
 		end,
-	},
-	{
-		"vim-test/vim-test",
 	},
 }
