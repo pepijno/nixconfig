@@ -41,7 +41,7 @@
 
       buildInputs = with pkgs; [ nixd nixfmt lua-language-server stylua ];
 
-      system = "x86_64-darwin";
+      system = "x86_64-linux";
     in {
       homeConfigurations = {
         pepijn = home-manager.lib.homeManagerConfiguration {

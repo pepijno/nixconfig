@@ -10,73 +10,6 @@ function table.copy(t)
 	return setmetatable(u, getmetatable(t))
 end
 
-local get_query_ts = function()
-	return vim.treesitter.query.parse(
-		"typescript",
-		[[
-[
-  "export"
-] @leaf
-
-[
-  (class_body)
-  (statement_block)
-] @append_hardline
-		]]
-	)
-end
-
-local get_query_json = function()
-	return vim.treesitter.query.parse(
-		"json",
-		[[
-; Sometimes we want to indicate that certain parts of our source text should
-; not be formatted, but taken as is. We use the leaf capture name to inform the
-; tool of this.
-(string) @leaf
-
-; Append space after colons
-":" @append_space
-
-; We want every object and array to have the { start a softline and an indented
-; block. So we match on the named object/array followed by the first anonymous
-; node { or [.
-
-; We do not want to add spaces or newlines in empty objects and arrays,
-; so we add the newline and the indentation block only if there is a pair in
-; the object (or a value in the array).
-(object
-  .
-  "{" @append_spaced_softline @append_indent_start
-  (pair)
-  "}" @prepend_spaced_softline @prepend_indent_end
-  .
-)
-
-(array
-  .
-  "[" @append_spaced_softline @append_indent_start
-  (_value)
-  "]" @prepend_spaced_softline @prepend_indent_end
-  .
-)
-
-; Pairs should always end with a softline.
-; Pairs come in two kinds, ones with a trailing comma, and those without.
-; Those without are the last pair of an object,
-; and the line is already added by the closing curly brace of the object.
-(object
-  "," @append_spaced_softline
-)
-
-; Items in an array must have a softline after. See also the pairs above.
-(array
-  "," @append_spaced_softline
-)
-	]]
-	)
-end
-
 local Atom = {}
 Atom.__index = Atom
 
@@ -184,6 +117,18 @@ function Atom.ScopedSoftLine(id, scope_id, spaced)
 	return atom
 end
 
+function Atom.SingleQuote()
+	local atom = table.copy(Atom)
+	atom.type = "SingleQuote"
+	return atom
+end
+
+function Atom.DoubleQuote()
+	local atom = table.copy(Atom)
+	atom.type = "DoubleQuote"
+	return atom
+end
+
 local ScopedCondition = {}
 ScopedCondition.SingleLineOnly = "SingleLineOnly"
 ScopedCondition.MultiLineOnly = "MultiLineOnly"
@@ -198,18 +143,10 @@ function Atom.ScopedConditional(id, scope_id, condition, atom)
 	return a
 end
 
-local get_root = function(bufnr)
-	local parser = vim.treesitter.get_parser(bufnr, "json", {})
+local get_root = function(bufnr, lang)
+	local parser = vim.treesitter.get_parser(bufnr, lang, {})
 	local tree = parser:parse()[1]
 	return tree:root()
-end
-
-local tablelength = function(T)
-	local count = 0
-	for _ in pairs(T) do
-		count = count + 1
-	end
-	return count
 end
 
 local function dfs_flatten(node)
@@ -240,26 +177,23 @@ local function detect_multiline_nodes(nodes)
 	return multiline_nodes
 end
 
-local detect_linebreaks = function(nodes, minimum_line_breaks)
+local function detect_linebreaks(nodes, minimum_line_breaks)
 	nodes = nodes or {}
 	minimum_line_breaks = minimum_line_breaks or 1
 
 	local before = {}
 	local after = {}
 
-	local length = tablelength(nodes)
-
-	for i, k in ipairs(nodes) do
-		if i >= length - 1 then
+	for i = 1, #nodes do
+		if i == #nodes then
 			break
 		end
-
-		local range_left = { k:range() }
+		local range_left = { nodes[i]:range() }
 		local range_right = { nodes[i + 1]:range() }
 
-		if range_right[1] >= range_left[3] + minimum_line_breaks then
-			table.insert(before, nodes[i + 1]:id())
-			table.insert(after, k:id())
+		if range_right[1] >= (range_left[3] + minimum_line_breaks) then
+			before[nodes[i + 1]:id()] = nodes[i + 1]:id()
+			after[nodes[i]:id()] = nodes[i]:id()
 		end
 	end
 
@@ -344,10 +278,6 @@ function Atoms:collect_leafs_inner(bufnr, node, parent_ids, level)
 
 	if node:byte_length() == 0 then
 	elseif node:child_count() == 0 or self.leaf_nodes[id] ~= nil then
-		-- vim.print(node:child_count())
-		-- vim.print(self.leaf_nodes[id])
-		-- vim.print(node:has_error())
-		-- vim.print(vim.treesitter.get_node_text(node, bufnr))
 		table.insert(
 			self.atoms,
 			Atom.Leaf(vim.treesitter.get_node_text(node, bufnr), id, { node:range() }, false, false)
@@ -387,8 +317,6 @@ function Atoms:resolve_capture(name, node, predicates)
 		end
 	end
 
-	vim.print(name)
-
 	if is_multi_line and predicates.single_line_only then
 		vim.print("Skipping because context is multi-line and #single_line_only! is set")
 		return
@@ -400,16 +328,22 @@ function Atoms:resolve_capture(name, node, predicates)
 	end
 
 	local parent_leaf_node = self.parent_leaf_nodes[node:id()]
-	if parent_leaf_node ~= nil and parent_leaf_node ~= node:id()then
+	if parent_leaf_node ~= nil and parent_leaf_node ~= node:id() then
 		vim.print("Skipping because the match occurred below a leaf node: {}")
 		return
 	end
 
-	if name == "allow_blank_line_before" then
-		vim.print("yo!")
+	if name == "single_quote" then
+		local child = node:child(0)
+		self:prepend(Atom.SingleQuote(), child, predicates)
+		self:append(Atom.SingleQuote(), child, predicates)
+	elseif name == "double_quote" then
+	elseif name == "allow_blank_line_before" then
 		if self.blank_lines_before[node:id()] ~= nil then
-			self:prepend(Atom.Blankline, node, predicates)
+			self:prepend(Atom.Blankline(), node, predicates)
 		end
+	-- elseif name == "append_blank_line" then
+	-- 	self:append(Atom.Blankline(), node, predicates)
 	elseif name == "append_delimiter" then
 		self:append(Atom.Literal(require_delimiters(name, predicates)), node, predicates)
 	elseif name == "append_empty_softline" then
@@ -440,6 +374,8 @@ function Atoms:resolve_capture(name, node, predicates)
 		self:prepend(Atom.Softline(false), node, predicates)
 	elseif name == "prepend_hardline" then
 		self:prepend(Atom.Hardline(), node, predicates)
+	elseif name == "prepend_blank_line" then
+		self:prepend(Atom.Blankline(), node, predicates)
 	elseif name == "prepend_indent_start" then
 		self:prepend(Atom.IndentStart(), node, predicates)
 	elseif name == "prepend_indent_end" then
@@ -578,7 +514,8 @@ function Atoms:last_leaf(node)
 	if nr_children == 0 or self.leaf_nodes[node:id()] ~= nil then
 		return node
 	else
-		local n = node:child(nr_children)
+		-- child function is zero index based
+		local n = node:child(nr_children - 1)
 		return self:last_leaf(n)
 	end
 end
@@ -849,7 +786,6 @@ local function apply_query(bufnr, query, root)
 		-- { start row, start col, end row, end col }
 		-- local range = { node:range() }
 		local name = query.captures[id]
-		-- vim.print("here i a ma " .. name .. " l")
 		if name == "leaf" then
 			leaf_ids[node:id()] = node:id()
 		end
@@ -857,10 +793,7 @@ local function apply_query(bufnr, query, root)
 
 	local atoms = collect_leafs(bufnr, root, leaf_ids)
 
-	-- vim.print(atoms)
-
 	for _, match, metadata in query:iter_matches(root, bufnr, 0, -1) do
-
 		if metadata.custom ~= nil then
 			metadata.custom:validate()
 		end
@@ -925,17 +858,6 @@ local function try_removing_spaces_after_newlines(str, n)
 	return result
 end
 
-local function split(inputstr, sep)
-	if sep == nil then
-		sep = "%s"
-	end
-	local t = {}
-	for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
-		table.insert(t, str)
-	end
-	return t
-end
-
 local function render(atoms, indent)
 	local buffer = ""
 	local indent_level = 0
@@ -976,6 +898,10 @@ local function render(atoms, indent)
 			buffer = buffer .. atom.literal
 		elseif atom.type == "Space" then
 			buffer = buffer .. " "
+		elseif atom.type == "SingleQuote" then
+			buffer = buffer .. "'"
+		elseif atom.type == "DoubleQuote" then
+			buffer = buffer .. '"'
 		else
 			error(
 				string.format(
@@ -987,7 +913,7 @@ local function render(atoms, indent)
 		end
 	end
 
-	return split(buffer, "\n")
+	return vim.split(buffer, "\n")
 end
 
 vim.treesitter.query.add_directive("delimiter!", function(_, _, _, pred, metadata)
@@ -1069,17 +995,15 @@ local format = function(bufnr)
 	-- 	return
 	-- end
 
-	local root = get_root(bufnr)
+	local root = get_root(bufnr, "typescript")
 
-	local query = get_query_ts()
+	local query = assert(vim.treesitter.query.get("typescript", "parser"), "No query")
 
 	local atoms = apply_query(bufnr, query, root)
 
 	atoms:post_process()
 
 	local rendered = render(atoms.atoms, "  ")
-
-	vim.print(rendered)
 
 	vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, rendered)
 end

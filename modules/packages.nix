@@ -33,6 +33,8 @@ in {
     mullvad-vpn
     playerctl
     ripgrep
+    du-dust
+    tldr
 
     electrum
     torbrowserWithAudio
