@@ -13,6 +13,8 @@
 
     hyprland.url = "github:hyprwm/Hyprland";
     nix-colors.url = "github:misterio77/nix-colors";
+
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
 
   outputs = { self, nixpkgs, home-manager, hyprland, ... }@inputs:
@@ -32,10 +34,11 @@
           allowNonfree = true;
           allowUnfreePredicate = (pkg: true);
         };
-        # overlays = [
-        #   localOverlay
-        #   nixgl.overlay
-        # ];
+        overlays = [
+          inputs.neovim-nightly-overlay.overlay
+          # localOverlay
+          # nixgl.overlay
+        ];
         inherit system;
       };
 

@@ -9,6 +9,7 @@
     ./modules/applications/fish.nix
     ./modules/applications/git.nix
     ./modules/applications/tmux.nix
+    # ./modules/applications/zellij.nix
     ./modules/applications/neovim/neovim.nix
 
     ./modules/services/backup.nix

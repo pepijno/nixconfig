@@ -77,7 +77,9 @@ in {
     windowrulev2 = workspace 3,class:Firefox
     windowrulev2 = workspace 4,class:Tor Browser
     windowrulev2 = workspace 5,class:Steam
-    windowrulev2 = float, class:(firefox), title:(Picture-in-Picture)
+    windowrulev2 = float, title:^(Picture-in-Picture|Firefox)$
+    windowrulev2 = size 800 450, title:^(Picture-in-Picture|Firefox)$
+    windowrulev2 = pin, title:^(Picture-in-Picture|Firefox)$
 
     bind = $mod, B, exec, ${sw}/bin/pkill swaybg && ${swaybg}
     bind = $mod SHIFT, Q, killactive

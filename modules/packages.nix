@@ -48,5 +48,7 @@ in {
     openrct2
 
     discord
+
+    wineWowPackages.base
   ];
 }
