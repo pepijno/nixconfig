@@ -31,11 +31,6 @@
           allowUnfreePredicate = (pkg: true);
         };
         overlays = [
-          (final: prev: {
-            dmenu = prev.dwm.overrideAttrs {
-              src = ./dmenu;
-            };
-          })
         ];
         inherit system;
       };

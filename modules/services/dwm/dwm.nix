@@ -9,16 +9,6 @@ let
     done
   '';
   runbar = pkgs.callPackage ./runbar.nix { config = config; };
-  dwm = pkgs.dwm.overrideAttrs rec {
-    src = ../../../dwm;
-    config = pkgs.writeText "config.h" (builtins.replaceStrings [
-      "\${kitty}"
-    ] [
-      "${pkgs.kitty}"
-    ]
-      (builtins.readFile ../../../dwm/config.h)
-    );
-  };
 in
 {
   home.file.".xinitrc".text = ''
@@ -42,11 +32,38 @@ in
   '';
 
   home.packages = [
-    pkgs.dmenu
+    (pkgs.dmenu.overrideAttrs (oldAttrs: {
+      src = ./dmenu;
+    }))
     pkgs.pamixer
     (pkgs.dwm.overrideAttrs (oldAttrs: rec {
-      src = ../../../dwm;
-      config = ../../../dwm/config.h;
+      src = ./dwm;
+      configFile = pkgs.writeText "config.def.h" (builtins.replaceStrings [
+        "\${dmenu}"
+        "\${kitty}"
+        "\${sysmenu}"
+        "\${firefox}"
+        "\${vivaldi}"
+        "\${tor-browser}"
+        "\${steam}"
+        "\${sw}"
+        "\${playerctl}"
+      ] [
+        "${pkgs.dmenu}"
+        "${pkgs.kitty}"
+        "${sysmenu}"
+        "${pkgs.firefox}"
+        "${pkgs.vivaldi}"
+        "${pkgs.tor-browser-bundle-bin}"
+        "${pkgs.steam}"
+        "${sw}"
+        "${pkgs.playerctl}"
+      ]
+        (builtins.readFile ./dwm/config.h)
+      );
+      postPatch = ''
+        cp ${configFile} config.h
+      '';
     }))
     pkgs.feh
     sysmenu
@@ -77,6 +94,10 @@ in
     pkill runbar
   '';
   xdg.dataFile."dwm/autoclose_blocking.sh".executable = true;
+
+  # home.activation.dwm = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  #   warnEcho "Please reload dwm manually."
+  # '';
 
   # programs.dwm = {
   #   enable = true;

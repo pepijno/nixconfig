@@ -78,9 +78,9 @@ in pkgs.writeShellScriptBin "runbar" ''
     }
 
     disk() {
-      root_free=$(${sw}/bin/df -h /dev/sda1 | ${sw}/bin/tail -1 | ${sw}/bin/awk '{print $4}')
-      home_free=$(${sw}/bin/df -h /dev/sda2 | ${sw}/bin/tail -1 | ${sw}/bin/awk '{print $4}')
-      backup_free=$(${sw}/bin/df -h /dev/sdb1 | ${sw}/bin/tail -1 | ${sw}/bin/awk '{print $4}')
+      root_free=$(${sw}/bin/df -h /dev/disk/by-label/nixos | ${sw}/bin/tail -1 | ${sw}/bin/awk '{print $4}')
+      home_free=$(${sw}/bin/df -h /dev/disk/by-label/home | ${sw}/bin/tail -1 | ${sw}/bin/awk '{print $4}')
+      backup_free=$(${sw}/bin/df -h /dev/disk/by-label/Backups | ${sw}/bin/tail -1 | ${sw}/bin/awk '{print $4}')
       printf "^c$green^^b$white^  $root_free "
       printf "^c$green^^b$white^ 󱂵 $home_free "
       printf "^c$green^^b$white^ 󱧺 $backup_free "
@@ -134,7 +134,7 @@ in pkgs.writeShellScriptBin "runbar" ''
       [ $(($interval % 2)) = 0 ] && cpu_value=$(cpu)
       [ $(($interval % 2)) = 0 ] && pulse_value=$(pulse)
 
-      ${sw}/bin/xsetroot -name "$network_value$cpu_value $cpu_temp_value $disk_value$mem_value$pulse_value$clock_value   "
+      ${sw}/bin/xsetroot -name "        $network_value$cpu_value $cpu_temp_value $disk_value$mem_value$pulse_value$clock_value   "
       ${sw}/bin/sleep 1
     done
   ''

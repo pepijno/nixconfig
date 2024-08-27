@@ -109,20 +109,20 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-c", "-l", "20", NULL };
-static const char *termcmd[]  = { "kitty", NULL };
-static const char *sysmenucmd[]  = { "sysmenu", NULL };
-static const char *firefoxcmd[]  = { "firefox", NULL };
-static const char *vivaldicmd[]  = { "vivaldi", NULL };
-static const char *torcmd[]  = { "tor-browser", NULL };
-static const char *steamcmd[]  = { "steam", NULL };
+static const char *dmenucmd[] = { "${dmenu}/bin/dmenu_run", "-c", "-l", "20", NULL };
+static const char *termcmd[]  = { "${kitty}/bin/kitty", NULL };
+static const char *sysmenucmd[]  = { "${sysmenu}/bin/sysmenu", NULL };
+static const char *firefoxcmd[]  = { "${firefox}/bin/firefox", NULL };
+static const char *vivaldicmd[]  = { "${vivaldi}/bin/vivaldi", NULL };
+static const char *torcmd[]  = { "${tor-browser}/bin/tor-browser", NULL };
+static const char *steamcmd[]  = { "${steam}/bin/steam", NULL };
 
-static const char *pactldecrease[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
-static const char *pactlincrease[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
-static const char *pactlmute[] = { "pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };
-static const char *medplaypausecmd[] = { "playerctl", "play-pause", NULL };
-static const char *mednextcmd[] = { "playerctl", "next", NULL };
-static const char *medprevcmd[] = { "playerctl", "previous", NULL };
+static const char *pactldecrease[] = { "${sw}/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
+static const char *pactlincrease[] = { "${sw}/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
+static const char *pactlmute[] = { "${sw}/bin/pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };
+static const char *medplaypausecmd[] = { "${playerctl}/bin/playerctl", "play-pause", NULL };
+static const char *mednextcmd[] = { "${playerctl}/bin/playerctl", "next", NULL };
+static const char *medprevcmd[] = { "${playerctl}/bin/playerctl", "previous", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
