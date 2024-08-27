@@ -41,6 +41,8 @@ M.init_options = function()
 	opt.smartindent = true -- Do auto indenting when starting a new line
 	opt.splitbelow = true -- Splitting a new window below the current one
 	opt.splitright = true -- Splitting a new window at the right of the current one
+
+	g.c_syntax_for_h = true
 end
 
 M.disable_builtins = function()

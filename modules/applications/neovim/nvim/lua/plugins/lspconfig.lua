@@ -21,6 +21,9 @@ capabilities.textDocument.completion.completionItem = {
 return {
 	{
 		"neovim/nvim-lspconfig",
+		dependencies = {
+			"folke/neodev.nvim",
+		},
 		event = { "BufReadPre", "BufNewFile" },
 		opts = {
 			diagnostics = {
@@ -41,6 +44,14 @@ return {
 			setup = {},
 		},
 		config = function(_, opts)
+			require("inc_rename").setup()
+
+			vim.keymap.set("n", "<leader>rn", function()
+				return ":IncRename " .. vim.fn.expand("<cword>")
+			end, { expr = true })
+
+			require("neodev").setup()
+
 			vim.diagnostic.config({
 				float = { border = "rounded" },
 			})
@@ -53,6 +64,9 @@ return {
 					local buffer = args.buf
 					local client = vim.lsp.get_client_by_id(args.data.client_id)
 					keys.on_attach(client, buffer)
+					-- if client.server_capabilities.inlayHintProvider then
+					-- 	vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+					-- end
 				end,
 			})
 
@@ -147,15 +161,15 @@ return {
 			--
 			-- local ensure_installed = {} ---@type string[]
 			for server, server_opts in pairs(servers) do
-			-- 	if server_opts then
-			-- 		server_opts = server_opts == true and {} or server_opts
-			-- 		-- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
-			-- 		if server_opts.mason == false or not vim.tbl_contains(all_mslp_servers, server) then
-						setup(server)
-			-- 		else
-			-- 			ensure_installed[#ensure_installed + 1] = server
-			-- 		end
-			-- 	end
+				-- 	if server_opts then
+				-- 		server_opts = server_opts == true and {} or server_opts
+				-- 		-- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
+				-- 		if server_opts.mason == false or not vim.tbl_contains(all_mslp_servers, server) then
+				setup(server)
+				-- 		else
+				-- 			ensure_installed[#ensure_installed + 1] = server
+				-- 		end
+				-- 	end
 			end
 			--
 			-- if have_mason then

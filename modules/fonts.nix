@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   fonts.fontconfig.enable = true;
@@ -7,7 +7,6 @@
     ubuntu_font_family
     nerdfonts
     fira-code
-    monoid
-    hasklig
+    mononoki
   ];
 }

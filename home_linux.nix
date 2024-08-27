@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, ... }:
+{ inputs, ... }:
 
 {
   imports = [
@@ -12,19 +12,25 @@
     ./modules/applications/neovim/neovim.nix
 
     ./modules/services/backup.nix
-    ./modules/services/hyprland.nix
-    ./modules/services/wlsunset.nix
-    ./modules/services/sirula/sirula.nix
-    ./modules/services/waybar/waybar.nix
+    ./modules/services/betterlockscreen.nix
+    # ./modules/services/dunst.nix
+    # ./modules/services/picom.nix
+    ./modules/services/redshift.nix
+
+    ./modules/services/dwm/dwm.nix
 
     inputs.nix-colors.homeManagerModules.default
   ];
 
   colorScheme = inputs.nix-colors.colorSchemes.catppuccin-latte;
 
+  xdg.enable = true;
+
   home.username = "pepijn";
   home.homeDirectory = "/home/pepijn";
   home.stateVersion = "21.03";
+
+  home.enableNixpkgsReleaseCheck = false;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

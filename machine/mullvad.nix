@@ -1,4 +1,4 @@
-{ config, pkgs, fetchurl, lib, ... }:
+{ pkgs, ... }:
 
 {
   services.mullvad-vpn.enable = true;

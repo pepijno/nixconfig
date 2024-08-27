@@ -1,10 +1,10 @@
-{ pkgs, config, ... }:
+{ config, ... }:
 
 {
   programs.kitty = {
     enable = true;
     # theme = "Gruvbox Material Light Soft";
-    settings = with config.colorScheme.colors; {
+    settings = with config.colorScheme.palette; {
       scrollback_lines = 10000;
       enable_audio_bell = false;
       update_check_interval = 0;
