@@ -1,10 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
 #include <X11/XF86keysym.h>
-#include "selfrestart.c"
-
-# include <stdio.h>
-# include <string.h>
+#include <stdio.h>
+#include <string.h>
 
 void exitdwm ()
 {
@@ -221,7 +219,6 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
 	TAGKEYS(                        XK_5,                      4)
-	{ MODKEY|ShiftMask,             XK_r,      self_restart,   {0} },
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ShiftMask,             XK_e,      exitdwm,        {0} },
 
