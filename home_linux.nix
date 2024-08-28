@@ -11,7 +11,7 @@
     ./modules/applications/tmux.nix
     ./modules/applications/neovim/neovim.nix
 
-    ./modules/services/backup.nix
+    ./modules/services/backup/backup.nix
     ./modules/services/betterlockscreen.nix
     # ./modules/services/dunst.nix
     # ./modules/services/picom.nix

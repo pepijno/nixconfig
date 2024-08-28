@@ -1,7 +1,6 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
-  sysmenu = pkgs.callPackage ../scripts/sysmenu.nix { config = config; };
   sw = "/run/current-system/sw";
   rundwm = pkgs.writeShellScriptBin "rundwm" ''
     while true; do
@@ -9,6 +8,9 @@ let
     done
   '';
   runbar = pkgs.callPackage ./runbar.nix { config = config; };
+  dmenu = (pkgs.dmenu.overrideAttrs (oldAttrs: {
+    src = ./dmenu;
+  }));
 in
 {
   home.file.".xinitrc".text = ''
@@ -32,16 +34,12 @@ in
   '';
 
   home.packages = [
-    (pkgs.dmenu.overrideAttrs (oldAttrs: {
-      src = ./dmenu;
-    }))
-    pkgs.pamixer
     (pkgs.dwm.overrideAttrs (oldAttrs: rec {
       src = ./dwm;
       configFile = pkgs.writeText "config.def.h" (builtins.replaceStrings [
         "\${dmenu}"
+        "\${betterlockscreen}"
         "\${kitty}"
-        "\${sysmenu}"
         "\${firefox}"
         "\${vivaldi}"
         "\${tor-browser}"
@@ -49,9 +47,9 @@ in
         "\${sw}"
         "\${playerctl}"
       ] [
-        "${pkgs.dmenu}"
+        "${dmenu}"
+        "${pkgs.betterlockscreen}"
         "${pkgs.kitty}"
-        "${sysmenu}"
         "${pkgs.firefox}"
         "${pkgs.vivaldi}"
         "${pkgs.tor-browser-bundle-bin}"
@@ -65,8 +63,6 @@ in
         cp ${configFile} config.h
       '';
     }))
-    pkgs.feh
-    sysmenu
   ];
 
   xdg.dataFile."dwm/autostart.sh".text = ''
@@ -95,74 +91,12 @@ in
   '';
   xdg.dataFile."dwm/autoclose_blocking.sh".executable = true;
 
-  # home.activation.dwm = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-  #   warnEcho "Please reload dwm manually."
-  # '';
-
-  # programs.dwm = {
-  #   enable = true;
-  #   # extraConfig = builtins.replaceStrings [
-  #   #   "\${trayer-padding}"
-  #   #   "\${xdotool}"
-  #   # ] [
-  #   #   "${trayer-padding}"
-  #   #   "${pkgs.xdotool}"
-  #   # ] (builtins.readFile ./xmobarrc);
-  # };
-  #
-  # xsession = {
-  #   windowManager.dwm = {
-  #     enable = true;
-  #     # enableContribAndExtras = true;
-  #     # extraPackages = hp: [
-  #     #   hp.dbus
-  #     #   hp.monad-logger
-  #     #   hp.xmonad
-  #     #   hp.xmonad-contrib
-  #     #   hp.xmonad-extras
-  #     # ];
-  #     # config = pkgs.writeText "xmonad.hs" (builtins.replaceStrings [
-  #     #   "\${alacritty}"
-  #     #   "\${menu}"
-  #     #   "\${sysmenu}"
-  #     #   "\${xmonad}"
-  #     #   "\${vivaldi}"
-  #     #   "\${firefox}"
-  #     #   "\${tor}"
-  #     #   "\${steam}"
-  #     #   "\${playerctl}"
-  #     #   "\${solaar}"
-  #     #   "\${xrandr}"
-  #     #   "\${betterlockscreen}"
-  #     #   "\${trayer}"
-  #     #   "\${xdotool}"
-  #     #   "\${start-trayer}"
-  #     #   "\${busybox}"
-  #     #   "\${sw}"
-  #     #   "\${feh}"
-  #     # ] [
-  #     #   "${pkgs.alacritty}"
-  #     #   "${menu}"
-  #     #   "${sysmenu}"
-  #     #   "${pkgs.haskellPackages.xmonad}"
-  #     #   "${pkgs.vivaldi}"
-  #     #   "${pkgs.firefox}"
-  #     #   "${pkgs.tor-browser-bundle-bin}"
-  #     #   "${pkgs.steam}"
-  #     #   "${pkgs.playerctl}"
-  #     #   "${pkgs.solaar}"
-  #     #   "${pkgs.xorg.xrandr}"
-  #     #   "${pkgs.betterlockscreen}"
-  #     #   "${pkgs.trayer}"
-  #     #   "${pkgs.xdotool}"
-  #     #   "${start-trayer}"
-  #     #   "${pkgs.busybox}"
-  #     #   sw
-  #     #   "${pkgs.feh}"
-  #     # ]
-  #     #   (builtins.readFile ./xmonad.hs)
-  #     # );
-  #   };
-  # };
+  home.activation.dwm = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    oldDwm="$oldGenPath/home-path/bin/dwm"
+    newDwm="$newGenPath/home-path/bin/dwm"
+    if ! [ "$oldDwm" -ef "$newDwm" ]; then
+      warnEcho "Please reload dwm manually."
+    fi
+  '';
 }
 

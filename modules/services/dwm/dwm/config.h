@@ -3,6 +3,82 @@
 #include <X11/XF86keysym.h>
 #include "selfrestart.c"
 
+# include <stdio.h>
+# include <string.h>
+
+void exitdwm ()
+{
+# define S_LOCK "Lock"
+# define S_RESTART_DWM "Restart Dwm"
+# define S_KILL_DWM "Kill Dwm"
+# define S_SUSPEND "Suspend"
+# define S_HIBERNATE "Hibernate"
+# define S_REBOOT "Reboot"
+# define S_SHUTDOWN "Shutdown"
+# define S_LOCK_ICON ""
+# define S_RESTART_DWM_ICON ""
+# define S_KILL_DWM_ICON ""
+# define S_SUSPEND_ICON ""
+# define S_HIBERNATE_ICON "⏾"
+# define S_REBOOT_ICON ""
+# define S_SHUTDOWN_ICON ""
+
+# define S_FORMAT(ACTION) S_##ACTION##_ICON " " S_##ACTION
+# define S_FORMAT_CLEAR "sed 's/^..//'"
+
+	FILE * exit_menu = popen (
+		"echo \""
+			S_FORMAT (LOCK) "\n"
+			S_FORMAT (RESTART_DWM) "\n"
+			S_FORMAT (KILL_DWM) "\n"
+			S_FORMAT (SUSPEND) "\n"
+			S_FORMAT (HIBERNATE) "\n"
+			S_FORMAT (REBOOT) "\n"
+			S_FORMAT (SHUTDOWN)
+			"\" | ${dmenu}/bin/dmenu -i -l 7 -p exit: | " S_FORMAT_CLEAR
+		,
+		"r"
+	);
+
+	char exit_action [16];
+
+	if (
+		exit_menu == NULL ||
+		fscanf (exit_menu, "%15[a-zA-Z -]", exit_action) == EOF
+	) {
+		fputs ("Error. Failure in exit_dwm.", stderr);
+		goto close_streams;
+	}
+
+	if (strcmp (exit_action, S_LOCK) == 0) system ("${betterlockscreen}/bin/betterlockscreen --lock blur");
+	else if (strcmp (exit_action, S_RESTART_DWM) == 0) quit (& (const Arg) {1});
+	else if (strcmp (exit_action, S_KILL_DWM) == 0) system ("${sw}/bin/pkill dwm");
+	else if (strcmp (exit_action, S_SUSPEND) == 0) system ("${sw}/bin/systemctl suspend");
+	else if (strcmp (exit_action, S_HIBERNATE) == 0) system ("${sw}/bin/systemctl hibernate");
+	else if (strcmp (exit_action, S_REBOOT) == 0) system ("${sw}/bin/systemctl reboot");
+	else if (strcmp (exit_action, S_SHUTDOWN) == 0) system ("${sw}/bin/systemctl poweroff -i");
+
+close_streams:
+	pclose (exit_menu);
+
+# undef S_LOCK
+# undef S_RESTART_DWM
+# undef S_KILL_DWM
+# undef S_SUSPEND
+# undef S_HIBERNATE
+# undef S_REBOOT
+# undef S_SHUTDOWN
+# undef S_LOCK_ICON
+# undef S_RESTART_DWM_ICON
+# undef S_KILL_DWM_ICON
+# undef S_SUSPEND_ICON
+# undef S_HIBERNATE_ICON
+# undef S_REBOOT_ICON
+# undef S_SHUTDOWN_ICON
+# undef S_FORMAT
+# undef S_FORMAT_CLEAR
+}
+
 /* appearance */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -23,7 +99,7 @@ static const int sidepad            = 10;       /* horizontal padding of bar */
 static const int horizpadbar        = 5;        /* horizontal padding for statusbar */
 static const int vertpadbar         = 11;       /* vertical padding for statusbar */
 static const int colorfultag        = 1;        /* 0 means use SchemeSel for selected non vacant tag */
-static const char *fonts[]          = {"mononoki:style=Regular:size=12" ,"JetBrainsMono Nerd Font Mono:style=Medium:size=16" };
+static const char *fonts[]          = { "mononoki:style=Regular:size=12", "JetBrainsMono Nerd Font Mono:style=Medium:size=16" };
 static const char black[]           = "#4c4f69";
 static const char gray2[]           = "#8c8fa1"; // unfocused window border
 static const char gray3[]           = "#9ca0b0";
@@ -44,19 +120,12 @@ static const char *colors[][3]      = {
     /*                     fg       bg      border */
     [SchemeNorm]       = { gray3,   white,  gray2 },
     [SchemeSel]        = { gray4,   blue,   blue  },
-    // [SchemeTitle]      = { white,   black,  black }, // active window title
-    // [TabSel]           = { blue,    gray2,  black },
-    // [TabNorm]          = { gray3,   black,  black },
     [SchemeTag]        = { gray3,   white,  white },
     [SchemeTag1]       = { blue,    white,  white },
     [SchemeTag2]       = { red,     white,  white },
     [SchemeTag3]       = { orange,  white,  white },
     [SchemeTag4]       = { green,   white,  white },
     [SchemeTag5]       = { pink,    white,  white },
-    // [SchemeLayout]     = { green,   black,  black },
-    // [SchemeBtnPrev]    = { green,   black,  black },
-    // [SchemeBtnNext]    = { yellow,  black,  black },
-    // [SchemeBtnClose]   = { red,     black,  black },
 };
 
 /* tagging */
@@ -154,10 +223,10 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_5,                      4)
 	{ MODKEY|ShiftMask,             XK_r,      self_restart,   {0} },
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_e,      exitdwm,        {0} },
 
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = sysmenucmd } },
 	{ MODKEY|ShiftMask,             XK_b,      spawn,          {.v = vivaldicmd } },
 	{ MODKEY|ShiftMask,             XK_f,      spawn,          {.v = firefoxcmd } },
 	{ MODKEY|ShiftMask,             XK_o,      spawn,          {.v = torcmd } },

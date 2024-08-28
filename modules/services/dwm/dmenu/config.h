@@ -7,7 +7,8 @@ static int min_width = 500;                 /* minimum width when centered */
 static const float menu_height_ratio = 4.0f;/* This is the ratio used in the original calculation */
 /* -fn option overrides fonts[0]; default X11 font or font set */
 static const char *fonts[] = {
-	"mononoki:style=Regular:size=12"
+	"mononoki:style=Regular:size=12",
+	"JetBrainsMono Nerd Font Mono:style=Medium:size=16"
 };
 static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
 static const char *colors[SchemeLast][2] = {

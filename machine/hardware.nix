@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   hardware = {
@@ -11,9 +11,9 @@
       enable = true;
       enable32Bit = true;
       extraPackages = with pkgs; [ amdvlk ];
-      extraPackages32 = with pkgs;
-        [ pkgsi686Linux.libva driversi686Linux.amdvlk ]
-        ++ lib.optionals config.services.pipewire.enable [ pipewire ];
+      extraPackages32 = 
+        [ pkgs.pkgsi686Linux.libva pkgs.driversi686Linux.amdvlk ]
+        ++ lib.optionals config.services.pipewire.enable [ pkgs.pipewire ];
     };
 
     logitech.wireless = {
