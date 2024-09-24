@@ -4,7 +4,7 @@
   services.picom = {
     enable = true;
     # blur = true;
-    opacityRules = [ "100:class_i ?= 'alacritty'" ];
+    opacityRules = [ "100:class_i ?= 'kitty'" ];
     activeOpacity = 1.0;
     inactiveOpacity = 1.0;
     backend = "glx";

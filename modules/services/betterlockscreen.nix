@@ -1,12 +1,8 @@
 { pkgs, ... }:
 
-let
-  sw = "/run/current-system/sw";
-in
-{
-  home.packages = with pkgs; [
-    feh
-  ];
+let sw = "/run/current-system/sw";
+in {
+  home.packages = with pkgs; [ feh ];
 
   services.xidlehook = {
     enable = true;

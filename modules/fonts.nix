@@ -5,8 +5,8 @@
 
   home.packages = with pkgs; [
     ubuntu_font_family
-    # nerdfonts
-    (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" ]; })
+    nerdfonts
+    # (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" ]; })
     fira-code
     mononoki
   ];

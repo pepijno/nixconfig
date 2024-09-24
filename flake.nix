@@ -30,14 +30,13 @@
           allowNonfree = true;
           allowUnfreePredicate = (pkg: true);
         };
-        overlays = [
-        ];
+        overlays = [ ];
         inherit system;
       };
 
       buildInputs = with pkgs; [
         nixd
-        nixfmt
+        nixfmt-classic
         lua-language-server
         stylua
         xorg.libX11
@@ -56,9 +55,7 @@
             inherit inputs;
             inherit allowed-unfree-packages;
           };
-          modules = [
-            ./home_linux.nix
-          ];
+          modules = [ ./home_linux.nix ];
         };
         pepijn_mac = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;

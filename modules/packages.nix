@@ -45,7 +45,6 @@ in {
     discord
 
     wineWowPackages.base
-    redshift
     playonlinux
     # libreoffice
   ];

@@ -3,16 +3,15 @@
 {
   environment.pathsToLink = [ "/libexec" ];
 
-  imports =
-    [
-      ./hardware-configuration.nix
-      ./pci-passthrough.nix
-      ./boot.nix
-      ./services.nix
-      ./hardware.nix
-      ./nix.nix
-      ./mullvad.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ./pci-passthrough.nix
+    ./boot.nix
+    ./services.nix
+    ./hardware.nix
+    ./nix.nix
+    ./mullvad.nix
+  ];
 
   networking = {
     hostName = "pep-pc";
@@ -28,12 +27,10 @@
     polkit.enable = true;
     doas = {
       enable = true;
-      extraRules = [
-        {
-          users = [ "pepijn" ];
-          keepEnv = true;
-        }
-      ];
+      extraRules = [{
+        users = [ "pepijn" ];
+        keepEnv = true;
+      }];
     };
     pam.services.swaylock.text = ''
       # PAM configuration file for the swaylock screen locker. By default, it includes
@@ -70,7 +67,7 @@
   # };
 
   system = {
-    autoUpgrade.enable = true;
+    autoUpgrade.enable = false;
     autoUpgrade.allowReboot = false;
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions

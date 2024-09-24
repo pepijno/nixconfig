@@ -5,6 +5,7 @@
 
   services = {
     upower.enable = true;
+    blueman.enable = false;
 
     dbus = {
       enable = true;

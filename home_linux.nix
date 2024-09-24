@@ -14,10 +14,11 @@
     ./modules/services/backup/backup.nix
     ./modules/services/betterlockscreen.nix
     # ./modules/services/dunst.nix
-    # ./modules/services/picom.nix
     ./modules/services/redshift.nix
 
     ./modules/services/dwm/dwm.nix
+
+    ./modules/services/bluetooth.nix
 
     inputs.nix-colors.homeManagerModules.default
   ];

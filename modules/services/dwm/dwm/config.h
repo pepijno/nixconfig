@@ -98,18 +98,17 @@ static const int horizpadbar        = 5;        /* horizontal padding for status
 static const int vertpadbar         = 11;       /* vertical padding for statusbar */
 static const int colorfultag        = 1;        /* 0 means use SchemeSel for selected non vacant tag */
 static const char *fonts[]          = { "mononoki:style=Regular:size=12", "JetBrainsMono Nerd Font Mono:style=Medium:size=16" };
-static const char black[]           = "#4c4f69";
+static const char black[]           = "#${base05}";
 static const char gray2[]           = "#8c8fa1"; // unfocused window border
 static const char gray3[]           = "#9ca0b0";
 static const char gray4[]           = "#acb0be";
-static const char blue[]            = "#1e66f5";  // focused window border
-static const char green[]           = "#40a02b";
-static const char red[]             = "#d20f39";
-static const char orange[]          = "#fe640b";
-static const char yellow[]          = "#df8e1d";
-static const char pink[]            = "#ea76cb";
+static const char blue[]            = "#${base0D}";  // focused window border
+static const char green[]           = "#${base0B}";
+static const char red[]             = "#${base08}";
+static const char orange[]          = "#${base09}";
+static const char yellow[]          = "#${base0A}";
 static const char col_borderbar[]   = "#1E1D2D"; // inner border
-static const char white[]           = "#eff1f5";
+static const char white[]           = "#${base00}";
 
 #define ICONSIZE 19   /* icon size */
 #define ICONSPACING 8 /* space between icon and title */
@@ -119,11 +118,11 @@ static const char *colors[][3]      = {
     [SchemeNorm]       = { gray3,   white,  gray2 },
     [SchemeSel]        = { gray4,   blue,   blue  },
     [SchemeTag]        = { gray3,   white,  white },
-    [SchemeTag1]       = { blue,    white,  white },
+    [SchemeTag1]       = { green,   white,  white },
     [SchemeTag2]       = { red,     white,  white },
     [SchemeTag3]       = { orange,  white,  white },
-    [SchemeTag4]       = { green,   white,  white },
-    [SchemeTag5]       = { pink,    white,  white },
+    [SchemeTag4]       = { blue,    white,  white },
+    [SchemeTag5]       = { yellow,  white,  white },
 };
 
 /* tagging */
