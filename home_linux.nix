@@ -13,7 +13,7 @@
 
     ./modules/services/backup/backup.nix
     ./modules/services/betterlockscreen.nix
-    # ./modules/services/dunst.nix
+    ./modules/services/dunst.nix
     ./modules/services/redshift.nix
 
     ./modules/services/dwm/dwm.nix

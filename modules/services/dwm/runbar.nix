@@ -51,12 +51,18 @@ in pkgs.writeShellScriptBin "runbar" ''
   }
 
   mem() {
-    total_ram=$(${sw}/bin/free -mh --si | ${sw}/bin/grep Mem | ${sw}/bin/awk  {'print $2'})
-    used_ram=$(${sw}/bin/free -mh --si | ${sw}/bin/grep Mem | ${sw}/bin/awk  {'print $3'})
-    total_swap=$(${sw}/bin/free -mh --si | ${sw}/bin/grep Swap | ${sw}/bin/awk  {'print $2'})
-    used_swap=$(${sw}/bin/free -mh --si | ${sw}/bin/grep Swap | ${sw}/bin/awk  {'print $3'})
-    printf "^c$red^^b$white^  $used_ram/$total_ram "
-    printf "^c$red^^b$white^ 󰧑 $used_swap/$total_swap "
+    total_ram_kbytes=$(${sw}/bin/cat /proc/meminfo | grep "MemTotal" | awk -F" " '{print $2}')
+    total_ram_bytes=$(( total_ram_kbytes * 1000 ))
+    available_ram_kbytes=$(${sw}/bin/cat /proc/meminfo | grep "MemAvailable" | awk -F" " '{print $2}')
+    used_ram_bytes=$(( total_ram_bytes - available_ram_kbytes * 1000 ))
+
+    total_swap_kbytes=$(${sw}/bin/cat /proc/meminfo | grep "SwapTotal" | awk -F" " '{print $2}')
+    total_swap_bytes=$(( total_swap_kbytes * 1000 ))
+    available_swap_kbytes=$(${sw}/bin/cat /proc/meminfo | grep "SwapFree" | awk -F" " '{print $2}')
+    used_swap_bytes=$(( total_swap_bytes - available_swap_kbytes * 1000 ))
+
+    printf "^c$red^^b$white^  %s/%s " $(${sw}/bin/numfmt --to=iec $used_ram_bytes) $(${sw}/bin/numfmt --to=iec $total_ram_bytes)
+    printf "^c$red^^b$white^ 󰧑 %s/%s " $(${sw}/bin/numfmt --to=iec $used_swap_bytes) $(${sw}/bin/numfmt --to=iec $total_swap_bytes)
   }
 
   update_network() {
@@ -105,14 +111,14 @@ in pkgs.writeShellScriptBin "runbar" ''
     [ $(($interval % 3600)) = 0 ] && interval=0
 
     [ $(($interval % 1)) = 0 ] && clock_value=$(clock)
-    [ $(($interval % 2)) = 0 ] && network_value=$(network rx_old tx_old)
-    [ $(($interval % 5)) = 0 ] && mem_value=$(mem)
-    [ $(($interval % 5)) = 0 ] && disk_value=$(disk)
+    [ $(($interval % 1)) = 0 ] && network_value=$(network rx_old tx_old)
+    [ $(($interval % 2)) = 0 ] && mem_value=$(mem)
+    [ $(($interval % 4)) = 0 ] && disk_value=$(disk)
     [ $(($interval % 1)) = 0 ] && cpu_temp_value=$(cputemp)
     [ $(($interval % 1)) = 0 ] && cpu_value=$(cpu)
     [ $(($interval % 2)) = 0 ] && pulse_value=$(pulse)
 
     ${sw}/bin/xsetroot -name "        $network_value$cpu_value $cpu_temp_value $disk_value$mem_value$pulse_value$clock_value   "
-    ${sw}/bin/sleep 1
+    ${sw}/bin/sleep 0.5
   done
 ''

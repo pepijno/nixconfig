@@ -47,5 +47,11 @@ in {
     wineWowPackages.base
     playonlinux
     # libreoffice
+
+    undervolt
+    s-tui
+    stress
+
+    sudo
   ];
 }

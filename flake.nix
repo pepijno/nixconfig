@@ -2,7 +2,7 @@
   description = "System config";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.05";
+    nixpkgs.url = "nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
@@ -21,16 +21,29 @@
         "steam"
         "steam-original"
         "steam-run"
+        "steam-unwrapped"
         "widevine-cdm"
         "discord"
       ];
-      pkgs = import nixpkgs {
+      overlay-nixpkgs = final: prev: {
+        unstable = import nixpkgs-unstable {
+          inherit system;
+          config = {
+            allowUnfree = true;
+            allowNonfree = true;
+            allowUnfreePredicate = (pkg: true);
+          };
+        };
+      };
+      pkgs = import nixpkgs{
         config = {
           allowUnfree = true;
           allowNonfree = true;
           allowUnfreePredicate = (pkg: true);
         };
-        overlays = [ ];
+        overlays = [
+          overlay-nixpkgs
+        ];
         inherit system;
       };
 

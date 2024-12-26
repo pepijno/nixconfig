@@ -44,17 +44,24 @@ let
       "${config.colorScheme.palette.base0D}"
       "${config.colorScheme.palette.base0E}"
       "${config.colorScheme.palette.base0F}"
-    ] (builtins.readFile ./dmenu/config.h));
+    ]
+      (builtins.readFile ./dmenu/config.h)
+    );
     postPatch = ''
       cp ${configFile} config.h
     '';
   }));
-in {
+in
+{
   systemd.user.targets.tray = {
     Unit = {
       Description = "Home Manager System Tray";
       Requires = [ "graphical-session-pre.target" ];
     };
+  };
+
+  services.playerctld = {
+    enable = true;
   };
 
   home.file.".xinitrc".text = ''
@@ -133,7 +140,9 @@ in {
         "${config.colorScheme.palette.base0D}"
         "${config.colorScheme.palette.base0E}"
         "${config.colorScheme.palette.base0F}"
-      ] (builtins.readFile ./dwm/config.h));
+      ]
+        (builtins.readFile ./dwm/config.h)
+      );
       postPatch = ''
         cp ${configFile} config.h
       '';
@@ -143,6 +152,7 @@ in {
   xdg.dataFile."dwm/autostart.sh".text = ''
     #!${pkgs.stdenv.shell}
 
+    ${sw}/bin/pgrep solaar > /dev/null || ${pkgs.solaar}/bin/solaar --window hide --battery-icons symbolic &
     /usr/lib/polkit-gnome-polkit-gnome-authentication-agent-1 &
     ${sw}/bin/systemctl --user --quiet is-active dunst.service || ${sw}/bin/systemctl --user start dunst.service &
     ${sw}/bin/systemctl --user --quiet is-active redshift.service || ${sw}/bin/systemctl --user start redshift.service &

@@ -10,7 +10,7 @@
     shortcut = "a";
     terminal = "xterm-256color";
 
-    extraConfig = with config.colorScheme.palette; ''
+    extraConfig = with config.colorScheme.colors; ''
       # reload source file with '<C-a>r'
       unbind r
       bind r source-file ~/.config/tmux/tmux.conf \; display 'Reloaded tmux config.'

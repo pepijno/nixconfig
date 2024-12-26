@@ -2,10 +2,11 @@
 
 {
   home.packages = with pkgs; [
-    neovim
+    unstable.neovim
 
     # needed for Mason
     unzip
+    gzip
     patchelf
     gcc
     cargo
