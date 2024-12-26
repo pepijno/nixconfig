@@ -25,11 +25,13 @@
 
   security = {
     polkit.enable = true;
+    sudo.enable = true;
     doas = {
       enable = true;
       extraRules = [{
         users = [ "pepijn" ];
         keepEnv = true;
+        persist = true;
       }];
     };
     pam.services.swaylock.text = ''
@@ -44,7 +46,6 @@
   programs = {
     git.enable = true;
     fish.enable = true;
-    # steam.enable = true;
   };
 
   users = {

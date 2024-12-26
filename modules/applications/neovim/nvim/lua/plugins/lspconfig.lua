@@ -64,9 +64,9 @@ return {
 					local buffer = args.buf
 					local client = vim.lsp.get_client_by_id(args.data.client_id)
 					keys.on_attach(client, buffer)
-					-- if client.server_capabilities.inlayHintProvider then
-					-- 	vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
-					-- end
+					if client.server_capabilities.inlayHintProvider then
+						vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+					end
 				end,
 			})
 
