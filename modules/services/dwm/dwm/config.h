@@ -143,7 +143,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class             instance    title       tags mask     isfloating   monitor */
-	{ "firefox",         NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "librewolf",         NULL,       NULL,       1 << 2,       0,           -1 },
 	{ "Vivaldi-stable",  NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "steam",           NULL,       NULL,       1 << 4,       0,           -1 },
 	{ "Tor Browser",     NULL,       NULL,       1 << 3,       0,           -1 },
@@ -178,7 +178,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "${dmenu}/bin/dmenu_run", "-c", "-l", "20", NULL };
 static const char *termcmd[]  = { "${kitty}/bin/kitty", NULL };
 static const char *sysmenucmd[]  = { "${sysmenu}/bin/sysmenu", NULL };
-static const char *firefoxcmd[]  = { "${firefox}/bin/firefox", NULL };
+static const char *librewolfcmd[]  = { "${librewolf}/bin/librewolf", NULL };
 static const char *vivaldicmd[]  = { "${vivaldi}/bin/vivaldi", NULL };
 static const char *torcmd[]  = { "${tor-browser}/bin/tor-browser", NULL };
 static const char *steamcmd[]  = { "${steam}/bin/steam", NULL };
@@ -224,7 +224,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_b,      spawn,          {.v = vivaldicmd } },
-	{ MODKEY|ShiftMask,             XK_f,      spawn,          {.v = firefoxcmd } },
+	{ MODKEY|ShiftMask,             XK_f,      spawn,          {.v = librewolfcmd } },
 	{ MODKEY|ShiftMask,             XK_o,      spawn,          {.v = torcmd } },
 	{ MODKEY|ShiftMask,             XK_s,      spawn,          {.v = steamcmd } },
 

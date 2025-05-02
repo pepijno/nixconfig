@@ -28,5 +28,6 @@
       settings = { General = { Enable = "Source,Sink,Media,Socket"; }; };
     };
 
+    xone.enable = true;
   };
 }

@@ -11,7 +11,7 @@ in {
     timers = [
       {
         delay = 600;
-        command = "${pkgs.betterlockscreen}/bin/betterlockscreen -l dim";
+        command = "${pkgs.betterlockscreen}/bin/betterlockscreen -l dim -w /home/pepijn/Downloads/pixel_sakura.gif";
       }
       {
         delay = 600;

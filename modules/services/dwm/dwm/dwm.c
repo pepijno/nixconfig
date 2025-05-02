@@ -150,6 +150,7 @@ struct Monitor {
 	Client *stack;
 	Monitor *next;
 	Window barwin;
+	Window gifwallpaper;
 	const Layout *lt[2];
 };
 
@@ -573,6 +574,8 @@ cleanupmon(Monitor *mon)
 	}
 	XUnmapWindow(dpy, mon->barwin);
 	XDestroyWindow(dpy, mon->barwin);
+	XUnmapWindow(dpy, mon->gifwallpaper);
+	XDestroyWindow(dpy, mon->gifwallpaper);
 	free(mon);
 }
 
@@ -1286,6 +1289,17 @@ killclient(const Arg *arg)
 void
 manage(Window w, XWindowAttributes *wa)
 {
+	char windownamegif[256];
+	gettextprop(w, XA_WM_NAME, windownamegif, sizeof windownamegif);
+	if (!strcmp(windownamegif, "gifwallpaper")) {
+		selmon->gifwallpaper = w;
+		XMoveResizeWindow(dpy, w, 0, 0, selmon->mw, selmon->mh);
+		XSetWindowBorderWidth(dpy, w, 0);
+		XLowerWindow(dpy, w);
+		XMapWindow(dpy, w);
+		return;
+	}
+
 	Client *c, *t = NULL;
 	Window trans = None;
 	XWindowChanges wc;

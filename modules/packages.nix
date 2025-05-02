@@ -33,7 +33,7 @@ in {
 
     electrum
     torbrowserWithAudio
-    firefox
+    librewolf
     vivaldi
     widevine-cdm
     vivaldi-ffmpeg-codecs
@@ -51,5 +51,8 @@ in {
     undervolt
     s-tui
     stress
+
+    betterlockscreen
+    audacity
   ];
 }
