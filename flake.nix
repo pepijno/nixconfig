@@ -2,11 +2,11 @@
   description = "System config";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.05";
+    nixpkgs.url = "nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/5d48f3ded3b55ef32d5853c9022fb4df29b3fc45";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

@@ -9,10 +9,10 @@ in {
     not-when-fullscreen = true;
     not-when-audio = true;
     timers = [
-      {
-        delay = 600;
-        command = "${pkgs.betterlockscreen}/bin/betterlockscreen -l dim -w /home/pepijn/Downloads/pixel_sakura.gif";
-      }
+      # {
+      #   delay = 600;
+      #   command = "${pkgs.betterlockscreen}/bin/betterlockscreen -l dim -w /home/pepijn/Downloads/pixel_sakura.gif";
+      # }
       {
         delay = 600;
         command = "${sw}/bin/systemctl hibernate";

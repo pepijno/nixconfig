@@ -158,7 +158,7 @@ in
     ${sw}/bin/systemctl --user --quiet is-active redshift.service || ${sw}/bin/systemctl --user start redshift.service &
     ${sw}/bin/systemctl --user --quiet is-active xidlehook.service || ${sw}/bin/systemctl --user start xidlehook.service &
     pkill feh; ${pkgs.feh}/bin/feh --randomize --bg-fill ~/Pictures/Wallpapers/ &
-    pkill betterlockscreen; ${pkgs.betterlockscreen}/bin/betterlockscreen -u ~/Pictures/Wallpapers/ &
+    # pkill betterlockscreen; ${pkgs.betterlockscreen}/bin/betterlockscreen -u ~/Pictures/Wallpapers/ &
     pkill runbar; ${runbar}/bin/runbar &
   '';
   xdg.dataFile."dwm/autostart.sh".executable = true;
@@ -170,7 +170,7 @@ in
     ${sw}/bin/systemctl --user --quiet is-active redshift.service && ${sw}/bin/systemctl --user stop redshift.service
     ${sw}/bin/systemctl --user --quiet is-active xidlehook.service && ${sw}/bin/systemctl --user stop xidlehook.service
     pkill feh
-    pkill betterlockscreen
+    # pkill betterlockscreen
     pkill runbar
   '';
   xdg.dataFile."dwm/autoclose_blocking.sh".executable = true;

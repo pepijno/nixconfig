@@ -14,13 +14,9 @@ in {
 
   home.packages = with pkgs; [
     bash
-    imagemagick
-    # nix-du
     wget
     nix-prefetch-git
-    ueberzug
     fd
-    # minecraft
     steam
     steam-run
     hicolor-icon-theme
@@ -40,19 +36,7 @@ in {
 
     libnotify
 
-    openrct2
-
-    discord
-
-    wineWowPackages.base
-    playonlinux
-    # libreoffice
-
-    undervolt
-    s-tui
-    stress
-
-    betterlockscreen
+    # betterlockscreen
     audacity
   ];
 }

@@ -12,7 +12,7 @@
     ./modules/applications/neovim/neovim.nix
 
     ./modules/services/backup/backup.nix
-    ./modules/services/betterlockscreen.nix
+    # ./modules/services/betterlockscreen.nix
     ./modules/services/dunst.nix
     ./modules/services/redshift.nix
 
