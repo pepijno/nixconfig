@@ -2,13 +2,13 @@
 
 {
   services.pipewire.enable = lib.mkForce false;
-  hardware = {
-    pulseaudio = {
-      enable = true;
-      support32Bit = true;
-      package = pkgs.pulseaudioFull;
-    };
+  services.pulseaudio = {
+    enable = true;
+    support32Bit = true;
+    package = pkgs.pulseaudioFull;
+  };
 
+  hardware = {
     graphics = {
       enable = true;
       enable32Bit = true;
