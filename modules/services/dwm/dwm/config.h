@@ -142,11 +142,12 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class             instance    title       tags mask     isfloating   monitor */
-	{ "librewolf",         NULL,       NULL,       1 << 2,       0,           -1 },
-	{ "Vivaldi-stable",  NULL,       NULL,       1 << 1,       0,           -1 },
-	{ "steam",           NULL,       NULL,       1 << 4,       0,           -1 },
-	{ "Tor Browser",     NULL,       NULL,       1 << 3,       0,           -1 },
+	/* class             instance    title                 tags mask     isfloating   monitor */
+	{ "librewolf",       NULL,       NULL,                 1 << 2,       0,           -1 },
+	{ "librewolf",       NULL,       "Picture-in-Picture", 1 << 2,       1,           -1 },
+	{ "Vivaldi-stable",  NULL,       NULL,                 1 << 1,       0,           -1 },
+	{ "steam",           NULL,       NULL,                 1 << 4,       0,           -1 },
+	{ "Tor Browser",     NULL,       NULL,                 1 << 3,       0,           -1 },
 };
 
 /* layout(s) */
