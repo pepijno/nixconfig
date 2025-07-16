@@ -77,6 +77,11 @@
       set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'  # underscore colours - needs tmux-3.0
 
       set -g default-command fish
+
+      set-window-option -g mode-keys vi
+      bind-key -T copy-mode-vi 'v' send -X begin-selection
+      bind-key -T copy-mode-vi 'y' send -X copy-pipe-and-cancel 'pbcopy'
+      bind-key -T copy-mode-vi Enter send -X copy-pipe-and-cancel 'pbcopy'
     '';
   };
 }
