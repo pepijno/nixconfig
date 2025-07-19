@@ -2,11 +2,11 @@
   description = "System config";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.11";
+    nixpkgs.url = "nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/5d48f3ded3b55ef32d5853c9022fb4df29b3fc45";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -35,15 +35,13 @@
           };
         };
       };
-      pkgs = import nixpkgs{
+      pkgs = import nixpkgs {
         config = {
           allowUnfree = true;
           allowNonfree = true;
           allowUnfreePredicate = (pkg: true);
         };
-        overlays = [
-          overlay-nixpkgs
-        ];
+        overlays = [ overlay-nixpkgs ];
         inherit system;
       };
 
