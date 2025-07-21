@@ -1,4 +1,4 @@
-{ allowed-unfree-packages, pkgs, lib, config, ... }:
+{ allowed-unfree-packages, pkgs, lib, ... }:
 
 let
   torbrowserWithAudio = pkgs.tor-browser-bundle-bin.override {
@@ -20,15 +20,12 @@ in {
     nix-prefetch-git
     ueberzug
     fd
-    lm_sensors
     # minecraft
     steam
     steam-run
     hicolor-icon-theme
     dosbox-staging
     inotify-tools
-    timidity
-    soundfont-fluid
     ltunify
     mullvad-vpn
     playerctl
@@ -40,7 +37,7 @@ in {
     torbrowserWithAudio
     firefox
     vivaldi
-    # widevine-cdm
+    widevine-cdm
     vivaldi-ffmpeg-codecs
 
     libnotify
@@ -50,5 +47,14 @@ in {
     discord
 
     wineWowPackages.base
+
+    playonlinux
+    # libreoffice
+
+    undervolt
+    s-tui
+    stress
+
+    sudo
   ];
 }

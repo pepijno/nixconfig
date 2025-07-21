@@ -3,13 +3,14 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		dependencies = {
-			"nvim-treesitter/nvim-treesitter-textobjects",
+			-- "nvim-treesitter/nvim-treesitter-textobjects",
+			"nvim-treesitter/playground",
 		},
 		build = ":TSUpdate",
 		event = { "BufReadPost", "BufNewFile" },
 		cmd = { "TSUpdateSync" },
 		opts = {
-			ensure_installed = {},
+			ensure_installed = { "c", "lua", "vim" },
 			highlight = {
 				enable = true,
 				use_languagetree = true,
@@ -87,53 +88,53 @@ return {
 			end
 			require("nvim-treesitter.configs").setup(opts)
 
-			if load_textobjects then
-				-- PERF: no need to load the plugin, if we only need its queries for mini.ai
-				if opts.textobjects then
-					for _, mod in ipairs({ "move", "select", "swap", "lsp_interop" }) do
-						if opts.textobjects[mod] and opts.textobjects[mod].enable then
-							local Loader = require("lazy.core.loader")
-							Loader.disabled_rtp_plugins["nvim-treesitter-textobjects"] = nil
-							local plugin = require("lazy.core.config").plugins["nvim-treesitter-textobjects"]
-							require("lazy.core.loader").source_runtime(plugin.dir, "plugin")
-							break
-						end
-					end
-				end
-			end
+			-- if load_textobjects then
+			-- 	-- PERF: no need to load the plugin, if we only need its queries for mini.ai
+			-- 	if opts.textobjects then
+			-- 		for _, mod in ipairs({ "move", "select", "swap", "lsp_interop" }) do
+			-- 			if opts.textobjects[mod] and opts.textobjects[mod].enable then
+			-- 				local Loader = require("lazy.core.loader")
+			-- 				Loader.disabled_rtp_plugins["nvim-treesitter-textobjects"] = nil
+			-- 				local plugin = require("lazy.core.config").plugins["nvim-treesitter-textobjects"]
+			-- 				require("lazy.core.loader").source_runtime(plugin.dir, "plugin")
+			-- 				break
+			-- 			end
+			-- 		end
+			-- 	end
+			-- end
 		end,
 	},
-	{
-		"nvim-treesitter/nvim-treesitter-refactor",
-		config = function()
-			require("nvim-treesitter.configs").setup({
-				refactor = {
-					highlight_definitions = {
-						enable = true,
-						-- Set to false if you have an `updatetime` of ~100.
-						clear_on_cursor_move = true,
-					},
-				},
-			})
-		end,
-	},
-	{
-		"nvim-treesitter/nvim-treesitter-context",
-		config = function()
-			require("treesitter-context").setup({
-				enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-				max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-				min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
-				line_numbers = true,
-				multiline_threshold = 20, -- Maximum number of lines to show for a single context
-				trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-				mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
-				-- Separator between context and content. Should be a single character string, like '-'.
-				-- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
-				separator = nil,
-				zindex = 20, -- The Z-index of the context window
-				on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
-			})
-		end,
-	},
+	-- {
+	-- 	"nvim-treesitter/nvim-treesitter-refactor",
+	-- 	config = function()
+	-- 		require("nvim-treesitter.configs").setup({
+	-- 			refactor = {
+	-- 				highlight_definitions = {
+	-- 					enable = true,
+	-- 					-- Set to false if you have an `updatetime` of ~100.
+	-- 					clear_on_cursor_move = true,
+	-- 				},
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
+	-- {
+	-- 	"nvim-treesitter/nvim-treesitter-context",
+	-- 	config = function()
+	-- 		require("treesitter-context").setup({
+	-- 			enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+	-- 			max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+	-- 			min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+	-- 			line_numbers = true,
+	-- 			multiline_threshold = 20, -- Maximum number of lines to show for a single context
+	-- 			trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+	-- 			mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
+	-- 			-- Separator between context and content. Should be a single character string, like '-'.
+	-- 			-- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+	-- 			separator = nil,
+	-- 			zindex = 20, -- The Z-index of the context window
+	-- 			on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
+	-- 		})
+	-- 	end,
+	-- },
 }

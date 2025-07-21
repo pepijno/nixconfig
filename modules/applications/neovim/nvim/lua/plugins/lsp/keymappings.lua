@@ -53,7 +53,9 @@ function M.get()
 			-- { "<leader>cf", format, desc = "Format Document", has = "formatting" },
 			-- { "<leader>cf", format, desc = "Format Range", mode = "v", has = "rangeFormatting" },
 			{ "<leader>la", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
-			{ "<leader>lr", vim.lsp.buf.rename, desc = "Rename", has = "rename" },
+			-- { "<leader>lr", function()
+			-- 	return ":IncRename " .. vim.fn.expand("<cword>")
+			-- end, desc = "Rename" },
 			-- {
 			--      "<leader>cA",
 			--      function()

@@ -1,9 +1,10 @@
-{ config, pkgs, ... }:
+{ ... }:
 
 {
   boot = {
     initrd = {
-      availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+      availableKernelModules =
+        [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
       kernelModules = [ ];
     };
 
@@ -14,11 +15,7 @@
 
     kernelModules = [ "kvm-intel" "coretemp" ];
 
-    kernel = {
-      sysctl = {
-        "net.ipv4.ip_forward" = 1;
-      };
-    };
+    kernel = { sysctl = { "net.ipv4.ip_forward" = 1; }; };
 
     extraModulePackages = [ ];
   };

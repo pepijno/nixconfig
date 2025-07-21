@@ -1,10 +1,11 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   systemd.services.upower.enable = true;
 
   services = {
     upower.enable = true;
+    blueman.enable = false;
 
     dbus = {
       enable = true;
@@ -34,5 +35,11 @@
       KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", MODE="0660", GROUP="$USER_GID", TAG+="uaccess", TAG+="udev-acl"
       '';
     };
+
+    # undervolt = {
+    #   enable = true;
+    #   coreOffset = -80;
+    #   gpuOffset = -80;
+    # };
   };
 }

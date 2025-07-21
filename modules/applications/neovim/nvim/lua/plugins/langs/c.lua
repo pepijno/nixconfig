@@ -12,8 +12,8 @@ return {
 		opts = {
 			servers = {
 				clangd = {
-					settings = {
-					},
+					filetypes = { "c" },
+					settings = {},
 				},
 			},
 		},
@@ -26,15 +26,20 @@ return {
 	-- 		end
 	-- 	end,
 	-- },
-	-- {
-	-- 	"stevearc/conform.nvim",
-	-- 	opts = function(_, opts)
-	-- 		local extra = { c = { "clang-format" } }
-	-- 		if type(opts.formatters_by_ft) == "table" then
-	-- 			opts.formatters_by_ft = vim.tbl_extend("force", opts.formatters_by_ft, extra)
-	-- 		else
-	-- 			opts.formatters_by_ft = extra
-	-- 		end
-	-- 	end,
-	-- },
+	{
+		"stevearc/conform.nvim",
+		opts = function(_, opts)
+			-- opts["format_on_save"] = {
+			-- 	-- These options will be passed to conform.format()
+			-- 	timeout_ms = 500,
+			-- 	lsp_fallback = true,
+			-- }
+			local extra = { c = { "clang_format" } }
+			if type(opts.formatters_by_ft) == "table" then
+				opts.formatters_by_ft = vim.tbl_extend("force", opts.formatters_by_ft, extra)
+			else
+				opts.formatters_by_ft = extra
+			end
+		end,
+	},
 }

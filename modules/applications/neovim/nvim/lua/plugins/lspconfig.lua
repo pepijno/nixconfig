@@ -44,6 +44,12 @@ return {
 			setup = {},
 		},
 		config = function(_, opts)
+			require("inc_rename").setup()
+
+			vim.keymap.set("n", "<leader>rn", function()
+				return ":IncRename " .. vim.fn.expand("<cword>")
+			end, { expr = true })
+
 			require("neodev").setup()
 
 			vim.diagnostic.config({
@@ -58,6 +64,9 @@ return {
 					local buffer = args.buf
 					local client = vim.lsp.get_client_by_id(args.data.client_id)
 					keys.on_attach(client, buffer)
+					if client.server_capabilities.inlayHintProvider then
+						vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+					end
 				end,
 			})
 

@@ -1,18 +1,17 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   environment.pathsToLink = [ "/libexec" ];
 
-  imports =
-    [
-      ./hardware-configuration.nix
-      ./pci-passthrough.nix
-      ./boot.nix
-      ./services.nix
-      ./hardware.nix
-      ./nix.nix
-      ./mullvad.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ./pci-passthrough.nix
+    ./boot.nix
+    ./services.nix
+    ./hardware.nix
+    ./nix.nix
+    ./mullvad.nix
+  ];
 
   networking = {
     hostName = "pep-pc";
@@ -26,14 +25,14 @@
 
   security = {
     polkit.enable = true;
+    sudo.enable = true;
     doas = {
       enable = true;
-      extraRules = [
-        {
-          users = [ "pepijn" ];
-          keepEnv = true;
-        }
-      ];
+      extraRules = [{
+        users = [ "pepijn" ];
+        keepEnv = true;
+        persist = true;
+      }];
     };
     pam.services.swaylock.text = ''
       # PAM configuration file for the swaylock screen locker. By default, it includes
@@ -47,7 +46,6 @@
   programs = {
     git.enable = true;
     fish.enable = true;
-    # steam.enable = true;
   };
 
   users = {
@@ -59,18 +57,18 @@
     };
   };
 
-  virtualisation = {
-    docker = {
-      enable = true;
-      rootless = {
-        enable = true;
-        setSocketVariable = true;
-      };
-    };
-  };
+  # virtualisation = {
+  #   docker = {
+  #     enable = true;
+  #     rootless = {
+  #       enable = true;
+  #       setSocketVariable = true;
+  #     };
+  #   };
+  # };
 
   system = {
-    autoUpgrade.enable = true;
+    autoUpgrade.enable = false;
     autoUpgrade.allowReboot = false;
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
