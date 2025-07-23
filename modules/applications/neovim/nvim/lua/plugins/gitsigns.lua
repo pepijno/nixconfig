@@ -66,7 +66,7 @@ return {
 				map("n", "<leader>gtd", gs.toggle_deleted)
 
 				-- Text object
-				map({ "o", "x" }, "gh", ":<C-U>Gitsigns select_hunk<CR>")
+				map({ "o", "x" }, "gh", ":<C-U>Gitsigns select_hunk<Return>")
 			end,
 		})
 	end,

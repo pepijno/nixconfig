@@ -1,9 +1,18 @@
-require("core")
+require("core.options")
+require("core.keymaps")
+require("core.autocmds")
+require("core.lsp")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
-if not vim.loop.fs_stat(lazypath) then
-	require("core.bootstrap").init_lazy(lazypath)
+if not vim.uv.fs_stat(lazypath) then
+	vim.cmd("redraw")
+	vim.api.nvim_echo({ { "  Installing lazy.nvim & plugins ...", "Bold" } }, true, {})
+	local repo = "https://github.com/folke/lazy.nvim.git"
+	local shell_args = { "git", "clone", "--filter=blob:none", "--branch=stable", repo, lazypath }
+	local output = vim.fn.system(shell_args)
+	assert(vim.v.shell_error == 0, "External call failed with error code: " .. vim.v.shell_error .. "\n" .. output)
+	vim.opt.rtp:prepend(lazypath)
 end
 
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
@@ -13,26 +22,22 @@ require("lazy").setup({
 		{ import = "plugins" },
 		{ import = "plugins/langs" },
 	},
+	rocks = {
+		enabled = false,
+	},
+	change_detection = {
+		notify = false,
+	},
 	lockfile = vim.fn.stdpath("data") .. "/lazy/lazy-lock.json",
-}, {
-	checker = { enabled = true },
+	performance = {
+		rtp = {
+			disabled_plugins = {
+				"matchit",
+				"matchparen",
+				"netrwPlugin",
+				"tohtml",
+				"tutor",
+			},
+		},
+	},
 })
-
--- vim.schedule(function()
--- 	vim.cmd "MasonInstallAll"
---
--- 	-- Keep track of which mason pkgs get installed
--- 	local packages = table.concat(vim.g.mason_binaries_list, " ")
---
--- 	require("mason-registry"):on("package:install:success", function(pkg)
--- 		packages = string.gsub(packages, pkg.name:gsub("%-", "%%-"), "") -- rm package name
---
--- 		-- run above screen func after all pkgs are installed.
--- 		if packages:match "%S" == nil then
--- 			vim.schedule(function()
--- 				api.nvim_buf_delete(0, { force = true })
--- 				vim.cmd "echo '' | redraw" -- clear cmdline
--- 			end)
--- 		end
--- 	end)
--- end)

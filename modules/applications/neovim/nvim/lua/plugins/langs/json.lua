@@ -1,0 +1,19 @@
+vim.lsp.config("jsonls", {
+	cmd = { "vscode-json-language-server", "--stdio" },
+	filetypes = { "json", "jsonc" },
+	init_options = {
+		provideFormatter = true,
+	},
+	root_markers = { ".git" },
+})
+vim.lsp.enable("jsonls")
+
+return {
+	{
+		"nvim-treesitter/nvim-treesitter",
+		opts = function(_, opts)
+			opts.ensure_installed = opts.ensure_installed or {}
+			vim.list_extend(opts.ensure_installed, { "json" })
+		end,
+	},
+}
