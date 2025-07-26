@@ -1,3 +1,9 @@
+local fzf_lua = function(builtin, opts)
+	return function()
+		require("fzf-lua")[builtin](opts)
+	end
+end
+
 local function client_supports_method(client, method, bufnr)
 	if vim.fn.has("nvim-0.11") == 1 then
 		return client:supports_method(method, bufnr)
@@ -20,16 +26,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			max_height = math.floor(vim.o.lines * 0.7),
 		}
 
-		keymap("n", "<leader>ld", "<cmd>Telescope diagnostic<cr>", opt("Buffer [D]iagnostics"))
-		keymap("n", "<leader>lgd", function()
-			require("telescope.builtin").lsp_definitions({ reuse_win = true })
-		end, opt("[G]oto [D]efinition"))
-		keymap("n", "<leader>lgi", function()
-			require("telescope.builtin").lsp_implementations({ reuse_win = true })
-		end, opt("[G]oto [I]mplementation"))
-		keymap("n", "<leader>lgy", function()
-			require("telescope.builtin").lsp_type_definitions({ reuse_win = true })
-		end, opt("[G]oto T[y]pe Definitions"))
+		keymap("n", "<leader>lgd", fzf_lua("lsp_definitions"), opt("[D]efinition"))
+		keymap("n", "<leader>lgi", fzf_lua("lsp_implementations"), opt("[I]mplementation"))
+		keymap("n", "<leader>lgr", fzf_lua("lsp_references"), opt("[R]eferences"))
+		keymap(
+			{ "n", "v" },
+			"<leader>la",
+			fzf_lua("lsp_code_actions", { winopts = { fullscreen = false, preview = { hidden = true } } }),
+			opt("Code [A]ctions")
+		)
 		keymap("n", "<leader>lh", function()
 			lsp.buf.hover(hover_opts)
 		end, opt("[H]over"))
@@ -96,15 +101,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
 vim.diagnostic.config({
 	severity_sort = true,
 	float = { border = "rounded", source = "if_many" },
-	underline = { severity = vim.diagnostic.severity.ERROR },
-	signs = vim.g.have_nerd_font and {
+	signs = {
 		text = {
 			[vim.diagnostic.severity.ERROR] = "󰅚 ",
 			[vim.diagnostic.severity.WARN] = "󰀪 ",
 			[vim.diagnostic.severity.INFO] = "󰋽 ",
 			[vim.diagnostic.severity.HINT] = "󰌶 ",
 		},
-	} or {},
+	},
 	virtual_text = {
 		source = "if_many",
 		spacing = 2,

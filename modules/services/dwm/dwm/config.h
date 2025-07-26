@@ -146,6 +146,7 @@ static const Rule rules[] = {
 	{ "librewolf",       NULL,       NULL,                 1 << 2,       0,           -1 },
 	{ "librewolf",       NULL,       "Picture-in-Picture", 1 << 2,       1,           -1 },
 	{ "Vivaldi-stable",  NULL,       NULL,                 1 << 1,       0,           -1 },
+	{ NULL,              NULL,       "Picture in picture", 1 << 1,       1,           -1 },
 	{ "steam",           NULL,       NULL,                 1 << 4,       0,           -1 },
 	{ "Tor Browser",     NULL,       NULL,                 1 << 3,       0,           -1 },
 };

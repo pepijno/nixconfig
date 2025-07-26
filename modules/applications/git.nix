@@ -1,5 +1,13 @@
-{ ... }:
+{ pkgs, config, runtimeRoot, context, ... }:
 
+let
+  mkSymlinkAttrs = import ../../lib/mkSymlinkAttrs.nix {
+    inherit pkgs;
+    inherit context;
+    inherit runtimeRoot;
+    hm = config.lib;
+  };
+in
 {
   programs.git = {
     enable = true;

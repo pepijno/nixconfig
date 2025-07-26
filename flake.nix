@@ -11,9 +11,12 @@
     };
 
     nix-colors.url = "github:misterio77/nix-colors";
+    neovim-nightly-overlay.url =
+      "github:nix-community/neovim-nightly-overlay/5c2f79eef3dbe9522b6e79fb7f1d99dd593e478a";
+    wrapper-manager.url = "github:viperML/wrapper-manager";
   };
 
-  outputs = { nixpkgs-unstable, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs-unstable, nixpkgs, home-manager, ... }@inputs:
     let
       allowed-unfree-packages = [
         "vivaldi"
@@ -57,6 +60,8 @@
         gnumake
       ];
 
+      runtimeRoot = builtins.getEnv "PWD";
+
       system = "x86_64-linux";
     in {
       homeConfigurations = {
@@ -65,6 +70,8 @@
           extraSpecialArgs = {
             inherit inputs;
             inherit allowed-unfree-packages;
+            inherit runtimeRoot;
+            context = self;
           };
           modules = [ ./home_linux.nix ];
         };

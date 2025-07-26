@@ -33,4 +33,9 @@ ls.add_snippets('zig', {
 				return last
 			end
 		end, { 1 }), i(1) })),
+	s("stru", fmt([[
+	const {} = struct {{
+		{}
+	}};
+	]], { i(1), i(0) })),
 })

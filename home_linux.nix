@@ -8,8 +8,9 @@
     ./modules/applications/kitty.nix
     ./modules/applications/fish.nix
     ./modules/applications/git.nix
+    ./modules/applications/jj.nix
     ./modules/applications/tmux.nix
-    ./modules/applications/neovim/neovim.nix
+    ./modules/applications/neovim.nix
 
     ./modules/services/backup/backup.nix
     # ./modules/services/betterlockscreen.nix

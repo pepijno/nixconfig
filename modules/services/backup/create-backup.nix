@@ -65,7 +65,7 @@ in pkgs.writeShellScriptBin "create-backup" ''
       fi
   done
 
-  dirs=(.local/share/Steam .cache/ .local/share/containers/ .local/share/docker/ .mozilla/ libvirt/ .local/share/tor-browser/)
+  dirs=(.local/share/Steam .cache/ .local/share/containers/ .local/share/docker/ .mozilla/ libvirt/ .local/share/tor-browser/ .local/share/Daedalus/)
   excludes=()
   for f in "''${dirs[@]}"
   do
