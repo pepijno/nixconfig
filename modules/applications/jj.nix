@@ -1,13 +1,13 @@
-{ ... }:
+{ pkgs, config, mkSymlinkAttrs, ... }:
 
 {
-  programs.jujutsu = {
-    enable = true;
-    settings = {
-      user = {
-        name = "Pepijn Overbeeke";
-        email = "pepijn.overbeeke@gmail.com";
-      };
+  home.packages = with pkgs; [ jujutsu ];
+
+  xdg.configFile = mkSymlinkAttrs config {
+    "jj" = {
+      source = ../../dotfiles/jj;
+      outOfStoreSymlink = true;
+      recursive = false;
     };
   };
 }

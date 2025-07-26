@@ -1,0 +1,12 @@
+"$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json"
+
+[user]
+email = "pepijn.overbeeke@gmail.com"
+name = "Pepijn Overbeeke"
+
+[ui]
+paginate = "never"
+
+[colors]
+rest = "white"
+
