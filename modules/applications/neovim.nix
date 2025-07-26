@@ -1,13 +1,6 @@
-{ inputs, pkgs, config, runtimeRoot, context, ... }:
+{ inputs, pkgs, config, mkSymlinkAttrs, ... }:
 
-let
-  mkSymlinkAttrs = import ../../lib/mkSymlinkAttrs.nix {
-    inherit pkgs;
-    inherit context;
-    inherit runtimeRoot;
-    hm = config.lib;
-  };
-in {
+{
   home.packages = with pkgs; [
     inputs.neovim-nightly-overlay.packages.${pkgs.system}.default
     fzf
@@ -16,7 +9,7 @@ in {
     gcc
   ];
 
-  xdg.configFile = mkSymlinkAttrs {
+  xdg.configFile = mkSymlinkAttrs config {
     "nvim" = {
       source = ../../dotfiles/nvim;
       outOfStoreSymlink = true;

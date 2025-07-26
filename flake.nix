@@ -62,6 +62,13 @@
 
       runtimeRoot = builtins.getEnv "PWD";
 
+      mkSymlinkAttrs = config: import ./lib/mkSymlinkAttrs.nix {
+        inherit pkgs;
+        runtimeRoot = builtins.getEnv "PWD";
+        context = self;
+        hm = config.lib;
+      };
+
       system = "x86_64-linux";
     in {
       homeConfigurations = {
@@ -70,8 +77,7 @@
           extraSpecialArgs = {
             inherit inputs;
             inherit allowed-unfree-packages;
-            inherit runtimeRoot;
-            context = self;
+            inherit mkSymlinkAttrs;
           };
           modules = [ ./home_linux.nix ];
         };
