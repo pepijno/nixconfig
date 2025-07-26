@@ -3,6 +3,35 @@ require("core.keymaps")
 require("core.autocmds")
 require("core.lsp")
 
+vim.opt.packpath:append(vim.fn.stdpath("data") .. "/site")
+
+local keymap = vim.keymap.set
+
+local github = function(name)
+	return "https://github.com/" .. name
+end
+
+vim.pack.add({
+	github("folke/which-key.nvim"),
+	github("tpope/vim-sleuth"),
+	github("stevearc/oil.nvim"),
+	github("j-hui/fidget.nvim"),
+	github("catppuccin/nvim"),
+	github("nvim-lualine/lualine.nvim"),
+	github("lewis6991/gitsigns.nvim"),
+	github("numToStr/Comment.nvim"),
+	{ src = github("L3MON4D3/LuaSnip"), version = vim.version.range("2.*") },
+	github("folke/lazydev.nvim"),
+	{ src = github("saghen/blink.cmp"), version = vim.version.range("1.*") },
+	github("ibhagwan/fzf-lua"),
+	github("echasnovski/mini.icons"),
+	github("nvim-treesitter/nvim-treesitter"),
+	github("nvim-treesitter/nvim-treesitter-textobjects"),
+	github("nvim-treesitter/playground"),
+	github("stevearc/conform.nvim"),
+	github("neovim/nvim-lspconfig"),
+})
+
 local langs_ensure_installed = {
 	"asm",
 	"lua",
@@ -32,7 +61,6 @@ local formatters_by_ft = {
 }
 
 vim.lsp.enable("asm_lsp")
-vim.lsp.config("lua_ls", require("lua_lsp_settings"))
 vim.lsp.enable("nixd")
 vim.lsp.enable("zls")
 vim.lsp.enable("hls")
@@ -41,35 +69,40 @@ vim.lsp.enable("bashls")
 vim.lsp.enable("cssls")
 vim.lsp.enable("html")
 vim.lsp.enable("jsonls")
+vim.lsp.config("lua_ls", {
+	on_init = function(client)
+		if client.workspace_folders then
+			local path = client.workspace_folders[1].name
+			if
+				path ~= vim.fn.stdpath("config")
+				and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+			then
+				return
+			end
+		end
 
-vim.opt.packpath:append(vim.fn.stdpath("data") .. "/site")
-
-local keymap = vim.keymap.set
-
-local github = function(name)
-	return "https://github.com/" .. name
-end
-
-vim.pack.add({
-	github("folke/which-key.nvim"),
-	github("tpope/vim-sleuth"),
-	github("stevearc/oil.nvim"),
-	github("j-hui/fidget.nvim"),
-	github("catppuccin/nvim"),
-	github("nvim-lualine/lualine.nvim"),
-	github("lewis6991/gitsigns.nvim"),
-	github("numToStr/Comment.nvim"),
-	github("L3MON4D3/LuaSnip"),
-	github("folke/lazydev.nvim"),
-	github("saghen/blink.cmp"),
-	github("ibhagwan/fzf-lua"),
-	github("echasnovski/mini.icons"),
-	github("nvim-treesitter/nvim-treesitter"),
-	github("nvim-treesitter/nvim-treesitter-textobjects"),
-	github("nvim-treesitter/playground"),
-	github("stevearc/conform.nvim"),
-	github("neovim/nvim-lspconfig"),
+		client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
+			runtime = {
+				version = "LuaJIT",
+				path = {
+					"lua/?.lua",
+					"lua/?/init.lua",
+				},
+			},
+			-- Make the server aware of Neovim runtime files
+			workspace = {
+				checkThirdParty = false,
+				library = {
+					vim.env.VIMRUNTIME,
+				},
+			},
+		})
+	end,
+	settings = {
+		Lua = {},
+	},
 })
+vim.lsp.enable("lua_ls")
 
 -- catppuccin
 ------------------------------------------------------------------------------------------------------------------------

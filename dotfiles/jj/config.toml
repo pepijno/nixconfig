@@ -6,7 +6,12 @@ name = "Pepijn Overbeeke"
 
 [ui]
 paginate = "never"
+default-command = "log"
 
 [colors]
 rest = "white"
+
+[[--scope]]
+--when.commands = ["diff"]
+ui.paginate = "auto"
 
