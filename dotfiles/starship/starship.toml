@@ -1,0 +1,24 @@
+add_newline = true
+format = "[┌───────────────────](bold green) $time$all\n[│](bold green)$directory\n[└─](bold green)$character\n"
+right_format = "$cmd_duration"
+scan_timeout = 10
+
+[cmd_duration]
+min_time = 50
+
+[directory]
+fish_style_pwd_dir_length = 1
+format = "[$path]($style)[$read_only]($read_only_style)"
+truncation_symbol = ".../"
+
+[line_break]
+disabled = true
+
+[nix_shell]
+style = "bold red"
+symbol = "[󱄅](bold blue) "
+
+[time]
+disabled = false
+format = "[$time]($style) "
+
