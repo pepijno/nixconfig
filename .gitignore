@@ -2,3 +2,7 @@ tags
 home.nix
 dotfiles/tmux/plugins/*
 !dotfiles/tmux/plugins/tpm
+dotfiles/fish/completions/*
+!dotfiles/fish/completions/fisher.fish
+dotfiles/fish/functions/*
+!dotfiles/fish/functions/fisher.fish
