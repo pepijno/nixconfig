@@ -6,7 +6,7 @@
     ./modules/packages.nix
 
     ./modules/applications/kitty.nix
-    ./modules/applications/starship.nix
+    ./modules/applications/oh-my-posh.nix
     ./modules/applications/fish.nix
     ./modules/applications/git.nix
     ./modules/applications/jj.nix
