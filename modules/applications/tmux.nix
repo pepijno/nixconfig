@@ -1,7 +1,7 @@
 { config, pkgs, mkSymlinkAttrs, ... }:
 
 {
-  home.packages = with pkgs; [ tmux tmux-mem-cpu-load ];
+  home.packages = with pkgs; [ tmux tmux-mem-cpu-load yq ];
 
   xdg.configFile = mkSymlinkAttrs config {
     "tmux" = {

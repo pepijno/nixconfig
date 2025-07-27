@@ -1,2 +1,4 @@
 tags
 home.nix
+dotfiles/tmux/plugins/*
+!dotfiles/tmux/plugins/tpm
