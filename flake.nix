@@ -53,6 +53,7 @@
         nixfmt-classic
         lua-language-server
         stylua
+        fish-lsp
         xorg.libX11
         xorg.libXinerama
         xorg.libXft

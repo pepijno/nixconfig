@@ -46,6 +46,7 @@ local langs_ensure_installed = {
 	"html",
 	"css",
 	"json",
+	"fish",
 }
 local formatters_by_ft = {
 	asm = { "asmfmt" },
@@ -58,6 +59,7 @@ local formatters_by_ft = {
 	sh = { "beautysh" },
 	angular = { "prettier" },
 	json = { "jq" },
+	fish = { "fish_indent" },
 }
 
 vim.lsp.enable("asm_lsp")
@@ -69,6 +71,7 @@ vim.lsp.enable("bashls")
 vim.lsp.enable("cssls")
 vim.lsp.enable("html")
 vim.lsp.enable("jsonls")
+vim.lsp.enable("fish_lsp")
 vim.lsp.config("lua_ls", {
 	on_init = function(client)
 		if client.workspace_folders then
