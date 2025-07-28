@@ -4,12 +4,13 @@
   imports = [
     ./modules/fonts.nix
 
-    ./modules/applications/kitty.nix
+    ./modules/applications/jj.nix
+    ./modules/applications/alacritty.nix
     ./modules/applications/tmux.nix
 
-    ./modules/applications/neovim/neovim.nix
-    ./modules/applications/kitty.nix
+    ./modules/applications/neovim.nix
     ./modules/applications/fish.nix
+    ./modules/applications/oh-my-posh.nix
 
     inputs.nix-colors.homeManagerModules.default
   ];
@@ -22,7 +23,10 @@
     ripgrep
     fd
     screen
-    lazygit
+    wget
+
+    nixd
+    nixfmt
   ];
 
   colorScheme = inputs.nix-colors.colorSchemes.catppuccin-latte;

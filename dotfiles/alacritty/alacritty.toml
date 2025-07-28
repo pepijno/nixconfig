@@ -1,0 +1,78 @@
+draw_bold_text_with_bright_colors = false
+live_config_reload = true
+
+[bell]
+duration = 0
+
+[colors.bright]
+black = "#eff1f5"
+blue = "#1e66f5"
+cyan = "#179299"
+green = "#40a02b"
+magenta = "#8839ef"
+red = "#d20f39"
+white = "#bcc0cc"
+yellow = "#df8e1d"
+
+[colors.normal]
+black = "#eff1f5"
+blue = "#1e66f5"
+cyan = "#179299"
+green = "#40a02b"
+magenta = "#8839ef"
+red = "#d20f39"
+white = "#acb0be"
+yellow = "#df8e1d"
+
+[colors.primary]
+background = "#eff1f5"
+foreground = "#4c4f69"
+
+[cursor]
+style = "Block"
+unfocused_hollow = true
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 11.0
+
+[font.bold]
+family = "MesloLGS Nerd Font Mono"
+style = "Bold"
+
+[font.italic]
+family = "MesloLGS Nerd Font Mono"
+style = "Italic"
+
+[font.normal]
+family = "MesloLGS Nerd Font Mono"
+
+[[keyboard.bindings]]
+chars = "u001B[13;2u"
+key = "Return"
+mods = "Shift"
+
+[[keyboard.bindings]]
+chars = "u001B[13;5u"
+key = "Return"
+mods = "Control"
+
+[offset]
+x = 0.0
+y = 0.0
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[window]
+decorations = "none"
+dynamic_padding = true
+startup_mode = "Maximized"
+
+[window.padding]
+x = 25
+y = 20
+

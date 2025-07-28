@@ -47,6 +47,9 @@ local langs_ensure_installed = {
 	"css",
 	"json",
 	"fish",
+	"java",
+	"kotlin",
+	"xml",
 }
 local formatters_by_ft = {
 	asm = { "asmfmt" },
@@ -58,6 +61,7 @@ local formatters_by_ft = {
 	bash = { "beautysh" },
 	sh = { "beautysh" },
 	angular = { "prettier" },
+	typescript = { "prettier" },
 	json = { "jq" },
 	fish = { "fish_indent" },
 }
@@ -70,6 +74,7 @@ vim.lsp.enable("clangd")
 vim.lsp.enable("bashls")
 vim.lsp.enable("cssls")
 vim.lsp.enable("html")
+vim.lsp.enable("ts_lua")
 vim.lsp.enable("jsonls")
 vim.lsp.enable("fish_lsp")
 vim.lsp.config("lua_ls", {

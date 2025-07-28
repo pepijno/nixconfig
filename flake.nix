@@ -11,12 +11,18 @@
     };
 
     nix-colors.url = "github:misterio77/nix-colors";
-    neovim-nightly-overlay.url =
-      "github:nix-community/neovim-nightly-overlay/5c2f79eef3dbe9522b6e79fb7f1d99dd593e478a";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay/5c2f79eef3dbe9522b6e79fb7f1d99dd593e478a";
     wrapper-manager.url = "github:viperML/wrapper-manager";
   };
 
-  outputs = { self, nixpkgs-unstable, nixpkgs, home-manager, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs-unstable,
+      nixpkgs,
+      home-manager,
+      ...
+    }@inputs:
     let
       allowed-unfree-packages = [
         "vivaldi"
@@ -30,7 +36,6 @@
       ];
       overlay-nixpkgs = final: prev: {
         unstable = import nixpkgs-unstable {
-          inherit system;
           config = {
             allowUnfree = true;
             allowNonfree = true;
@@ -45,7 +50,6 @@
           allowUnfreePredicate = (pkg: true);
         };
         overlays = [ overlay-nixpkgs ];
-        inherit system;
       };
 
       buildInputs = with pkgs; [
@@ -61,41 +65,48 @@
         gnumake
       ];
 
-      runtimeRoot = builtins.getEnv "PWD";
-
-      mkSymlinkAttrs = config: import ./lib/mkSymlinkAttrs.nix {
-        inherit pkgs;
-        runtimeRoot = builtins.getEnv "PWD";
-        context = self;
-        hm = config.lib;
-      };
-
-      system = "x86_64-linux";
-    in {
+      mkSymlinkAttrs =
+        config:
+        import ./lib/mkSymlinkAttrs.nix {
+          inherit pkgs;
+          runtimeRoot = builtins.getEnv "PWD";
+          context = self;
+          hm = config.lib;
+        };
+    in
+    {
       homeConfigurations = {
         pepijn = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
+          pkgs = import pkgs { system = "x86_64-linux"; };
           extraSpecialArgs = {
             inherit inputs;
             inherit allowed-unfree-packages;
             inherit mkSymlinkAttrs;
           };
-          modules = [ ./home_linux.nix ];
+          modules = [
+            ./home_linux.nix
+          ];
         };
         pepijn_mac = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          extraSpecialArgs = { inherit inputs; };
-          modules = [ ./home_mac.nix ];
+          pkgs = import pkgs { system = "aarch64-darwin"; };
+          extraSpecialArgs = {
+            inherit inputs;
+            inherit allowed-unfree-packages;
+          };
+          modules = [
+            ./home_mac.nix
+          ];
         };
       };
       nixosConfigurations = {
         desktop = nixpkgs-unstable.lib.nixosSystem {
-          inherit system;
+          system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [ ./machine/configuration.nix ];
         };
       };
 
-      devShells.${system}.default = pkgs.mkShell { inherit buildInputs; };
+      devShells."x86_64-linux".default = pkgs.mkShell { inherit buildInputs; };
+      devShells."aarch64-darwin".default = pkgs.mkShell { inherit buildInputs; };
     };
 }
