@@ -11,19 +11,17 @@
     };
 
     nix-colors.url = "github:misterio77/nix-colors";
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay/5c2f79eef3dbe9522b6e79fb7f1d99dd593e478a";
+    neovim-nightly-overlay.url =
+      "github:nix-community/neovim-nightly-overlay/5c2f79eef3dbe9522b6e79fb7f1d99dd593e478a";
     wrapper-manager.url = "github:viperML/wrapper-manager";
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs-unstable,
-      nixpkgs,
-      home-manager,
-      ...
-    }@inputs:
+  outputs = { self, nixpkgs-unstable, nixpkgs, home-manager, ... }@inputs:
     let
+      systems = [ "x86_64-linux" "aarch64-darwin" ];
+
+      forAllSystems = nixpkgs.lib.genAttrs systems;
+
       allowed-unfree-packages = [
         "vivaldi"
         "vivaldi-ffmpeg-codecs"
@@ -34,68 +32,70 @@
         "widevine-cdm"
         "discord"
       ];
-      overlay-nixpkgs = final: prev: {
-        unstable = import nixpkgs-unstable {
+
+      mkPkgs = system:
+        let
+          overlay-nixpkgs = final: prev: {
+            unstable = import nixpkgs-unstable {
+              inherit system;
+              config = {
+                allowUnfree = true;
+                allowNonfree = true;
+                allowUnfreePredicate = (pkg: true);
+              };
+            };
+          };
+        in import nixpkgs {
+          inherit system;
           config = {
             allowUnfree = true;
             allowNonfree = true;
             allowUnfreePredicate = (pkg: true);
           };
+          overlays = [ overlay-nixpkgs ];
         };
-      };
-      pkgs = import nixpkgs {
-        config = {
-          allowUnfree = true;
-          allowNonfree = true;
-          allowUnfreePredicate = (pkg: true);
-        };
-        overlays = [ overlay-nixpkgs ];
-      };
 
-      buildInputs = with pkgs; [
-        nixd
-        nixfmt-classic
-        lua-language-server
-        stylua
-        fish-lsp
-        xorg.libX11
-        xorg.libXinerama
-        xorg.libXft
-        gcc
-        gnumake
-      ];
+      mkBuildInputs = system:
+        let pkgs = mkPkgs system;
+        in with pkgs;
+        [ nixd nixfmt-classic lua-language-server stylua fish-lsp ]
+        ++ nixpkgs.lib.optionals (system == "x86_64-linux") [
+          # X11 dependencies only for Linux
+          xorg.libX11
+          xorg.libXinerama
+          xorg.libXft
+          gcc
+          gnumake
+        ];
 
-      mkSymlinkAttrs =
-        config:
-        import ./lib/mkSymlinkAttrs.nix {
+      mkSymlinkAttrs = system: config:
+        let pkgs = mkPkgs system;
+        in import ./lib/mkSymlinkAttrs.nix {
           inherit pkgs;
           runtimeRoot = builtins.getEnv "PWD";
           context = self;
           hm = config.lib;
         };
-    in
-    {
+
+    in {
       homeConfigurations = {
         pepijn = home-manager.lib.homeManagerConfiguration {
-          pkgs = import pkgs { system = "x86_64-linux"; };
+          pkgs = mkPkgs "x86_64-linux";
           extraSpecialArgs = {
             inherit inputs;
             inherit allowed-unfree-packages;
-            inherit mkSymlinkAttrs;
+            mkSymlinkAttrs = mkSymlinkAttrs "x86_64-linux";
           };
-          modules = [
-            ./home_linux.nix
-          ];
+          modules = [ ./home_linux.nix ];
         };
         pepijn_mac = home-manager.lib.homeManagerConfiguration {
-          pkgs = import pkgs { system = "aarch64-darwin"; };
+          pkgs = mkPkgs "aarch64-darwin";
           extraSpecialArgs = {
             inherit inputs;
             inherit allowed-unfree-packages;
+            mkSymlinkAttrs = mkSymlinkAttrs "x86_64-linux";
           };
-          modules = [
-            ./home_mac.nix
-          ];
+          modules = [ ./home_mac.nix ];
         };
       };
       nixosConfigurations = {
@@ -106,7 +106,9 @@
         };
       };
 
-      devShells."x86_64-linux".default = pkgs.mkShell { inherit buildInputs; };
-      devShells."aarch64-darwin".default = pkgs.mkShell { inherit buildInputs; };
+      devShells = forAllSystems (system: {
+        default =
+          (mkPkgs system).mkShell { buildInputs = mkBuildInputs system; };
+      });
     };
 }
