@@ -21,3 +21,7 @@ begin
     set -l post (string split " " (string trim $post_joined))
     set fish_complete_path $prev "~/.local/share/fish/home-manager_generated_completions" $post
 end
+
+if test -f "$XDG_CONFIG_HOME/extra.fish"
+    source "$XDG_CONFIG_HOME/extra.fish"
+end
