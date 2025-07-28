@@ -47,7 +47,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		keymap("n", "<C-h>", function()
 			lsp.buf.signature_help(hover_opts)
 		end, opt("Signature [H]elp"))
-		keymap({ "n", "v" }, "<leader>la", lsp.buf.code_action, opt("Code [A]ction"))
 		keymap("n", "<leader>ldj", function()
 			vim.diagnostic.jump({ count = 1, float = true })
 		end, opt("Next Diagnostic"))

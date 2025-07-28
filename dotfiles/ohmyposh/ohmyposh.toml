@@ -22,7 +22,7 @@ final_space = true
     stype = 'plain'
     foreground = 'p:lavendar'
     background = 'transparent'
-    template = '<b>{{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }}</b><p:red>{{ if .Detached }} detached{{ end }}{{ if .Merge }} merging{{ end }}{{ if .Rebase }} rebasing{{ end }}{{ if .CherryPick }} cherry-pick{{end}}</p:red> '
+    template = '<b>{{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }}</b>{{ if .Detached }} detached{{ end }}{{ if .Merge }} merging{{ end }}{{ if .Rebase }} rebasing{{ end }}{{ if .CherryPick }} cherry-pick{{end}} '
 
     [blocks.segments.properties]
       branch_icon = ''

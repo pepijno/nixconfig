@@ -6,6 +6,7 @@ require("core.lsp")
 vim.opt.packpath:append(vim.fn.stdpath("data") .. "/site")
 
 local keymap = vim.keymap.set
+keymap("n", "<leader>x", ":source ~/.config/nvim/init.lua<Return>", { desc = "Soure init.lua" })
 
 local github = function(name)
 	return "https://github.com/" .. name
@@ -30,6 +31,7 @@ vim.pack.add({
 	github("nvim-treesitter/playground"),
 	github("stevearc/conform.nvim"),
 	github("neovim/nvim-lspconfig"),
+	github("smjonas/inc-rename.nvim"),
 })
 
 local langs_ensure_installed = {
@@ -74,7 +76,7 @@ vim.lsp.enable("clangd")
 vim.lsp.enable("bashls")
 vim.lsp.enable("cssls")
 vim.lsp.enable("html")
-vim.lsp.enable("ts_lua")
+vim.lsp.enable("ts_ls")
 vim.lsp.enable("jsonls")
 vim.lsp.enable("fish_lsp")
 vim.lsp.config("lua_ls", {
@@ -411,3 +413,10 @@ end
 require("conform").setup({
 	formatters_by_ft = formatters_by_ft,
 })
+
+-- IncRename
+------------------------------------------------------------------------------------------------------------------------
+require("inc_rename").setup()
+keymap("n", "<leader>lr", function()
+	return ":IncRename " .. vim.fn.expand("<cword>")
+end, { expr = true, desc = "[R]ename" })
