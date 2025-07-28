@@ -6,3 +6,4 @@ dotfiles/fish/completions/*
 !dotfiles/fish/completions/fisher.fish
 dotfiles/fish/functions/*
 !dotfiles/fish/functions/fisher.fish
+dotfiles/fish/fish_variables
