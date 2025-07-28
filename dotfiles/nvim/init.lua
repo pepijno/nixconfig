@@ -1,9 +1,10 @@
+vim.opt.packpath:append(vim.fn.stdpath("data") .. "/site")
+
 require("core.options")
 require("core.keymaps")
 require("core.autocmds")
 require("core.lsp")
 
-vim.opt.packpath:append(vim.fn.stdpath("data") .. "/site")
 
 local keymap = vim.keymap.set
 keymap("n", "<leader>x", ":source ~/.config/nvim/init.lua<Return>", { desc = "Soure init.lua" })
@@ -18,11 +19,9 @@ vim.pack.add({
 	github("stevearc/oil.nvim"),
 	github("j-hui/fidget.nvim"),
 	github("catppuccin/nvim"),
-	github("nvim-lualine/lualine.nvim"),
 	github("lewis6991/gitsigns.nvim"),
 	github("numToStr/Comment.nvim"),
 	{ src = github("L3MON4D3/LuaSnip"), version = vim.version.range("2.*") },
-	github("folke/lazydev.nvim"),
 	{ src = github("saghen/blink.cmp"), version = vim.version.range("1.*") },
 	github("ibhagwan/fzf-lua"),
 	github("echasnovski/mini.icons"),
@@ -54,6 +53,7 @@ local langs_ensure_installed = {
 	"kotlin",
 	"xml",
 	"toml",
+	"sql",
 }
 local formatters_by_ft = {
 	asm = { "asmfmt" },
@@ -69,6 +69,7 @@ local formatters_by_ft = {
 	json = { "jq" },
 	fish = { "fish_indent" },
 	toml = { "tombi" },
+	xml = { "xmllint" },
 }
 
 local formatters = {
@@ -84,53 +85,33 @@ local formatters = {
 	},
 }
 
-vim.lsp.enable("asm_lsp")
-vim.lsp.enable("nixd")
-vim.lsp.enable("zls")
-vim.lsp.enable("hls")
-vim.lsp.enable("clangd")
-vim.lsp.enable("bashls")
-vim.lsp.enable("cssls")
-vim.lsp.enable("html")
-vim.lsp.enable("ts_ls")
-vim.lsp.enable("jsonls")
-vim.lsp.enable("fish_lsp")
-vim.lsp.enable("angularls")
-vim.lsp.enable("tombi")
 vim.lsp.config("lua_ls", {
-	on_init = function(client)
-		if client.workspace_folders then
-			local path = client.workspace_folders[1].name
-			if
-				path ~= vim.fn.stdpath("config")
-				and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
-			then
-				return
-			end
-		end
-
-		client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
-			runtime = {
-				version = "LuaJIT",
-				path = {
-					"lua/?.lua",
-					"lua/?/init.lua",
-				},
-			},
-			-- Make the server aware of Neovim runtime files
-			workspace = {
-				checkThirdParty = false,
-				library = {
-					vim.env.VIMRUNTIME,
-				},
-			},
-		})
-	end,
 	settings = {
-		Lua = {},
+		Lua = {
+			workspace = {
+				library = vim.api.nvim_get_runtime_file("", true),
+			},
+		},
 	},
 })
-vim.lsp.enable("lua_ls")
+vim.lsp.enable({
+	"lua_ls",
+	"asm_lsp",
+	"nixd",
+	"zls",
+	"hls",
+	"clangd",
+	"bashls",
+	"cssls",
+	"html",
+	"ts_ls",
+	"jsonls",
+	"fish_lsp",
+	"angularls",
+	"tombi",
+	"lemminx",
+	"jdtls",
+})
 
 -- catppuccin
 ------------------------------------------------------------------------------------------------------------------------
@@ -139,40 +120,6 @@ require("catppuccin").setup({
 	transparent_background = true,
 })
 vim.cmd.colorscheme("catppuccin-latte")
-
--- lualine.nvim
-------------------------------------------------------------------------------------------------------------------------
-require("lualine").setup({
-	options = {
-		icons_enabled = false,
-		theme = "catppuccin-latte",
-		component_separators = "|",
-		globalstatus = true,
-		section_separators = { left = "", right = "" },
-	},
-	sections = {
-		lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
-		lualine_b = { "filename", "branch" },
-		lualine_c = {
-			"%=", --[[ add your center components here in place of this comment ]]
-		},
-		lualine_x = {},
-		lualine_y = { "filetype", "progress" },
-		lualine_z = {
-			{ "location", separator = { right = "" }, left_padding = 2 },
-		},
-	},
-	inactive_sections = {
-		lualine_a = { "filename" },
-		lualine_b = {},
-		lualine_c = {},
-		lualine_x = {},
-		lualine_y = {},
-		lualine_z = { "location" },
-	},
-	tabline = {},
-	extensions = {},
-})
 
 -- Which Key
 ------------------------------------------------------------------------------------------------------------------------
@@ -318,9 +265,11 @@ cmp.setup({
 		list = { selection = { preselect = false, auto_insert = false } },
 	},
 	sources = {
-		default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+		default = { "lsp", "path", "snippets", "buffer" },
 		providers = {
-			lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", score_offset = 100 },
+			lsp = {
+				fallbacks = { "buffer" },
+			},
 		},
 	},
 	snippets = { preset = "luasnip" },
@@ -466,3 +415,5 @@ end, { expr = true, desc = "[R]ename" })
 -- nvim-autopairs
 ------------------------------------------------------------------------------------------------------------------------
 require("nvim-autopairs").setup({})
+
+require("core.statusline")
