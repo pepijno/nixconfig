@@ -5,6 +5,7 @@
     ./modules/fonts.nix
 
     ./modules/applications/jj.nix
+    ./modules/applications/git.nix
     ./modules/applications/alacritty.nix
     ./modules/applications/tmux.nix
 
@@ -22,11 +23,28 @@
     fzf
     ripgrep
     fd
-    screen
     wget
 
+    asm-lsp
+    asmfmt
+    zig
+    zls
+    ormolu
+    haskell-language-server
+    clang-tools
+    bash-language-server
+    beautysh
+    stylua
     nixd
     nixfmt
+    fish-lsp
+    lua-language-server
+    jq
+    lemminx
+    libxml2 # xmllint
+    jdt-language-server
+
+    librewolf
   ];
 
   colorScheme = inputs.nix-colors.colorSchemes.catppuccin-latte;

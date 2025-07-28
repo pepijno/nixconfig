@@ -1,3 +1,7 @@
+[core]
+        autocrlf = False
+        fsmonitor = true
+        untrackedCache = true
 [alias]
         a = "add -p"
         ci = "commit"
@@ -8,8 +12,26 @@
         sl = "stash list"
         sp = "stash pop"
         st = "status"
+[push]
+        autoSetupRemote = true
+[pull]
+        rebase = true
+[rerere]
+        enabled = true
+[init]
+        defaultbranch = master
+[index]
+        skipHash = true
+        version = 4
+[transfer]
+        credentialsInUrl = warn
+[feature]
+        experimental = false
 
 [user]
         email = "pepijn.overbeeke@gmail.com"
         name = "Pepijn Overbeeke"
+
+[includeIf "gitdir:~/sandboxes/"]
+        path = ~/.config/git/config-work
 

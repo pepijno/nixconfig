@@ -1,4 +1,4 @@
-draw_bold_text_with_bright_colors = false
+[general]
 live_config_reload = true
 
 [bell]
@@ -58,10 +58,6 @@ mods = "Shift"
 chars = "\u001B[13;5u"
 key = "Return"
 mods = "Control"
-
-[offset]
-x = 0.0
-y = 0.0
 
 [scrolling]
 history = 10000

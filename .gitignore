@@ -1,9 +1,12 @@
-tags
-home.nix
 dotfiles/tmux/plugins/*
 !dotfiles/tmux/plugins/tpm
+
+dotfiles/fish/conf.d/extra.fish
 dotfiles/fish/completions/*
 !dotfiles/fish/completions/fisher.fish
 dotfiles/fish/functions/*
 !dotfiles/fish/functions/fisher.fish
 dotfiles/fish/fish_variables
+
+dotfiles/git/config-work
+dotfiles/jj/conf.d/

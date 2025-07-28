@@ -1,11 +1,11 @@
 { pkgs, config, mkSymlinkAttrs, ... }:
 
 {
-  home.packages = with pkgs; [ git ];
+  home.packages = if pkgs.system == "aarch64-darwin" then [] else with pkgs; [ git ];
 
   xdg.configFile = mkSymlinkAttrs config {
     "git" = {
-      source = if pkgs.system == "aarch64-darwin" then ../../dotfiles/git_mac else ../../dotfiles/git;
+      source = ../../dotfiles/git;
       outOfStoreSymlink = true;
       recursive = false;
     };

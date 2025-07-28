@@ -1,5 +1,9 @@
 "$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json"
 
+[working-copy]
+# No EOL conversion. Similar to core.autocrlf = false.
+eol-conversion = "none"
+
 [user]
 email = "pepijn.overbeeke@gmail.com"
 name = "Pepijn Overbeeke"
@@ -11,8 +15,16 @@ push-new-bookmarks = true
 paginate = "never"
 default-command = "log"
 
+[colors]
+rest = "white"
+
 [aliases]
 tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
+push-bookmark = ["git", "push", "-r", "heads(::@- & bookmarks())"]
+
+[revset-aliases]
+"downstream(x,y)" = "(x::y) & y"
+log_default = "present(@) | ancestors(immutable_heads().., 2) | present(trunk())"
 
 [[--scope]]
 --when.commands = ["diff"]

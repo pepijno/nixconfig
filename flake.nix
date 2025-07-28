@@ -93,7 +93,7 @@
           extraSpecialArgs = {
             inherit inputs;
             inherit allowed-unfree-packages;
-            mkSymlinkAttrs = mkSymlinkAttrs "x86_64-linux";
+            mkSymlinkAttrs = mkSymlinkAttrs "aarch64-darwin";
           };
           modules = [ ./home_mac.nix ];
         };
