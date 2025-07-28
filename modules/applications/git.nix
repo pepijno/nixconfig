@@ -5,7 +5,7 @@
 
   xdg.configFile = mkSymlinkAttrs config {
     "git" = {
-      source = ../../dotfiles/git;
+      source = if pkgs.system == "aarch64-darwin" then ../../dotfiles/git_mac else ../../dotfiles/git;
       outOfStoreSymlink = true;
       recursive = false;
     };

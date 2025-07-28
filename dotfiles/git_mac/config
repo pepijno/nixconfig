@@ -1,0 +1,37 @@
+[core]
+        autocrlf = False
+        fsmonitor = true
+        untrackedCache = true
+[alias]
+        pf = "!sh -c 'git pull --rebase; git fetch --tags --all --force'"
+        p = pull --rebase
+        st = status
+        ci = commit
+        co = checkout
+        s = stash --include-untracked
+        sp = stash pop
+        lol = "log --graph --abbrev-commit --decorate --first-parent --date-order --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'"
+        lola = "log --graph --decorate --abbrev-commit --all --date-order --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'"
+        sw = "!f() { git checkout $(git for-each-ref --format=\"%(refname:short)\" refs/heads refs/tags | grep -v \"refs/heads/remote/origin\" | fzf); }; f"
+        swa = "!f() { git checkout $(git branch -a | fzf | sed \"s/remotes\\/origin\\///\" | sed \"s/.* //\"); }; f"
+        team = "!f() { git co feature/espresso/TEAM; }; f"
+        u = "!sh -c 'git co master && git pf && git co - && git co green-compile && git co -'"
+[user]
+        name = Pepijn Overbeeke
+        email = Pepijn.Overbeeke@triodos.com
+[push]
+        autoSetupRemote = true
+[pull]
+        rebase = true
+[rerere]
+        enabled = true
+[init]
+        defaultbranch = master
+[index]
+        skipHash = true
+        version = 4
+[transfer]
+        credentialsInUrl = warn
+[feature]
+        experimental = false
+

@@ -5,7 +5,7 @@
 
   xdg.configFile = mkSymlinkAttrs config {
     "jj" = {
-      source = ../../dotfiles/jj;
+      source = if pkgs.system == "aarch64-darwin" then ../../dotfiles/jj_mac else ../../dotfiles/jj;
       outOfStoreSymlink = true;
       recursive = false;
     };

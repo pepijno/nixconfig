@@ -32,6 +32,7 @@ vim.pack.add({
 	github("stevearc/conform.nvim"),
 	github("neovim/nvim-lspconfig"),
 	github("smjonas/inc-rename.nvim"),
+	github("windwp/nvim-autopairs"),
 })
 
 local langs_ensure_installed = {
@@ -52,6 +53,7 @@ local langs_ensure_installed = {
 	"java",
 	"kotlin",
 	"xml",
+	"toml",
 }
 local formatters_by_ft = {
 	asm = { "asmfmt" },
@@ -66,6 +68,20 @@ local formatters_by_ft = {
 	typescript = { "prettier" },
 	json = { "jq" },
 	fish = { "fish_indent" },
+	toml = { "tombi" },
+}
+
+local formatters = {
+	prettier = {
+		printWidth = 100,
+		useTabs = false,
+		semi = true,
+		singleQuote = true,
+		trailingComma = "all",
+		arrowParens = "always",
+		htmlWhitespaceSensitivity = "strict",
+		bracketSpacing = true,
+	},
 }
 
 vim.lsp.enable("asm_lsp")
@@ -79,6 +95,8 @@ vim.lsp.enable("html")
 vim.lsp.enable("ts_ls")
 vim.lsp.enable("jsonls")
 vim.lsp.enable("fish_lsp")
+vim.lsp.enable("angularls")
+vim.lsp.enable("tombi")
 vim.lsp.config("lua_ls", {
 	on_init = function(client)
 		if client.workspace_folders then
@@ -412,6 +430,7 @@ end
 ------------------------------------------------------------------------------------------------------------------------
 require("conform").setup({
 	formatters_by_ft = formatters_by_ft,
+	formatters = formatters,
 })
 
 -- IncRename
@@ -420,3 +439,7 @@ require("inc_rename").setup()
 keymap("n", "<leader>lr", function()
 	return ":IncRename " .. vim.fn.expand("<cword>")
 end, { expr = true, desc = "[R]ename" })
+
+-- nvim-autopairs
+------------------------------------------------------------------------------------------------------------------------
+require("nvim-autopairs").setup({})
