@@ -11,6 +11,9 @@ default-command = "log"
 [colors]
 rest = "white"
 
+[aliases]
+tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
+
 [[--scope]]
 --when.commands = ["diff"]
 ui.paginate = "auto"
