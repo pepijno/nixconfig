@@ -4,12 +4,12 @@
 email = "pepijn.overbeeke@gmail.com"
 name = "Pepijn Overbeeke"
 
+[git]
+push-new-bookmarks = true
+
 [ui]
 paginate = "never"
 default-command = "log"
-
-[colors]
-rest = "white"
 
 [aliases]
 tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]

@@ -33,6 +33,7 @@ vim.pack.add({
 	github("neovim/nvim-lspconfig"),
 	github("smjonas/inc-rename.nvim"),
 	github("windwp/nvim-autopairs"),
+	github("code-biscuits/nvim-biscuits"),
 })
 
 local langs_ensure_installed = {
@@ -443,3 +444,7 @@ end, { expr = true, desc = "[R]ename" })
 -- nvim-autopairs
 ------------------------------------------------------------------------------------------------------------------------
 require("nvim-autopairs").setup({})
+
+-- nvim-biscuits
+------------------------------------------------------------------------------------------------------------------------
+require('nvim-biscuits').setup({})
