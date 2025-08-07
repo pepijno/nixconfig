@@ -33,7 +33,6 @@ vim.pack.add({
 	github("neovim/nvim-lspconfig"),
 	github("smjonas/inc-rename.nvim"),
 	github("windwp/nvim-autopairs"),
-	github("code-biscuits/nvim-biscuits"),
 })
 
 local langs_ensure_installed = {
@@ -148,8 +147,31 @@ require("lualine").setup({
 		icons_enabled = false,
 		theme = "catppuccin-latte",
 		component_separators = "|",
-		section_separators = "",
+		globalstatus = true,
+		section_separators = { left = "", right = "" },
 	},
+	sections = {
+		lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
+		lualine_b = { "filename", "branch" },
+		lualine_c = {
+			"%=", --[[ add your center components here in place of this comment ]]
+		},
+		lualine_x = {},
+		lualine_y = { "filetype", "progress" },
+		lualine_z = {
+			{ "location", separator = { right = "" }, left_padding = 2 },
+		},
+	},
+	inactive_sections = {
+		lualine_a = { "filename" },
+		lualine_b = {},
+		lualine_c = {},
+		lualine_x = {},
+		lualine_y = {},
+		lualine_z = { "location" },
+	},
+	tabline = {},
+	extensions = {},
 })
 
 -- Which Key
@@ -327,7 +349,7 @@ require("fzf-lua").setup({
 			border = "single",
 			horizontal = "right:50%",
 		},
-		fullscreen = true,
+		fullscreen = false,
 	},
 	fzf_colors = true,
 	keymap = {
@@ -444,7 +466,3 @@ end, { expr = true, desc = "[R]ename" })
 -- nvim-autopairs
 ------------------------------------------------------------------------------------------------------------------------
 require("nvim-autopairs").setup({})
-
--- nvim-biscuits
-------------------------------------------------------------------------------------------------------------------------
-require('nvim-biscuits').setup({})

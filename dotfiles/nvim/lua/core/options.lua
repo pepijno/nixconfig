@@ -86,6 +86,14 @@ vim.g.c_syntax_for_h = true
 -- Set the border of all windows
 vim.opt.winborder = "single"
 
+-- Enable system clipboard access
+vim.opt.clipboard = "unnamedplus"
+
+-- Have global status line, even for splits
+vim.opt.laststatus = 3
+
+vim.opt.cmdheight = 2
+
 -- Disable native vim plugins
 vim.g.loaded_2html_plugin = false
 vim.g.loaded_getscript = false
