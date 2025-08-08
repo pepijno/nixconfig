@@ -7,15 +7,6 @@ require("core.lsp")
 
 local keymap = vim.keymap.set
 keymap("n", "<leader>x", ":source ~/.config/nvim/init.lua<Return>", { desc = "Soure init.lua" })
-keymap("n", "-", "<cmd>Explore %:p:h<Return>", { desc = "Open netrw" })
-
-vim.api.nvim_create_autocmd("VimEnter", {
-	callback = function()
-		if vim.fn.argv(0) == "" then
-			vim.cmd("Explore %:p:h")
-		end
-	end,
-})
 
 local github = function(name)
 	return "https://github.com/" .. name
@@ -26,8 +17,8 @@ vim.pack.add({
 	github("tpope/vim-sleuth"),
 	github("j-hui/fidget.nvim"),
 	github("catppuccin/nvim"),
+	github("stevearc/oil.nvim"),
 	github("lewis6991/gitsigns.nvim"),
-	{ src = github("L3MON4D3/LuaSnip"), version = vim.version.range("2.*") },
 	{ src = github("saghen/blink.cmp"), version = vim.version.range("1.*") },
 	github("ibhagwan/fzf-lua"),
 	github("echasnovski/mini.icons"),
@@ -59,6 +50,7 @@ local langs_ensure_installed = {
 	"xml",
 	"toml",
 	"sql",
+	"cpp",
 }
 local formatters_by_ft = {
 	asm = { "asmfmt" },
@@ -157,6 +149,12 @@ require("fidget").setup({
 	},
 })
 
+-- Oil.nvim
+------------------------------------------------------------------------------------------------------------------------
+require("oil").setup()
+
+keymap("n", "-", "<cmd>Oil<Return>", { desc = "Open Oil" })
+
 -- gitsigns.nvim
 ------------------------------------------------------------------------------------------------------------------------
 require("gitsigns").setup({
@@ -171,45 +169,6 @@ require("gitsigns").setup({
 	attach_to_untracked = true,
 })
 
--- luasnip
-------------------------------------------------------------------------------------------------------------------------
-local ls = require("luasnip")
-local types = require("luasnip.util.types")
-ls.config.set_config({
-	history = true,
-	updateevents = "TextChanged,TextChangedI",
-	override_builtin = true,
-	exp_opts = {
-		[types.choiceNode] = {
-			active = {
-				virt_text = { { "<-", "Error" } },
-			},
-		},
-	},
-})
-
-for _, ft_path in ipairs(vim.api.nvim_get_runtime_file("lua/custom/snippets/*.lua", true)) do
-	loadfile(ft_path)()
-	vim.print("loaded snips " .. ft_path)
-end
-
-keymap({ "i", "s" }, "<C-k>", function()
-	vim.print(ls.expand_or_jumpable())
-	if ls.expand_or_jumpable() then
-		ls.expand_or_jump()
-	end
-end, { desc = "Expand or jump to next item" })
-keymap({ "i", "s" }, "<C-j>", function()
-	if ls.jumpable(-1) then
-		ls.jump(-1)
-	end
-end, { silent = true, desc = "Jump to previous item" })
-keymap({ "i", "s" }, "<C-l>", function()
-	if ls.choice_active() then
-		ls.change_choice(1)
-	end
-end, { silent = true, desc = "Change choice" })
-
 -- blink.cmp
 ------------------------------------------------------------------------------------------------------------------------
 local cmp = require("blink.cmp")
@@ -218,21 +177,6 @@ cmp.setup({
 		preset = "none",
 		["<C-n>"] = { "select_next", "fallback_to_mappings" },
 		["<C-p>"] = { "select_prev", "fallback_to_mappings" },
-		["<C-y>"] = {
-			function(cmp)
-				local luasnip = require("luasnip")
-				if luasnip.expandable() then
-					cmp.cancel()
-					vim.schedule(function()
-						luasnip.expand()
-					end) -- wait for blink to close
-					return true
-				end
-			end,
-			"select_and_accept",
-		},
-		-- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
-		--    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
 	},
 	appearance = {
 		nerd_font_variant = "mono",
@@ -253,22 +197,15 @@ cmp.setup({
 		list = { selection = { preselect = false, auto_insert = false } },
 	},
 	sources = {
-		default = { "lsp", "path", "snippets", "buffer" },
+		default = { "lsp", "path", "buffer" },
 		providers = {
 			lsp = {
 				fallbacks = { "buffer" },
 			},
 		},
 	},
-	snippets = { preset = "luasnip" },
 	fuzzy = { implementation = "lua" },
 	signature = { enabled = true },
-})
-
-vim.lsp.config("*", {
-	capabilities = cmp.get_lsp_capabilities({
-		textDocument = { completion = { completionItem = { snippetSupport = false } } },
-	}),
 })
 
 -- fzf-lua
@@ -307,6 +244,7 @@ keymap("n", "<leader>fr", fzf_lua("live_grep_native"), { desc = "[R]ipgrep" })
 keymap("v", "<leader>fR", fzf_lua("grep_visual"), { desc = "[R]ipgrep visual" })
 keymap("n", "<leader>fR", fzf_lua("grep_cword"), { desc = "[R]ipgrep word" })
 keymap("n", "<leader>fk", fzf_lua("keymaps"), { desc = "[K]eymaps" })
+keymap("n", "<leader>fc", fzf_lua("resume"), { desc = "[C]ontinue" })
 
 -- treesitter
 ------------------------------------------------------------------------------------------------------------------------
@@ -399,3 +337,27 @@ require("nvim-autopairs").setup({})
 
 require("core.statusline").setup()
 require("core.indentscope").setup()
+
+local function switch_case()
+	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+	local word = vim.fn.expand("<cword>")
+	local word_start = vim.fn.matchstrpos(vim.fn.getline("."), "\\k*\\%" .. (col + 1) .. "c\\k*")[2]
+
+	-- Detect camelCase
+	if word:find("[a-z][A-Z]") then
+		-- Convert camelCase to snake_case
+		local snake_case_word = word:gsub("([a-z])([A-Z])", "%1_%2"):lower()
+		vim.api.nvim_buf_set_text(0, line - 1, word_start, line - 1, word_start + #word, { snake_case_word })
+	-- Detect snake_case
+	elseif word:find("_[a-z]") then
+		-- Convert snake_case to camelCase
+		local camel_case_word = word:gsub("(_)([a-z])", function(_, l)
+			return l:upper()
+		end)
+		vim.api.nvim_buf_set_text(0, line - 1, word_start, line - 1, word_start + #word, { camel_case_word })
+	else
+		print("Not a snake_case or camelCase word")
+	end
+end
+
+keymap("n", "<leader>ss", switch_case, { desc = "Switch case" })
