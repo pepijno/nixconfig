@@ -19,6 +19,7 @@
     interfaces.enp0s31f6.useDHCP = true;
     iproute2.enable = true;
     wireguard.enable = true;
+    firewall.allowedTCPPorts = [ 22 ];
   };
 
   time.timeZone = "Europe/Amsterdam";

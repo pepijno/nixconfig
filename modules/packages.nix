@@ -38,5 +38,7 @@ in {
 
     # betterlockscreen
     audacity
+
+    emacs
   ];
 }
