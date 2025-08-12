@@ -5,7 +5,6 @@ require("core.keymaps")
 require("core.autocmds")
 require("core.lsp")
 
-
 local keymap = vim.keymap.set
 keymap("n", "<leader>x", ":source ~/.config/nvim/init.lua<Return>", { desc = "Soure init.lua" })
 
@@ -30,7 +29,6 @@ vim.pack.add({
 	github("nvim-treesitter/playground"),
 	github("stevearc/conform.nvim"),
 	github("neovim/nvim-lspconfig"),
-	github("smjonas/inc-rename.nvim"),
 	github("windwp/nvim-autopairs"),
 })
 
@@ -405,15 +403,9 @@ require("conform").setup({
 	formatters = formatters,
 })
 
--- IncRename
-------------------------------------------------------------------------------------------------------------------------
-require("inc_rename").setup()
-keymap("n", "<leader>lr", function()
-	return ":IncRename " .. vim.fn.expand("<cword>")
-end, { expr = true, desc = "[R]ename" })
-
 -- nvim-autopairs
 ------------------------------------------------------------------------------------------------------------------------
 require("nvim-autopairs").setup({})
 
-require("core.statusline")
+require("core.statusline").setup()
+require("core.indentscope").setup()

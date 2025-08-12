@@ -1,27 +1,27 @@
 local latte = require("catppuccin.palettes").get_palette("latte")
 
 local section_colors = {
-	NORMAL = {
+	normal = {
 		a = { bg = latte.blue, fg = latte.base, gui = "bold" },
 		b = { bg = latte.surface0, fg = latte.blue },
 		c = { bg = latte.base, fg = latte.blue },
 	},
-	INSERT = {
+	insert = {
 		a = { bg = latte.green, fg = latte.base, gui = "bold" },
 		b = { bg = latte.surface0, fg = latte.green },
 		c = { bg = latte.base, fg = latte.green },
 	},
-	REPLACE = {
+	replace = {
 		a = { bg = latte.red, fg = latte.base, gui = "bold" },
 		b = { bg = latte.surface0, fg = latte.red },
 		c = { bg = latte.base, fg = latte.red },
 	},
-	VISUAL = {
+	visual = {
 		a = { bg = latte.mauve, fg = latte.base, gui = "bold" },
 		b = { bg = latte.surface0, fg = latte.mauve },
 		c = { bg = latte.base, fg = latte.mauve },
 	},
-	COMMAND = {
+	command = {
 		a = { bg = latte.yellow, fg = latte.base, gui = "bold" },
 		b = { bg = latte.surface0, fg = latte.yellow },
 		c = { bg = latte.base, fg = latte.yellow },
@@ -48,8 +48,6 @@ local function create_highlight_groups()
 		end
 	end
 end
-
-create_highlight_groups()
 
 local function highlight_group(mode, section)
 	return string.format("%%#statusline_%s_%s#", mode, section)
@@ -94,6 +92,26 @@ local modes = {
 	["t"] = "TERMINAL",
 }
 
+local mode_colors = {
+	["NORMAL"] = "normal",
+	["O-PENDING"] = "normal",
+	["VISUAL"] = "visual",
+	["V-LINE"] = "visual",
+	["V-BLOCK"] = "visual",
+	["SELECT"] = "visual",
+	["S-LINE"] = "visual",
+	["S-BLOCK"] = "visual",
+	["INSERT"] = "insert",
+	["REPLACE"] = "replace",
+	["V-REPLACE"] = "replace",
+	["COMMAND"] = "command",
+	["EX"] = "command",
+	["MORE"] = "command",
+	["CONFIRM"] = "command",
+	["SHELL"] = "command",
+	["TERMINAL"] = "command",
+}
+
 local function get_mode()
 	local mode_code = vim.api.nvim_get_mode().mode
 	if modes[mode_code] == nil then
@@ -124,7 +142,7 @@ end
 
 local function get_filetype()
 	local ft = vim.bo.filetype or ""
-	return ft:gsub('%%', '%%%%')
+	return ft:gsub("%%", "%%%%")
 end
 
 local function get_progress()
@@ -160,38 +178,44 @@ local function update_statusline()
 		filetype = string.format(" %s |", filetype)
 	end
 
+	local mode_color = mode_colors[mode];
+
 	local parts = {
-		highlight_group(mode, "c"),
+		highlight_group(mode_color, "c"),
 		"",
-		highlight_group(mode, "a"),
+		highlight_group(mode_color, "a"),
 		surround_spaces(mode),
-		highlight_group(mode, "b"),
+		highlight_group(mode_color, "b"),
 		surround_spaces(filename),
 		highlight_group("background", "a"),
 		"",
 		"%*%=",
 		highlight_group("background", "a"),
 		"",
-		highlight_group(mode, "b"),
+		highlight_group(mode_color, "b"),
 		filetype,
 		surround_spaces(progress),
-		highlight_group(mode, "a"),
+		highlight_group(mode_color, "a"),
 		surround_spaces(location),
-		highlight_group(mode, "c"),
+		highlight_group(mode_color, "c"),
 		"",
 	}
 	return table.concat(parts, "")
 end
 
-vim.opt.showmode = false
-vim.opt.statusline = [[%{%luaeval('require("core.statusline").update_statusline()')%}]]
-vim.cmd([[
-  augroup statusline
-    autocmd!
-    autocmd ModeChanged,WinEnter,BufEnter * setlocal statusline=%{%luaeval('require(\"core.statusline\").update_statusline()')%}
-  augroup END
-  ]])
+local function setup()
+	create_highlight_groups()
+	vim.opt.showmode = false
+	vim.opt.statusline = [[%{%luaeval('require("core.statusline").update_statusline()')%}]]
+	vim.cmd([[
+augroup statusline
+autocmd!
+autocmd ModeChanged,WinEnter,BufEnter * setlocal statusline=%{%luaeval('require(\"core.statusline\").update_statusline()')%}
+augroup END
+]])
+end
 
 return {
+	setup = setup,
 	update_statusline = update_statusline,
 }
