@@ -19,7 +19,6 @@ vim.pack.add({
 	github("j-hui/fidget.nvim"),
 	github("catppuccin/nvim"),
 	github("lewis6991/gitsigns.nvim"),
-	github("numToStr/Comment.nvim"),
 	{ src = github("L3MON4D3/LuaSnip"), version = vim.version.range("2.*") },
 	{ src = github("saghen/blink.cmp"), version = vim.version.range("1.*") },
 	github("ibhagwan/fzf-lua"),
@@ -139,17 +138,6 @@ wk.add({
 keymap("n", "<leader>?", function()
 	wk.show({ global = false })
 end, { desc = "Buffer Local Keymaps (which-key)" })
-
--- Comment.nvim
-------------------------------------------------------------------------------------------------------------------------
-local comment = require("Comment")
-local ft = require("Comment.ft")
-
-local commentstr = "<!--%s-->"
-
-ft.set("angular", { commentstr, commentstr })
-
-comment.setup()
 
 -- oil.nvim
 ------------------------------------------------------------------------------------------------------------------------
@@ -318,7 +306,7 @@ keymap("v", "<leader>fR", fzf_lua("grep_visual"), { desc = "[R]ipgrep visual" })
 keymap("n", "<leader>fR", fzf_lua("grep_cword"), { desc = "[R]ipgrep word" })
 keymap("n", "<leader>fk", fzf_lua("keymaps"), { desc = "[K]eymaps" })
 
--- fzf-lua
+-- treesitter
 ------------------------------------------------------------------------------------------------------------------------
 local current_installed = require("nvim-treesitter.info").installed_parsers()
 local madatory_installed = { "c", "lua", "markdown", "markdown_inline", "query", "vim", "vimdoc" }
