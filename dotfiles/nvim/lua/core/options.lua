@@ -92,7 +92,17 @@ vim.opt.winborder = "single"
 -- Have global status line, even for splits
 vim.opt.laststatus = 3
 
+-- Set two lines for cmd
 vim.opt.cmdheight = 2
+
+-- Avoid files move error
+vim.g.netrw_keepdir = false
+-- Don't show netrw banner
+vim.g.netrw_banner = false
+-- Don't show './' and '../' in netrw
+vim.g.netrw_list_hide = "\\(^\\|\\s\\s\\)\\zs\\.\\S\\+"
+-- Copy recursively in netrw
+vim.g.netrw_localcopydircmd = "cp -r"
 
 -- Disable native vim plugins
 vim.g.loaded_2html_plugin = false
@@ -100,9 +110,6 @@ vim.g.loaded_getscript = false
 vim.g.loaded_getscriptPlugin = false
 vim.g.loaded_gzip = false
 vim.g.loaded_logipat = false
-vim.g.loaded_netrwFileHandlers = false
-vim.g.loaded_netrwPlugin = false
-vim.g.loaded_netrwSettngs = false
 vim.g.loaded_remote_plugins = false
 vim.g.loaded_tar = false
 vim.g.loaded_tarPlugin = false

@@ -1,11 +1,10 @@
 local map = vim.keymap.set
-local g = vim.g
 
 local opts = { noremap = true, silent = true }
 
 map("", "<Space>", "<Nop>", opts)
-g.mapleader = " "
-g.maplocalleader = " "
+vim.g.mapleader = vim.keycode("<Space>")
+vim.g.maplocalleader = vim.keycode("<Space>")
 
 -- undo breakpoints
 map("i", ",", ",<C-g>u", opts)

@@ -11,8 +11,7 @@
     };
 
     nix-colors.url = "github:misterio77/nix-colors";
-    neovim-nightly-overlay.url =
-      "github:nix-community/neovim-nightly-overlay/5c2f79eef3dbe9522b6e79fb7f1d99dd593e478a";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay/";
     wrapper-manager.url = "github:viperML/wrapper-manager";
   };
 

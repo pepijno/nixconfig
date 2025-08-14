@@ -7,6 +7,15 @@ require("core.lsp")
 
 local keymap = vim.keymap.set
 keymap("n", "<leader>x", ":source ~/.config/nvim/init.lua<Return>", { desc = "Soure init.lua" })
+keymap("n", "-", "<cmd>Explore %:p:h<Return>", { desc = "Open netrw" })
+
+vim.api.nvim_create_autocmd("VimEnter", {
+	callback = function()
+		if vim.fn.argv(0) == "" then
+			vim.cmd("Explore %:p:h")
+		end
+	end,
+})
 
 local github = function(name)
 	return "https://github.com/" .. name
@@ -15,7 +24,6 @@ end
 vim.pack.add({
 	github("folke/which-key.nvim"),
 	github("tpope/vim-sleuth"),
-	github("stevearc/oil.nvim"),
 	github("j-hui/fidget.nvim"),
 	github("catppuccin/nvim"),
 	github("lewis6991/gitsigns.nvim"),
@@ -138,12 +146,6 @@ wk.add({
 keymap("n", "<leader>?", function()
 	wk.show({ global = false })
 end, { desc = "Buffer Local Keymaps (which-key)" })
-
--- oil.nvim
-------------------------------------------------------------------------------------------------------------------------
-require("oil").setup({})
-
-keymap("n", "-", "<cmd>Oil<Return>", { desc = "Open Oil" })
 
 -- fidget
 ------------------------------------------------------------------------------------------------------------------------
