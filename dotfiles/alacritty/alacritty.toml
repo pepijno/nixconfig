@@ -5,32 +5,42 @@ live_config_reload = true
 duration = 0
 
 [colors.bright]
-black = "#eff1f5"
-blue = "#1e66f5"
-cyan = "#179299"
-green = "#40a02b"
-magenta = "#8839ef"
+black = "#6c6f85"
 red = "#d20f39"
-white = "#bcc0cc"
+green = "#40a02b"
 yellow = "#df8e1d"
+blue = "#1e66f5"
+magenta = "#ea76cb"
+cyan = "#179299"
+white = "#bcc0cc"
 
 [colors.normal]
-black = "#eff1f5"
-blue = "#1e66f5"
-cyan = "#179299"
-green = "#40a02b"
-magenta = "#8839ef"
+black = "#5c5f77"
 red = "#d20f39"
-white = "#acb0be"
+green = "#40a02b"
 yellow = "#df8e1d"
+blue = "#1e66f5"
+magenta = "#ea76cb"
+cyan = "#179299"
+white = "#acb0be"
 
 [colors.primary]
 background = "#eff1f5"
 foreground = "#4c4f69"
 
+[colors.selection]
+background = "#dc8a78"
+foreground = "#eff1f5"
+
+[colors.cursor]
+cursor = "#dc8a78"
+text = "#eff1f5"
+
 [cursor]
-style = "Block"
 unfocused_hollow = true
+
+[cursor.style]
+shape = "Block"
 
 [env]
 TERM = "xterm-256color"

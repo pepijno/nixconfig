@@ -29,7 +29,7 @@
         experimental = false
 
 [user]
-        email = "pepijn.overbeeke@gmail.com"
+        email = "pepijn.overbeeke@proton.me"
         name = "Pepijn Overbeeke"
 
 [includeIf "gitdir:~/sandboxes/"]

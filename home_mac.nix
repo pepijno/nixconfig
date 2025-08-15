@@ -43,8 +43,13 @@
     lemminx
     libxml2 # xmllint
     jdt-language-server
+    fennel-ls
+    fnlfmt
+
+    direnv
 
     librewolf
+    emacs
   ];
 
   colorScheme = inputs.nix-colors.colorSchemes.catppuccin-latte;
