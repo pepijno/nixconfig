@@ -18,6 +18,7 @@ set -gx XDG_DATA_HOME "$HOME/.local/share"
 set -gx XDG_STATE_HOME "$HOME/.local/state"
 
 oh-my-posh init fish --config $HOME/.config/ohmyposh.toml | source
+direnv hook fish | source
 
 begin
     set -l joined (string join " " $fish_complete_path)

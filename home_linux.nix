@@ -22,6 +22,8 @@
 
     ./modules/services/bluetooth.nix
 
+    ./modules/services/direnv.nix
+
     inputs.nix-colors.homeManagerModules.default
   ];
 
