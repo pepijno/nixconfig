@@ -177,6 +177,7 @@ cmp.setup({
 		preset = "none",
 		["<C-n>"] = { "select_next", "fallback_to_mappings" },
 		["<C-p>"] = { "select_prev", "fallback_to_mappings" },
+		["<C-y>"] = { "select_and_accept", "fallback_to_mappings" },
 	},
 	appearance = {
 		nerd_font_variant = "mono",

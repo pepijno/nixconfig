@@ -44,7 +44,7 @@
               };
             };
           };
-        in import nixpkgs {
+        in import nixpkgs-unstable {
           inherit system;
           config = {
             allowUnfree = true;
@@ -58,13 +58,27 @@
         let pkgs = mkPkgs system;
         in with pkgs;
         [ nixd nixfmt-classic lua-language-server stylua fish-lsp ]
-        ++ nixpkgs.lib.optionals (system == "x86_64-linux") [
+        ++ nixpkgs-unstable.lib.optionals (system == "x86_64-linux") [
           # X11 dependencies only for Linux
+          # dwm
           xorg.libX11
           xorg.libXinerama
           xorg.libXft
           gcc
           gnumake
+          # dwl
+          installShellFiles
+          pkg-config
+          wayland-scanner
+          libinput
+          xorg.libxcb
+          libxkbcommon
+          pixman
+          wayland
+          wayland-protocols
+          wlroots_0_18
+          xorg.xcbutilwm
+          xwayland
         ];
 
       mkSymlinkAttrs = system: config:

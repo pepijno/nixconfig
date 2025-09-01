@@ -1,0 +1,17 @@
+00:00:00.000 [INFO] [libseat] [libseat/backend/seatd.c:64] Could not connect to socket /run/seatd.sock: No such file or directory
+00:00:00.000 [INFO] [libseat] [libseat/libseat.c:76] Backend 'seatd' failed to open seat, skipping
+00:00:00.001 [INFO] [libseat] [libseat/libseat.c:73] Seat opened with backend 'logind'
+00:00:00.001 [INFO] [backend/session/session.c:108] Successfully loaded libseat session
+00:00:00.003 [INFO] [backend/backend.c:256] Found 1 GPUs
+00:00:00.003 [INFO] [backend/drm/backend.c:185] Initializing DRM backend for /dev/dri/card1 (amdgpu)
+00:00:00.003 [DEBUG] [backend/drm/drm.c:111] Using atomic DRM interface
+00:00:00.003 [DEBUG] [backend/drm/drm.c:131] ADDFB2 modifiers unsupported
+00:00:00.003 [INFO] [backend/drm/drm.c:310] Found 6 DRM CRTCs
+00:00:00.015 [INFO] [backend/drm/drm.c:268] Found 12 DRM planes
+00:00:00.030 [INFO] [render/egl.c:205] Supported EGL client extensions: 
+00:00:00.030 [ERROR] [render/egl.c:208] EGL_EXT_platform_base not supported
+00:00:00.030 [ERROR] [render/egl.c:523] Failed to create EGL context
+00:00:00.030 [ERROR] [render/gles2/renderer.c:499] Could not initialize EGL
+00:00:00.030 [DEBUG] [render/wlr_renderer.c:192] Failed to create a GLES2 renderer. Skipping!
+00:00:00.030 [ERROR] [render/wlr_renderer.c:272] Could not initialize renderer
+couldn't create renderer

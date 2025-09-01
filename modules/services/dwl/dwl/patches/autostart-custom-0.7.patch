@@ -1,0 +1,205 @@
+diff --git a/modules/services/dwl/dwl/dwl.c b/modules/services/dwl/dwl/dwl.c
+index 8d8ab28..132852d 100644
+--- a/modules/services/dwl/dwl/dwl.c
++++ b/modules/services/dwl/dwl/dwl.c
+@@ -8,6 +8,7 @@
+ #include <signal.h>
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <sys/stat.h>
+ #include <sys/wait.h>
+ #include <time.h>
+ #include <unistd.h>
+@@ -322,6 +323,7 @@ static void requeststartdrag(struct wl_listener *listener, void *data);
+ static void requestmonstate(struct wl_listener *listener, void *data);
+ static void resize(Client *c, struct wlr_box geo, int interact);
+ static void run(char *startup_cmd);
++static void runautostart(void);
+ static void setcursor(struct wl_listener *listener, void *data);
+ static void setcursorshape(struct wl_listener *listener, void *data);
+ static void setfloating(Client *c, int floating);
+@@ -357,7 +359,13 @@ static void xytonode(double x, double y, struct wlr_surface **psurface,
+ static void zoom(const Arg *arg);
+ 
+ /* variables */
++static const char autostartblocksh[] = "autostart_blocking.sh";
++static const char autostartsh[] = "autostart.sh";
++static const char autocloseblocksh[] = "autoclose_blocking.sh";
++static const char autoclosesh[] = "autoclose.sh";
+ static const char broken[] = "broken";
++static const char dwldir[] = "dwl";
++static const char localshare[] = ".local/share";
+ static pid_t child_pid = -1;
+ static int locked;
+ static void *exclusive_focus;
+@@ -2426,6 +2434,160 @@ setsel(struct wl_listener *listener, void *data)
+ 	wlr_seat_set_selection(seat, event->source, event->serial);
+ }
+ 
++void
++runautostart(void)
++{
++	char *pathpfx;
++	char *path;
++	char *xdgdatahome;
++	char *home;
++	struct stat sb;
++
++	if ((home = getenv("HOME")) == NULL)
++		/* this is almost impossible */
++		return;
++
++	/* if $XDG_DATA_HOME is set and not empty, use $XDG_DATA_HOME/dwl,
++	 * otherwise use ~/.local/share/dwl as autostart script directory
++	 */
++	xdgdatahome = getenv("XDG_DATA_HOME");
++	if (xdgdatahome != NULL && *xdgdatahome != '\0') {
++		/* space for path segments, separators and nul */
++		pathpfx = ecalloc(1, strlen(xdgdatahome) + strlen(dwldir) + 2);
++
++		if (sprintf(pathpfx, "%s/%s", xdgdatahome, dwldir) <= 0) {
++			free(pathpfx);
++			return;
++		}
++	} else {
++		/* space for path segments, separators and nul */
++		pathpfx = ecalloc(1, strlen(home) + strlen(localshare)
++		                     + strlen(dwldir) + 3);
++
++		if (sprintf(pathpfx, "%s/%s/%s", home, localshare, dwldir) < 0) {
++			free(pathpfx);
++			return;
++		}
++	}
++
++	/* check if the autostart script directory exists */
++	if (! (stat(pathpfx, &sb) == 0 && S_ISDIR(sb.st_mode))) {
++		/* the XDG conformant path does not exist or is no directory
++		 * so we try ~/.dwl instead
++		 */
++		char *pathpfx_new = realloc(pathpfx, strlen(home) + strlen(dwldir) + 3);
++		if(pathpfx_new == NULL) {
++			free(pathpfx);
++			return;
++		}
++		pathpfx = pathpfx_new;
++
++		if (sprintf(pathpfx, "%s/.%s", home, dwldir) <= 0) {
++			free(pathpfx);
++			return;
++		}
++	}
++
++	/* try the blocking script first */
++	path = ecalloc(1, strlen(pathpfx) + strlen(autostartblocksh) + 2);
++	if (sprintf(path, "%s/%s", pathpfx, autostartblocksh) <= 0) {
++		free(path);
++		free(pathpfx);
++	}
++
++	if (access(path, X_OK) == 0)
++		system(path);
++
++	/* now the non-blocking script */
++	if (sprintf(path, "%s/%s", pathpfx, autostartsh) <= 0) {
++		free(path);
++		free(pathpfx);
++	}
++
++	if (access(path, X_OK) == 0)
++		system(strcat(path, " &"));
++
++	free(pathpfx);
++	free(path);
++}
++
++void
++runautoclose(void)
++{
++	char *pathpfx;
++	char *path;
++	char *xdgdatahome;
++	char *home;
++	struct stat sb;
++
++	if ((home = getenv("HOME")) == NULL)
++		/* this is almost impossible */
++		return;
++
++	/* if $XDG_DATA_HOME is set and not empty, use $XDG_DATA_HOME/dwl,
++	 * otherwise use ~/.local/share/dwl as autoclose script directory
++	 */
++	xdgdatahome = getenv("XDG_DATA_HOME");
++	if (xdgdatahome != NULL && *xdgdatahome != '\0') {
++		/* space for path segments, separators and nul */
++		pathpfx = ecalloc(1, strlen(xdgdatahome) + strlen(dwldir) + 2);
++
++		if (sprintf(pathpfx, "%s/%s", xdgdatahome, dwldir) <= 0) {
++			free(pathpfx);
++			return;
++		}
++	} else {
++		/* space for path segments, separators and nul */
++		pathpfx = ecalloc(1, strlen(home) + strlen(localshare)
++		                     + strlen(dwldir) + 3);
++
++		if (sprintf(pathpfx, "%s/%s/%s", home, localshare, dwldir) < 0) {
++			free(pathpfx);
++			return;
++		}
++	}
++
++	/* check if the autoclose script directory exists */
++	if (! (stat(pathpfx, &sb) == 0 && S_ISDIR(sb.st_mode))) {
++		/* the XDG conformant path does not exist or is no directory
++		 * so we try ~/.dwl instead
++		 */
++		char *pathpfx_new = realloc(pathpfx, strlen(home) + strlen(dwldir) + 3);
++		if(pathpfx_new == NULL) {
++			free(pathpfx);
++			return;
++		}
++		pathpfx = pathpfx_new;
++
++		if (sprintf(pathpfx, "%s/.%s", home, dwldir) <= 0) {
++			free(pathpfx);
++			return;
++		}
++	}
++
++	/* try the blocking script first */
++	path = ecalloc(1, strlen(pathpfx) + strlen(autocloseblocksh) + 2);
++	if (sprintf(path, "%s/%s", pathpfx, autocloseblocksh) <= 0) {
++		free(path);
++		free(pathpfx);
++	}
++
++	if (access(path, X_OK) == 0)
++		system(path);
++
++	/* now the non-blocking script */
++	if (sprintf(path, "%s/%s", pathpfx, autoclosesh) <= 0) {
++		free(path);
++		free(pathpfx);
++	}
++
++	if (access(path, X_OK) == 0)
++		system(strcat(path, " &"));
++
++	free(pathpfx);
++	free(path);
++}
++
+ void
+ setup(void)
+ {
+@@ -3206,7 +3368,9 @@ main(int argc, char *argv[])
+ 	if (!getenv("XDG_RUNTIME_DIR"))
+ 		die("XDG_RUNTIME_DIR must be set");
+ 	setup();
++	runautostart();
+ 	run(startup_cmd);
++	runautoclose();
+ 	cleanup();
+ 	return EXIT_SUCCESS;
+ 

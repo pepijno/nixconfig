@@ -19,6 +19,7 @@
     ./modules/services/redshift.nix
 
     ./modules/services/dwm/dwm.nix
+    ./modules/services/dwl/dwl.nix
 
     ./modules/services/bluetooth.nix
 
