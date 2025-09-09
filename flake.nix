@@ -57,7 +57,7 @@
       mkBuildInputs = system:
         let pkgs = mkPkgs system;
         in with pkgs;
-        [ nixd nixfmt-classic lua-language-server stylua fish-lsp ]
+         [ nixd nixfmt-classic lua-language-server stylua fish-lsp ]
         ++ nixpkgs-unstable.lib.optionals (system == "x86_64-linux") [
           # X11 dependencies only for Linux
           # dwm

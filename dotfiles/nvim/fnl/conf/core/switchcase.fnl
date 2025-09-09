@@ -18,4 +18,4 @@
                                      [camel-case-word]))
         (vim.print "Not a snake_case or camelCase word"))))
 
-(nvim.keymap [:n] :<leader>ss switch-case {:desc "Switch case"})
+(nvim.keymap [:n] :<leader>cc switch-case {:desc "Switch case"})

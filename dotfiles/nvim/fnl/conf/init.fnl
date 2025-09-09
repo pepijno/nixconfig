@@ -7,6 +7,8 @@
 (require :conf.core.statusline)
 (require :conf.core.indentscope)
 (require :conf.core.switchcase)
+(require :conf.core.hardmode)
+(require :conf.core.jump)
 
 (nvim.keymap [:n] :<leader>x ":source ~/.config/nvim/init.lua<Return>"
              {:desc "Source init.lua"})
@@ -14,9 +16,10 @@
 (lambda github [name] (.. "https://github.com/" name))
 
 (vim.pack.add [(github :folke/which-key.nvim)
-               ; github("tpope/vim-sleuth"),
+               (github :tpope/vim-sleuth)
                (github :j-hui/fidget.nvim)
                (github :catppuccin/nvim)
+               (github :stevearc/oil.nvim)
                (github :lewis6991/gitsigns.nvim)
                {:src (github :saghen/blink.cmp)
                 :version (vim.version.range :1.*)}
@@ -28,8 +31,7 @@
                (github :nvim-treesitter/playground)
                (github :stevearc/conform.nvim)
                (github :neovim/nvim-lspconfig)
-               (github :windwp/nvim-autopairs)
-               (github :stevearc/oil.nvim)])
+               (github :windwp/nvim-autopairs)])
 
 (local langs-ensure-installed [:asm
                                :lua
@@ -177,7 +179,8 @@
                                           :fullscreen false}
                                 :fzf_colors true
                                 :keymap {:builtin {:<C-d> :preview-page-down
-                                                   :<C-u> :preview-page-up}}
+                                                   :<C-u> :preview-page-up}
+                                         :fzf {:ctrl-q :select-all+accept}}
                                 :files {:file_icons :mini}
                                 :grep {:file_icons :mini}})
 

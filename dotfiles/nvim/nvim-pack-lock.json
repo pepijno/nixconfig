@@ -73,6 +73,10 @@
       "rev": "ba48c6a62a280eefb7c85725b0915e021a1a0749",
       "src": "https://github.com/nvim-treesitter/playground"
     },
+    "vim-sleuth": {
+      "rev": "be69bff86754b1aa5adcbb527d7fcd1635a84080",
+      "src": "https://github.com/tpope/vim-sleuth"
+    },
     "which-key.nvim": {
       "rev": "370ec46f710e058c9c1646273e6b225acf47cbed",
       "src": "https://github.com/folke/which-key.nvim"

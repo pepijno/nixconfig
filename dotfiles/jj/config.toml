@@ -23,6 +23,7 @@ tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
 push-bookmark = ["git", "push", "-r", "heads(::@- & bookmarks())"]
 
 [revset-aliases]
+"closest_bookmark(to)" = "heads(::to & bookmarks())"
 "downstream(x,y)" = "(x::y) & y"
 log_default = "present(@) | ancestors(immutable_heads().., 2) | present(trunk())"
 
