@@ -12,9 +12,8 @@
     graphics = {
       enable = true;
       enable32Bit = true;
-      extraPackages = with pkgs; [ amdvlk ];
       extraPackages32 =
-        [ pkgs.pkgsi686Linux.libva pkgs.driversi686Linux.amdvlk ];
+        [ pkgs.pkgsi686Linux.libva ];
     };
 
     logitech.wireless = {

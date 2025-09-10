@@ -28,6 +28,7 @@ vim.pack.add({
 	github("stevearc/conform.nvim"),
 	github("neovim/nvim-lspconfig"),
 	github("windwp/nvim-autopairs"),
+	github("nvim-treesitter/nvim-treesitter-context"),
 })
 
 local langs_ensure_installed = {
@@ -87,6 +88,17 @@ vim.lsp.config("lua_ls", {
 		Lua = {
 			workspace = {
 				library = vim.api.nvim_get_runtime_file("", true),
+			},
+		},
+	},
+})
+vim.lsp.config("clangd", {
+	capabilities = {
+		textDocument = {
+			completion = {
+				completionItem = {
+					snippetSupport = false,
+				},
 			},
 		},
 	},

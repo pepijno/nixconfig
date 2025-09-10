@@ -4,7 +4,7 @@
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
-    ubuntu_font_family
+    ubuntu-classic
     # nerdfonts
     nerd-fonts.meslo-lg
     fira-code

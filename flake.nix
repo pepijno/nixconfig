@@ -2,7 +2,7 @@
   description = "System config";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-25.05";
+    nixpkgs.url = "nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
@@ -66,7 +66,6 @@
           xorg.libXft
           gcc
           gnumake
-          # dwl
           installShellFiles
           pkg-config
           wayland-scanner

@@ -1,7 +1,7 @@
 { allowed-unfree-packages, pkgs, lib, ... }:
 
 let
-  torbrowserWithAudio = pkgs.tor-browser-bundle-bin.override {
+  torbrowserWithAudio = pkgs.tor-browser.override {
     audioSupport = true;
     mediaSupport = true;
   };
@@ -39,6 +39,6 @@ in {
     # betterlockscreen
     audacity
 
-    emacs
+    discord
   ];
 }

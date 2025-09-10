@@ -8,8 +8,8 @@ eol-conversion = "none"
 email = "pepijn.overbeeke@gmail.com"
 name = "Pepijn Overbeeke"
 
-[git]
-push-new-bookmarks = true
+[remotes]
+origin.auto-track-bookmarks = "glob:*"
 
 [ui]
 paginate = "never"

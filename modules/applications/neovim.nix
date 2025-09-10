@@ -3,6 +3,7 @@
 {
   home.packages = with pkgs; [
     inputs.neovim-nightly-overlay.packages.${pkgs.system}.default
+    inputs.neovim-nightly-overlay.packages.${pkgs.system}.tree-sitter
     fzf
 
     # needed for treesitter

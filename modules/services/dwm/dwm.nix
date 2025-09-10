@@ -120,7 +120,7 @@ in
         "${pkgs.kitty}"
         "${pkgs.librewolf}"
         "${pkgs.vivaldi}"
-        "${pkgs.tor-browser-bundle-bin}"
+        "${pkgs.tor-browser}"
         "${pkgs.steam}"
         "${sw}"
         "${pkgs.playerctl}"
