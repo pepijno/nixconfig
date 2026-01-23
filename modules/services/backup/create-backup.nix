@@ -5,6 +5,8 @@ let
   ls = "/run/current-system/sw/bin/ls";
   mountpoint = "/run/current-system/sw/bin/mountpoint";
   date = "/run/current-system/sw/bin/date";
+  basename = "/run/current-system/sw/bin/basename";
+  rm = "/run/current-system/sw/bin/rm";
 
 in pkgs.writeShellScriptBin "create-backup" ''
   function send_message {
@@ -48,6 +50,20 @@ in pkgs.writeShellScriptBin "create-backup" ''
       show_fail "Source directory $source_dir does not exist."
       exit 1;
   fi
+
+  # Delete backups older than 5 years
+  ${echo} "Delete old backups..."
+  five_years_ago=$(${date} -d '5 years ago' +%Y-%m-%d)
+  bkp_dir_glob="$bkp_dir/*"
+  for dir in $bkp_dir_glob; do
+    dir_name=$(${basename} $dir)
+    if [[ "$dir_name" =~ ^([0-9]{4})-([0-9]{2})-([0-9]{2})_([0-9]{2}):([0-9]{2}):([0-9]{2})$ ]]; then
+      dir_date="''${dir_name%%_*}"
+      if [[ "$dir_date" < "$five_years_ago" && "''${dir_date:8:2}" != "01" ]]; then
+        ${rm} -rf $bkp_dir/$dir_name
+      fi
+    fi
+  done
 
   time=$(${date} +%Y-%m-%d_%T)
 
