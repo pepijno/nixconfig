@@ -1,6 +1,9 @@
 vim.pack.add({ "https://github.com/catppuccin/nvim" })
+
 local latte = require("catppuccin.palettes").get_palette("latte")
+
 local config = { ["no-name-text"] = "[No Name]", ["modified-symbol"] = "[+]", ["readonly-symbol"] = "[-]" }
+
 local theme_colors = {
 	normal = { primary = latte.blue },
 	insert = { primary = latte.green },
@@ -8,6 +11,7 @@ local theme_colors = {
 	visual = { primary = latte.mauve },
 	command = { primary = latte.yellow },
 }
+
 local function create_section_colors()
 	local sections = {}
 	for mode, colors in pairs(theme_colors) do
@@ -22,7 +26,9 @@ local function create_section_colors()
 	sections["background"] = { a = { bg = latte.base, fg = latte.surface0 } }
 	return sections
 end
+
 local section_colors = create_section_colors()
+
 local vim_modes = {
 	n = "NORMAL",
 	nt = "NORMAL",
@@ -61,6 +67,7 @@ local vim_modes = {
 	["r?"] = "CONFIRM",
 	rm = "MORE",
 }
+
 local mode_color_map = {
 	NORMAL = "normal",
 	INSERT = "insert",
@@ -80,11 +87,13 @@ local mode_color_map = {
 	CONFIRM = "command",
 	MORE = "command",
 }
+
 local function highlight(name, foreground, background, _3fgui)
 	local gui = (_3fgui or "nocombine")
 	local command = string.format("highlight! %s guifg=%s guibg=%s gui=%s", name, foreground, background, gui)
 	return vim.cmd(command)
 end
+
 local function create_highlight_groups()
 	for mode, sections in pairs(section_colors) do
 		for section, color in pairs(sections) do
@@ -94,13 +103,16 @@ local function create_highlight_groups()
 	end
 	return nil
 end
+
 local function highlight_group(mode, section)
 	return string.format("%%#statusline_%s_%s#", mode, section)
 end
+
 local function get_mode()
 	local mode_code = vim.api.nvim_get_mode().mode
 	return (vim_modes[mode_code] or mode_code)
 end
+
 local function get_file_name()
 	local filename = vim.fn.expand("%:t")
 	local name
@@ -125,10 +137,12 @@ local function get_file_name()
 		return escaped_name
 	end
 end
+
 local function get_filetype()
 	local ft = (vim.bo.filetype or "")
 	return ft:gsub("%%", "%%%%")
 end
+
 local function get_progress()
 	local cur = vim.fn.line(".")
 	local total = vim.fn.line("$")
@@ -140,14 +154,17 @@ local function get_progress()
 		return string.format("%2d%%%%", math.floor(((cur / total) * 100)))
 	end
 end
+
 local function get_location()
 	local line = vim.fn.line(".")
 	local col = vim.fn.charcol(".")
 	return string.format("%3d:%-2d", line, col)
 end
+
 local function with_spaces(text)
 	return (" " .. text .. " ")
 end
+
 local function build_statusline()
 	local mode = get_mode()
 	local filename = get_file_name()
@@ -155,12 +172,6 @@ local function build_statusline()
 	local progress = get_progress()
 	local location = get_location()
 	local mode_color = mode_color_map[mode]
-	local ft_section
-	if filetype == "" then
-		ft_section = ""
-	else
-		ft_section = string.format(" %s |", filetype)
-	end
 	local parts = {
 		highlight_group(mode_color, "c"),
 		"\238\130\182",
@@ -183,20 +194,9 @@ local function build_statusline()
 	}
 	return table.concat(parts, "")
 end
-local function create_autocommands()
-	local group = vim.api.nvim_create_augroup("CustomStatusline", {})
-	local function _7_()
-		return vim.wo.statusline("%{%luaeval('require(\"statusline\").update_statusline()')%}")
-	end
-	return vim.api.nvim_create_autocmd(
-		{ "ModeChanged", "WinEnter", "BufEnter" },
-		{ group = group, desc = "Update statusline", callback = _7_ }
-	)
-end
-local function setup()
-	create_highlight_groups()
-	vim.opt.showmode = false
-	vim.opt.statusline = "%{%luaeval('require(\"statusline\").update_statusline()')%}"
-end
-setup()
+
+create_highlight_groups()
+vim.opt.showmode = false
+vim.opt.statusline = "%{%luaeval('require(\"statusline\").update_statusline()')%}"
+
 return { update_statusline = build_statusline }

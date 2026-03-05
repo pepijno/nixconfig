@@ -120,6 +120,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 require("statusline")
+require("tabline")
 
 vim.pack.add({
 	"https://github.com/tpope/vim-sleuth",
@@ -170,6 +171,7 @@ local formatters_by_ft = {
 	c = { "clang_format" },
 	bash = { "beautysh" },
 	sh = { "beautysh" },
+	htmlangular = { "prettier" },
 	angular = { "prettier" },
 	typescript = { "prettier" },
 	json = { "jq" },
@@ -298,7 +300,7 @@ cmp.setup({
 })
 
 vim.lsp.config["*"] = {
-	capabilities = require("blink.cmp").get_lsp_capabilities()
+	capabilities = require("blink.cmp").get_lsp_capabilities(),
 }
 
 local signs = {
@@ -446,7 +448,7 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
 					apply = true,
 					bufnr = bufnr,
 				})
-			end, opt("Organize imports"));
+			end, opt("Organize imports"))
 		end
 
 		setup_document_highlight(client, event.buf)
