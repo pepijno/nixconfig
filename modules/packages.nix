@@ -23,7 +23,6 @@ in {
     dosbox-staging
     inotify-tools
     ltunify
-    mullvad-vpn
     playerctl
     ripgrep
 
@@ -40,5 +39,8 @@ in {
     audacity
 
     discord
+
+    jetbrains.jdk
+    maven
   ];
 }

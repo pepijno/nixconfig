@@ -10,7 +10,6 @@
     ./services.nix
     ./hardware.nix
     ./nix.nix
-    ./mullvad.nix
   ];
 
   networking = {
@@ -20,7 +19,13 @@
     iproute2.enable = true;
     wireguard.enable = true;
     firewall.allowedTCPPorts = [ 22 ];
+    firewall.checkReversePath = false;
   };
+
+  environment.systemPackages = with pkgs; [
+    wireguard-tools
+    protonvpn-gui
+  ];
 
   time.timeZone = "Europe/Amsterdam";
 
@@ -29,11 +34,13 @@
     sudo.enable = true;
     doas = {
       enable = true;
-      extraRules = [{
-        users = [ "pepijn" ];
-        keepEnv = true;
-        persist = true;
-      }];
+      extraRules = [
+        {
+          users = [ "pepijn" ];
+          keepEnv = true;
+          persist = true;
+        }
+      ];
     };
     pam.services.swaylock.text = ''
       # PAM configuration file for the swaylock screen locker. By default, it includes
@@ -53,7 +60,14 @@
     groups.plugdev = { };
     users.pepijn = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "kvm" "input" "libvirtd" "plugdev" "docker" ];
+      extraGroups = [
+        "wheel"
+        "kvm"
+        "input"
+        "libvirtd"
+        "plugdev"
+        "docker"
+      ];
       shell = pkgs.fish;
     };
   };
@@ -81,4 +95,3 @@
   };
 
 }
-

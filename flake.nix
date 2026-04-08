@@ -11,7 +11,6 @@
     };
 
     nix-colors.url = "github:misterio77/nix-colors";
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay/";
     wrapper-manager.url = "github:viperML/wrapper-manager";
   };
 
@@ -57,7 +56,7 @@
       mkBuildInputs = system:
         let pkgs = mkPkgs system;
         in with pkgs;
-         [ nixd nixfmt-classic lua-language-server stylua fish-lsp ]
+         [ nixd nixfmt lua-language-server stylua fish-lsp fnlfmt fennel-ls ]
         ++ nixpkgs-unstable.lib.optionals (system == "x86_64-linux") [
           # X11 dependencies only for Linux
           # dwm

@@ -1,9 +1,9 @@
-{ inputs, pkgs, config, mkSymlinkAttrs, ... }:
+{ pkgs, config, mkSymlinkAttrs, ... }:
 
 {
   home.packages = with pkgs; [
-    inputs.neovim-nightly-overlay.packages.${pkgs.system}.default
-    inputs.neovim-nightly-overlay.packages.${pkgs.system}.tree-sitter
+    neovim
+    tree-sitter
     fzf
 
     # needed for treesitter
