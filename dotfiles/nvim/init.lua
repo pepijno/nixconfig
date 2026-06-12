@@ -55,7 +55,7 @@ vim.opt.mouse = "a" -- Enable mouse support
 
 vim.g.c_syntax_for_h = true -- Use c file type for .h files
 
--- vim.opt.clipboard = "unnamedplus" -- Enable system clipboard access
+vim.opt.clipboard = "unnamedplus" -- Enable system clipboard access
 
 -- Disable native vim plugins
 vim.g.loaded_2html_plugin = false
@@ -208,6 +208,7 @@ require("catppuccin").setup({
 vim.cmd.colorscheme("catppuccin-latte")
 
 require("oil").setup()
+require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
 vim.keymap.set("n", "-", "<cmd>Oil<Return>", { desc = "Open Oil" })
 
 require("fzf-lua").setup({
@@ -451,7 +452,9 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
 			end, opt("Organize imports"))
 		end
 
-		setup_document_highlight(client, event.buf)
+		client.server_capabilities.semanticTokensProvider = nil
+
+		-- setup_document_highlight(client, event.buf)
 	end,
 })
 
@@ -478,27 +481,29 @@ vim.lsp.config["clangd"] = {
 }
 
 vim.lsp.enable({
-	"lua_ls",
-	"asm_lsp",
-	"nixd",
-	"zls",
-	"hls",
-	"clangd",
-	"bashls",
+-- 	"lua_ls",
+-- 	"asm_lsp",
+-- 	"nixd",
+-- 	"zls",
+-- 	"hls",
+	-- "clangd",
+-- 	"bashls",
 	"cssls",
 	"html",
 	"ts_ls",
 	"jsonls",
-	"fish_lsp",
+-- 	"fish_lsp",
 	"angularls",
-	"tombi",
-	"lemminx",
-	-- "jdtls",
+-- 	"tombi",
+-- 	"lemminx",
+-- 	-- "jdtls",
 })
 
 local setup_treesitter = function()
 	local treesitter = require("nvim-treesitter")
-	treesitter.setup({})
+	treesitter.setup({
+		highlight = false,
+	})
 	local ensure_installed = {
 		"lua",
 		"c",
@@ -539,14 +544,14 @@ local setup_treesitter = function()
 		treesitter.install(parsers_to_install)
 	end
 
-	vim.api.nvim_create_autocmd("FileType", {
-		group = augroup,
-		callback = function(args)
-			if vim.list_contains(treesitter.get_installed(), vim.treesitter.language.get_lang(args.match)) then
-				vim.treesitter.start(args.buf)
-			end
-		end,
-	})
+	-- vim.api.nvim_create_autocmd("FileType", {
+	-- 	group = augroup,
+	-- 	callback = function(args)
+	-- 		if vim.list_contains(treesitter.get_installed(), vim.treesitter.language.get_lang(args.match)) then
+	-- 			vim.treesitter.start(args.buf)
+	-- 		end
+	-- 	end,
+	-- })
 end
 
 setup_treesitter()
@@ -564,3 +569,5 @@ require("gitsigns").setup({
 })
 
 require("fidget").setup({})
+
+require("prism")
